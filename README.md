@@ -1,4 +1,5 @@
 [![License](https://img.shields.io/github/license/alexander-naumov/screen)](https://github.com/alexander-naumov/screen/COPYING)
+[![Buid Status](https://app.travis-ci.com/alexander-naumov/screen.svg?branch=main&status=started)](https://travis-ci.org/alexander-naumov/screen)
 
 GNU Screen - screen manager with VT100/ANSI terminal emulation
 
