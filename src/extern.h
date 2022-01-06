@@ -134,7 +134,7 @@ extern void  Input __P((char *, int, int, void (*)(char *, int, char *), char *,
 extern int   InInput __P((void));
 
 /* help.c */
-extern void  exit_with_usage __P((char *, char *, char *));
+extern void  exit_with_usage __P((char *, char *, char *, int));
 extern void  display_help __P((char *, struct action *));
 extern void  display_copyright __P((void));
 extern void  display_displays __P((void));

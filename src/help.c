@@ -58,7 +58,7 @@ static void PadStr __P((char *, int, int, int));
 extern char *wliststr;
 extern char *wlisttit;
 
-void exit_with_usage(char *myname, char *message, char *arg)
+void exit_with_usage(char *myname, char *message, char *arg, int ret)
 {
   printf("Use: %s [-opts] [cmd [args]]\n", myname);
   printf(" or: %s -r [host.tty]\n\nOptions:\n", myname);
@@ -112,7 +112,7 @@ void exit_with_usage(char *myname, char *message, char *arg)
     printf(message, arg);
     printf("\n");
   }
-  exit(1);
+  exit(ret);
 }
 
 /* Here come the help page routines */

@@ -538,7 +538,7 @@ int main(int ac, char** av)
 	    exit(0);
 	  }
 	  if (ap[1] == '-' && !strcmp(ap, "--help"))
-	    exit_with_usage(myname, NULL, NULL);
+	    exit_with_usage(myname, NULL, NULL, 0);
 
 	  while (ap && *ap && *++ap) {
         switch (*ap) {
@@ -566,7 +566,7 @@ int main(int ac, char** av)
               preselect = ap;
             else {
               if (!--ac)
-                exit_with_usage(myname, "Specify a window to preselect with -p", NULL);
+                exit_with_usage(myname, "Specify a window to preselect with -p", NULL, 1);
               preselect = *++av;
             }
             ap = NULL;
@@ -583,7 +583,7 @@ int main(int ac, char** av)
               RcFileName = ap;
             else {
               if (--ac == 0)
-                exit_with_usage(myname, "Specify an alternate rc-filename with -c", NULL);
+                exit_with_usage(myname, "Specify an alternate rc-filename with -c", NULL, 1);
               RcFileName = *++av;
             }
             ap = NULL;
@@ -592,7 +592,7 @@ int main(int ac, char** av)
           case 'e':
 		    if (!*++ap) {
               if (--ac == 0)
-                exit_with_usage(myname, "Specify command characters with -e", NULL);
+                exit_with_usage(myname, "Specify command characters with -e", NULL, 1);
               ap = *++av;
             }
             if (ParseEscape(ap))
@@ -618,16 +618,16 @@ int main(int ac, char** av)
                 nwin_options.flowflag = FLOW_AUTOFLAG;
                 break;
               default:
-                exit_with_usage(myname, "Unknown flow option -%s", --ap);
+                exit_with_usage(myname, "Unknown flow option -%s", --ap, 1);
             }
             break;
 
           case 'h':
             if (--ac == 0)
-              exit_with_usage(myname, NULL, NULL);
+              exit_with_usage(myname, NULL, NULL, 0);
             nwin_options.histheight = atoi(*++av);
             if (nwin_options.histheight < 0)
-              exit_with_usage(myname, "-h: %s: negative scrollback size?", *av);
+              exit_with_usage(myname, "-h: %s: negative scrollback size?", *av, 1);
             break;
 
           case 'i':
@@ -636,7 +636,7 @@ int main(int ac, char** av)
 
           case 't': /* title, the former AkA == -k */
             if (--ac == 0)
-              exit_with_usage(myname, "Specify a new window-name with -t", NULL);
+              exit_with_usage(myname, "Specify a new window-name with -t", NULL, 1);
             nwin_options.aka = *++av;
             break;
 
@@ -667,13 +667,13 @@ int main(int ac, char** av)
                 ap = NULL;
                 break;
               default:
-                exit_with_usage(myname, "%s: Unknown suboption to -l", --ap);
+                exit_with_usage(myname, "%s: Unknown suboption to -l", --ap, 1);
               }
             break;
 
           case 'w':
             if (strcmp(ap+1, "ipe"))
-              exit_with_usage(myname, "Unknown option %s", --ap);
+              exit_with_usage(myname, "Unknown option %s", --ap, 1);
             lsflag = 1;
             wipeflag = 1;
             if (ac > 1 && !SockMatch) {
@@ -685,7 +685,7 @@ int main(int ac, char** av)
           case 'L':
 	    if (!strcmp(ap + 1, "ogfile")) {
               if (--ac == 0)
-                exit_with_usage(myname, "Specify logfile path with -Logfile", NULL);
+                exit_with_usage(myname, "Specify logfile path with -Logfile", NULL, 1);
 
               if (strlen(*++av) > PATH_MAX)
                 Panic(1, "-Logfile name too long. (max. %d char)", PATH_MAX);
@@ -709,7 +709,7 @@ int main(int ac, char** av)
 
           case 'T':
             if (--ac == 0)
-              exit_with_usage(myname, "Specify terminal-type with -T", NULL);
+              exit_with_usage(myname, "Specify terminal-type with -T", NULL, 1);
             if (strlen(*++av) < MAXTERMLEN) {
               strncpy(screenterm, *av, MAXTERMLEN);
               screenterm[MAXTERMLEN] = '\0';
@@ -766,7 +766,7 @@ int main(int ac, char** av)
 
           case 's':
             if (--ac == 0)
-              exit_with_usage(myname, "Specify shell with -s", NULL);
+              exit_with_usage(myname, "Specify shell with -s", NULL, 1);
             if (ShellProg)
               free(ShellProg);
             ShellProg = SaveStr(*++av);
@@ -776,11 +776,11 @@ int main(int ac, char** av)
           case 'S':
             if (!SockMatch) {
               if (--ac == 0)
-                exit_with_usage(myname, "Specify session-name with -S", NULL);
+                exit_with_usage(myname, "Specify session-name with -S", NULL, 1);
               SockMatch = *++av;
             }
             if (!*SockMatch)
-              exit_with_usage(myname, "Empty session-name?", NULL);
+              exit_with_usage(myname, "Empty session-name?", NULL, 1);
             break;
 
           case 'X':
@@ -798,7 +798,7 @@ int main(int ac, char** av)
 #endif
 
           default:
-            exit_with_usage(myname, "Unknown option %s", --ap);
+            exit_with_usage(myname, "Unknown option %s", --ap, 1);
 		}
       }
     }
