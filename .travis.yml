@@ -1,0 +1,8 @@
+os:      linux
+dist:    xenial
+git:
+  depth: false
+script:
+  - ./autoget.sh
+  - ./configure
+  - make
