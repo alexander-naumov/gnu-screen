@@ -5,6 +5,6 @@ git:
 script:
   - cd src
   - ./autogen.sh
-  - ./configure
+  - ./configure CFLAGS="-Wall -DDEBUG"
   - make
-  - ./screen -v
+  - ./screen -h
