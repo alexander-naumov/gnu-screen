@@ -131,7 +131,7 @@ backsearchend(char *buf, int len, char *data)
 static int
 matchword(char *pattern, int y, int sx, int ex)
 {
-	unsigned char *ip, *cp, *pp, *cpe;
+	unsigned char *cp, *pp, *cpe;
 	int cy;
 
 	fore = ((struct markdata *)flayer->l_data)->md_window;
