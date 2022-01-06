@@ -2762,6 +2762,18 @@ char *MakeWinMsgEv(char *str, struct win *win, int esc, int padlen, struct event
       p += strlen(p) - 1;
       break;
 
+#ifdef ENCODINGS
+    case 'e':
+      *p = 0;
+      D_encoding = nwin_options.encoding > 0 ? nwin_options.encoding : 0;
+      if (win && win->w_encoding) {
+        *p++ = ' ';
+        strcpy(p, EncodingName(win->w_encoding));
+      }
+      p += strlen(p) - 1;
+      break;
+#endif
+
     case '{':
     {
       char rbuf[128];
