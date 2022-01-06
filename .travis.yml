@@ -3,6 +3,7 @@ dist:    xenial
 git:
   depth: false
 script:
+  - cd src
   - ./autogen.sh
   - ./configure
   - make
