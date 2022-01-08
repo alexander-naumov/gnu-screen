@@ -2212,7 +2212,7 @@ resize min      minimize current region
 Without any arguments, @code{screen} will prompt for how you would
 like to resize the current region.
 
-See @code{focusminsize} if you want to restrict the minimun size a region can have.
+See @code{focusminsize} if you want to restrict the minimum size a region can have.
 
 @end deffn
 
@@ -3689,7 +3689,7 @@ or last non-whitespace character on the line.
 
 @noindent
 @kbd{f}/@kbd{F}, @kbd{t}/@kbd{T} move the cursor forward/backward to the 
-next occurence of the target. (eg, '3fy' will move the cursor to the 3rd 
+next occurrence of the target. (eg, '3fy' will move the cursor to the 3rd
 'y' to the right.)
 
 @noindent
