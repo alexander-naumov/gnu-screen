@@ -186,8 +186,7 @@ sched()
 #if defined(__osf__) || defined(M_UNIX)
 				/* OSF/1 3.x, SCO bug: EBADF */
 				/* OSF/1 4.x bug: EIO */
-				if ((errno == EIO || errno == EBADF) &&
-				    sgihack())
+				if ((errno == EIO || errno == EBADF) && sgihack())
 					continue;
 #endif
 				Panic(errno, "select");
