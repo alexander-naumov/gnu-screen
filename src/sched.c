@@ -50,8 +50,7 @@ void
 evenq(struct event *ev)
 {
 	struct event *evp, **evpp;
-	debug3("New event fd %d type %d queued %d\n", ev -> fd, ev -> type, ev ->
-	queued);
+	debug3("New event fd %d type %d queued %d\n", ev -> fd, ev -> type, ev -> queued);
 	if (ev->queued)
 		return;
 	evpp = &evs;
@@ -71,8 +70,7 @@ void
 evdeq(struct event *ev)
 {
 	struct event *evp, **evpp;
-	debug3("Deq event fd %d type %d queued %d\n", ev -> fd, ev -> type, ev ->
-	queued);
+	debug3("Deq event fd %d type %d queued %d\n", ev -> fd, ev -> type, ev -> queued);
 	if (!ev->queued)
 		return;
 	evpp = &evs;
@@ -99,13 +97,11 @@ calctimo()
 	if ((min = tevs) == 0)
 		return 0;
 	mins = min->timeout.tv_sec;
-	for (ev = tevs->next; ev; ev = ev->next)
-	    {
+	for (ev = tevs->next; ev; ev = ev->next) {
 		ASSERT(ev->type == EV_TIMEOUT);
 		if (mins < ev->timeout.tv_sec)
 			continue;
-		if (mins > ev->timeout.tv_sec ||
-		    min->timeout.tv_usec > ev->timeout.tv_usec) {
+		if (mins > ev->timeout.tv_sec || min->timeout.tv_usec > ev->timeout.tv_usec) {
 			min = ev;
 			mins = ev->timeout.tv_sec;
 		}
@@ -127,11 +123,10 @@ sched()
 			timeoutev = calctimo();
 		if (timeoutev) {
 			gettimeofday(&timeout, NULL);
-	  /* tp - timeout */
-			timeout.tv_sec = timeoutev->timeout.tv_sec -
-			    timeout.tv_sec;
-			timeout.tv_usec = timeoutev->timeout.tv_usec -
-			    timeout.tv_usec;
+			/* tp - timeout */
+			timeout.tv_sec = timeoutev->timeout.tv_sec - timeout.tv_sec;
+			timeout.tv_usec = timeoutev->timeout.tv_usec - timeout.tv_usec;
+
 			if (timeout.tv_usec < 0) {
 				timeout.tv_usec += 1000000;
 				timeout.tv_sec--;
@@ -144,12 +139,10 @@ sched()
 #ifdef DEBUG
 		debug("waiting for events");
 		if (timeoutev)
-			debug2(" timeout %d secs %d usecs", timeout.tv_sec,
-			    timeout.tv_usec);
+			debug2(" timeout %d secs %d usecs", timeout.tv_sec, timeout.tv_usec);
 		debug(":\n");
 		for (ev = evs; ev; ev = ev->next)
-			debug3(" - fd %d type %d pri %d\n", ev->fd, ev->type,
-			    ev->pri);
+			debug3(" - fd %d type %d pri %d\n", ev->fd, ev->type, ev->pri);
 		if (tevs)
 			debug("timed events:\n");
 		for (ev = tevs; ev; ev = ev->next)
@@ -159,12 +152,9 @@ sched()
 
 		FD_ZERO(&r);
 		FD_ZERO(&w);
-		for (ev = evs; ev; ev = ev->next)
-		    {
-			if (ev->condpos &&
-			    *ev->condpos <= (ev->condneg ? *ev->condneg : 0)) {
-				debug2(" - cond ev fd %d type %d failed\n",
-				    ev->fd, ev->type);
+		for (ev = evs; ev; ev = ev->next) {
+			if (ev->condpos && *ev->condpos <= (ev->condneg ? *ev->condneg : 0)) {
+				debug2(" - cond ev fd %d type %d failed\n", ev->fd, ev->type);
 				continue;
 			}
 			if (ev->type == EV_READ)
@@ -186,8 +176,7 @@ sched()
 		debug("\n");
 #endif
 
-		nsel = select(FD_SETSIZE, &r, &w,
-		    (fd_set *)0, timeoutev ? &timeout : (struct timeval *)0);
+		nsel = select(FD_SETSIZE, &r, &w, (fd_set *)0, timeoutev ? &timeout : (struct timeval *)0);
 		if (nsel < 0) {
 			if (errno != EINTR) {
 #if defined(sgi) && defined(SVR4)
@@ -195,8 +184,8 @@ sched()
 					continue;
 #endif
 #if defined(__osf__) || defined(M_UNIX)
-	      /* OSF/1 3.x, SCO bug: EBADF */
-	      /* OSF/1 4.x bug: EIO */
+				/* OSF/1 3.x, SCO bug: EBADF */
+				/* OSF/1 4.x bug: EIO */
 				if ((errno == EIO || errno == EBADF) &&
 				    sgihack())
 					continue;
@@ -204,7 +193,7 @@ sched()
 				Panic(errno, "select");
 			}
 			nsel = 0;
-		} else if (nsel == 0)	/* timeout */ {
+		} else if (nsel == 0) {		/* timeout */
 			debug("TIMEOUT!\n");
 			ASSERT(timeoutev);
 			evdeq(timeoutev);
@@ -244,6 +233,7 @@ SetTimeout(struct event *ev, int timo)
 	gettimeofday(&ev->timeout, NULL);
 	ev->timeout.tv_sec += timo / 1000;
 	ev->timeout.tv_usec += (timo % 1000) * 1000;
+
 	if (ev->timeout.tv_usec > 1000000) {
 		ev->timeout.tv_usec -= 1000000;
 		ev->timeout.tv_sec++;
