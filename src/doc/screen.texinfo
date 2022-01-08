@@ -5571,6 +5571,8 @@ day number
 weekday name
 @item E
 sets %? to true if the escape character has been pressed.
+@item e
+encoding
 @item f
 flags of the window. @xref{Windows}, for meanings of the various flags.
 @item F
