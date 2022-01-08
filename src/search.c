@@ -46,7 +46,7 @@ int search_ic;
  *  VI style Search
  */
 
-static int matchword __P((char*, int, int, int));
+static int  matchword __P((char*, int, int, int));
 static void searchend __P((char*, int, char *));
 static void backsearchend __P((char*, int, char *));
 
@@ -183,9 +183,9 @@ static char *isprompts[] = {
 	"I-search: ", "failing I-search: "
 };
 
-static int is_redo __P((struct markdata*));
+static int  is_redo __P((struct markdata*));
 static void is_process __P((char*, int, char *));
-static int is_bm __P((char*, int, int, int, int));
+static int  is_bm __P((char*, int, int, int, int));
 
 static int
 is_bm(char *str, int l, int p, int end, int dir)
