@@ -8,7 +8,7 @@
 @finalout
 @setchapternewpage odd
 @c %**end of header
-@set version 4.8.0
+@set version 4.9.0
 
 @direntry
 * Screen: (screen).             Full-screen window manager.
@@ -25,7 +25,7 @@
 @ifinfo
 This file documents the @code{Screen} virtual terminal manager.
 
-Copyright (c) 1993-2018 Free Software Foundation, Inc.
+Copyright (c) 1993-2022 Free Software Foundation, Inc.
 
 Permission is granted to make and distribute verbatim copies of
 this manual provided the copyright notice and this permission notice
@@ -53,11 +53,11 @@ by the Foundation.
 @title Screen
 @subtitle The virtual terminal manager
 @subtitle for Version @value{version}
-@subtitle Feb 2020
+@subtitle Jan 2022
 
 @page
 @vskip 0pt plus 1filll
-Copyright @copyright{} 1993-2018 Free Software Foundation, Inc.
+Copyright @copyright{} 1993-2022 Free Software Foundation, Inc.
 
 Permission is granted to make and distribute verbatim copies of
 this manual provided the copyright notice and this permission notice
@@ -5321,7 +5321,8 @@ Uses the message line to display the time of day, the host name, and the
 load averages over 1, 5, and 15 minutes (if this is available on your
 system).  For window-specific information use @code{info} (@pxref{Info}).
 If a @var{string} is specified, it changes the format of the time report
-like it is described in the string escapes chapter (@pxref{String Escapes}). Screen uses a default of @samp{%c:%s %M %d %H%? %l%?}.
+like it is described in the string escapes chapter (@pxref{String Escapes}).
+Screen uses a default of @samp{%c:%s %M %d %H%? %l%?}.
 @end deffn
 
 @node Verbose, Version, Time, Miscellaneous
@@ -5990,7 +5991,7 @@ features.
 @section Reporting Bugs
 @cindex bug report
 
-If you find a bug in @code{Screen}, please send electronic mail to
+If you find a bug in @code{Screen}, please send mail to
 @w{@samp{screen-devel@@gnu.org}}.  Include the version number
 of @code{Screen} which you are using.  Also include in your message the
 hardware and operating system, the compiler used to compile, a
