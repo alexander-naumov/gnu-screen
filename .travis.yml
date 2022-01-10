@@ -1,19 +1,17 @@
-language: c
+language:	c
+os:			linux
+dist:		focal
 
-os:      linux
-dist:
-	- focal
-	- bionic
-arch:
-	- amd64
-	- arm64
+#arch:
+#	- amd64
+#	- arm64
 
 compiler:
   - gcc
   - clang
 
-git:
-  depth: false
+#git:
+#  depth: false
 
 script:
   - cd src
