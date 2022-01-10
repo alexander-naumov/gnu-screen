@@ -1,10 +1,9 @@
 language:	c
 os:			linux
 dist:		focal
-
-#arch:
-#	- amd64
-#	- arm64
+arch:
+  - amd64
+  - arm64
 
 compiler:
   - gcc
