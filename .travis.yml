@@ -1,10 +1,26 @@
+language: c
+
 os:      linux
-dist:    xenial
+dist:
+	- focal
+	- bionic
+arch:
+	- amd64
+	- arm64
+
+compiler:
+  - gcc
+  - clang
+
 git:
   depth: false
+
 script:
   - cd src
   - ./autogen.sh
   - ./configure CFLAGS="-Wall -DDEBUG"
+  - make clean
   - make
+  - ./screen -v
   - ./screen -h
+  - make clean
