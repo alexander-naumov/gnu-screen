@@ -20,8 +20,8 @@ script:
   - make
   - ./screen -v
   - ./screen -h
-  - make clean
   - ./screen -ls
   - ./screen -r
   - ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 600 localhost'
   - ./screen -r
+  - make clean
