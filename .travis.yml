@@ -20,6 +20,7 @@ script:
   - make
   - ./screen -v
   - ./screen -h
+  - ./screen -S shortname -d -m bash -c 'ping -c 600 localhost'
   - ./screen -ls
   - ./screen -r
   - ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 600 localhost'
