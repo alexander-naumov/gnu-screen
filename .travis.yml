@@ -30,6 +30,7 @@ script:
   - ./screen -r
   - ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'
   - ./screen -ls
-  - ./screen -r
+  - ls -la /tmp/debug/
+  - cat /tmp/debug/SCREEN*
   - make clean
   - man ./doc/screen.1
