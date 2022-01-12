@@ -20,10 +20,16 @@ script:
   - make
   - ./screen -v
   - ./screen -h
-  - ./screen -S shortname -d -m bash -c 'ping -c 600 localhost'
+  - ./screen -S -d -m bash -c 'ping -c 8 localhost'
   - ./screen -ls
+  - ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
+  - ./screen -ls
+  - ./screen -S shortname -X sessionname
+  - ./screen -ls
+  - ./screen -S shortname -X sessionname testtest
   - ./screen -r
-  - ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 600 localhost'
+  - ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'
   - ./screen -ls
   - ./screen -r
   - make clean
+  - man ./doc/screen.1
