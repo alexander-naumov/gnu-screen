@@ -946,14 +946,12 @@ processchar:
 						md_user->u_plop.buf = realloc(md_user->u_plop.buf, (unsigned)(md_user->u_plop.len + newcopylen + 3));
 					else {
 						md_user->u_plop.len = 0;
-						md_user->u_plop.buf = malloc((unsigned)(newcopylen +
-						    3));
+						md_user->u_plop.buf = malloc((unsigned)(newcopylen + 3));
 					}
 					if (!md_user->u_plop.buf) {
 						MarkAbort();
 						in_mark = 0;
-						LMsg(0,
-						    "Not enough memory... Sorry.");
+						LMsg(0, "Not enough memory... Sorry.");
 						md_user->u_plop.len = 0;
 						md_user->u_plop.buf = 0;
 						break;
@@ -1019,13 +1017,13 @@ processchar:
 			if (flayer->l_mouseevent.start) {
 				int button = flayer->l_mouseevent.buffer[0];
 				if (button == 'a') {
-				/* Scroll down */
+					/* Scroll down */
 					od = 'j';
 				} else if (button == '`') {
-				/* Scroll up */
+					/* Scroll up */
 					od = 'k';
 				} else if (button == ' ') {
-				/* Left click */
+					/* Left click */
 					cx = flayer->l_mouseevent.buffer[1];
 					cy = D2W(flayer->l_mouseevent.buffer[
 					    2]);
