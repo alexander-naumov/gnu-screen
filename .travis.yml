@@ -15,8 +15,17 @@ compiler:
 script:
   - cd src
   - ./autogen.sh
+  - ./configure CFLAGS=-Wall
+  - make
+  - ./screen -v
+  - ./screen -h
+  - ./screen -S -d -m bash -c 'ping -c 8 localhost'
+  - ./screen -ls
+  - ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
+  - ./screen -ls
+  - ./screen -S shortname -X sessionname
+  - ./make clean
   - ./configure CFLAGS="-Wall -DDEBUG"
-  - make clean
   - make
   - ./screen -v
   - ./screen -h
@@ -32,5 +41,4 @@ script:
   - ./screen -ls
   - ls -la /tmp/debug/
   - cat /tmp/debug/SCREEN*
-  - make clean
   - man ./doc/screen.1
