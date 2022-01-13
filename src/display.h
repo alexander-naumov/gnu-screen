@@ -61,7 +61,7 @@ struct win;			/* forward declaration */
 struct mouse_parse
 {
   char sgrmode;                 /* non-zero if parsing an SGR sequence */
-  char state;                   /* current state of parsing */
+  int state;                    /* current state of parsing */
   int params[3];                /* parsed params: button, x, y */
 };
 
