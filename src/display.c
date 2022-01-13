@@ -3405,7 +3405,7 @@ char *data;
    */
   int size;
   char bufspace[MAX_MOUSE_SEQUENCE + IOSIZE];
-  unsigned char *buf = bufspace + MAX_MOUSE_SEQUENCE;
+  unsigned char *buf = (unsigned char*)bufspace + MAX_MOUSE_SEQUENCE;
 
   struct canvas *cv;
 
@@ -3480,7 +3480,7 @@ char *data;
 	if (p->w_zdisplay == display)
 	  {
 	    flayer = &p->w_layer;
-	    bufp = buf;
+	    bufp = (char *)buf;
 	    while (size > 0)
 	      LayProcess(&bufp, &size);
 	    return;
@@ -3763,7 +3763,7 @@ disp_processinput(display, buf, size)
       return;
     }
 #endif
-  (*D_processinput)(buf, size);
+  (*D_processinput)((char *)buf, size);
 }
 
 static void
