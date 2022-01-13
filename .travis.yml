@@ -24,7 +24,7 @@ script:
   - ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
   - ./screen -ls
   - ./screen -S shortname -X sessionname
-  - ./make clean
+  - make clean
   - ./configure CFLAGS="-Wall -DDEBUG"
   - make
   - ./screen -v
