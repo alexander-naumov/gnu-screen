@@ -778,6 +778,10 @@ int main(int ac, char** av)
               if (--ac == 0)
                 exit_with_usage(myname, "Specify session-name with -S", NULL);
               SockMatch = *++av;
+              debug1("SockMatch: '%s'\n", SockMatch);
+              debug1("SockMatch len: '%d'\n", (int)strlen(SockMatch));
+              if (strlen(SockMatch) > 80)
+                exit_with_usage(myname, "Session-name is too long (max length is 80 symbols)", NULL);
             }
             if (!*SockMatch)
               exit_with_usage(myname, "Empty session-name?", NULL);
@@ -1203,6 +1207,13 @@ int main(int ac, char** av)
     SetTtyname(false, &st);
     if (!*av)
       Panic(0, "Please specify a command.");
+    if (!strcmp("sessionname", *av)) {
+      if (!*++av)
+        Panic(0, "Please specify a parameter.");
+      if (strlen(*av) > 80)
+        Panic(0, "Parameter of command 'sessionname' is too long.");
+    }
+    *--av;
     SET_GUID();
     SendCmdMessage(sty, SockMatch, av, queryflag >= 0);
     exit(0);
