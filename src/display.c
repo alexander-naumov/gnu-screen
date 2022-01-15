@@ -2315,7 +2315,7 @@ RefreshHStatus()
 {
   char *buf;
 #ifdef UTF8
-  int extrabytes = strlen(hstatusstring) - strlen_onscreen(hstatusstring, NULL);
+  int extrabytes = strlen(hstatusstring) - strlen_onscreen((unsigned char *)hstatusstring, NULL);
 #else
   int extrabytes = 0;
 #endif
@@ -2418,7 +2418,7 @@ int y, from, to, isblank;
 	  if (y == cv->c_ye + 1 && from >= cv->c_xs && from <= cv->c_xe)
 	    {
 #ifdef UTF8
-	      int extrabytes = strlen(captionstring) - strlen_onscreen(captionstring, NULL);
+	      int extrabytes = strlen(captionstring) - strlen_onscreen((unsigned char *)captionstring, NULL);
 #else
 	      int extrabytes = 0;
 #endif
