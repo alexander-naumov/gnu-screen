@@ -209,8 +209,7 @@ StartRc(char *rcfilename, int nopanic)
 				AddStr("\r\n");
 				Flush(0);
 			}
-		}
-		 else if (strcmp(args[0], "sleep") == 0) {
+		} else if (strcmp(args[0], "sleep") == 0) {
 			if (!display)
 				continue;
 			debug("sleeeeeeep\n");
@@ -223,8 +222,7 @@ StartRc(char *rcfilename, int nopanic)
 #ifdef TERMINFO
     else if (!strcmp(args[0], "termcapinfo") || !strcmp(args[0], "terminfo")) {
 #else
-		else if (!strcmp(args[0], "termcapinfo") ||
-		    !strcmp(args[0], "termcap")) {
+		else if (!strcmp(args[0], "termcapinfo") || !strcmp(args[0], "termcap")) {
 #endif
 			if (!display)
 				continue;
