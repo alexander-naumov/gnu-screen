@@ -42,20 +42,20 @@
 extern struct display *display, *displays;
 extern struct win *fore;
 extern struct layer *flayer;
-extern int ServerSocket;
-extern int real_uid, eff_uid;
-extern int real_gid, eff_gid;
-extern char *extra_incap, *extra_outcap;
-extern char *home, *RcFileName;
-extern char SockPath[], *SockName;
+extern int    ServerSocket;
+extern int    real_uid, eff_uid;
+extern int    real_gid, eff_gid;
+extern char  *extra_incap, *extra_outcap;
+extern char  *home, *RcFileName;
+extern char   SockPath[], *SockName;
 #ifdef COPY_PASTE
-extern char *BufferFile;
+extern char  *BufferFile;
 #endif
-extern int hardcopy_append;
-extern char *hardcopydir;
+extern int    hardcopy_append;
+extern char  *hardcopydir;
 
-static char *CatExtra __P((char *, char *));
-static char *findrcfile __P((char *));
+static char  *CatExtra __P((char *, char *));
+static char  *findrcfile __P((char *));
 
 char *rc_name = "";
 int rc_recursion = 0;
@@ -72,8 +72,7 @@ CatExtra(register char *str1, register char *str2)
 	add_colon = (str1[len1 - 1] != ':');
 	if (str2) {
 		len2 = strlen(str2);
-		if ((cp = realloc(str2,
-		    (unsigned)len1 + len2 + add_colon + 1)) == NULL)
+		if ((cp = realloc(str2, (unsigned)len1 + len2 + add_colon + 1)) == NULL)
 			Panic(0, "%s", strnomem);
 		bcopy(cp, cp + len1 + add_colon, len2 + 1);
 	} else {
@@ -93,8 +92,8 @@ findrcfile(char *rcfile)
 	char buf[256];
 	char *p;
 
-  /* Tilde prefix support courtesy <hesso@pool.math.tu-berlin.de>,
-   * taken from a Debian patch. */
+	/* Tilde prefix support courtesy <hesso@pool.math.tu-berlin.de>,
+	 * taken from a Debian patch. */
 	if (rcfile && *rcfile == '~') {
 		static char rcfilename_tilde_exp[MAXPATHLEN + 1];
 		char *slash_position = strchr(rcfile, '/');
@@ -102,27 +101,21 @@ findrcfile(char *rcfile)
 		if (slash_position == rcfile + 1) {
 			char *home = getenv("HOME");
 			if (!home) {
-				Msg(0, "%s: source: tilde expansion failed",
-				    rc_name);
+				Msg(0, "%s: source: tilde expansion failed", rc_name);
 				return NULL;
 			}
-			snprintf(rcfilename_tilde_exp, MAXPATHLEN, "%s/%s",
-			    home, rcfile + 2);
+			snprintf(rcfilename_tilde_exp, MAXPATHLEN, "%s/%s", home, rcfile + 2);
 		} else if (slash_position) {
 			struct passwd *p;
 			*slash_position = 0;
 			p = getpwnam(rcfile + 1);
 			if (!p) {
-				Msg(0,
-				    "%s: source: tilde expansion failed for user %s",
-				    rc_name, rcfile + 1);
+				Msg(0, "%s: source: tilde expansion failed for user %s", rc_name, rcfile + 1);
 				return NULL;
 			}
-			snprintf(rcfilename_tilde_exp, MAXPATHLEN, "%s/%s",
-			    p->pw_dir, slash_position + 1);
+			snprintf(rcfilename_tilde_exp, MAXPATHLEN, "%s/%s", p->pw_dir, slash_position + 1);
 		} else {
-			Msg(0, "%s: source: illegal tilde expression.",
-			    rc_name);
+			Msg(0, "%s: source: illegal tilde expression.", rc_name);
 			return NULL;
 		}
 		rcfile = rcfilename_tilde_exp;
@@ -130,8 +123,7 @@ findrcfile(char *rcfile)
 
 	if (rcfile) {
 		char *rcend = rindex(rc_name, '/');
-		if (*rcfile != '/' && rcend &&
-		    (rcend - rc_name) + strlen(rcfile) + 2 < sizeof(buf)) {
+		if (*rcfile != '/' && rcend && (rcend - rc_name) + strlen(rcfile) + 2 < sizeof(buf)) {
 			strncpy(buf, rc_name, rcend - rc_name + 1);
 			strcpy(buf + (rcend - rc_name) + 1, rcfile);
 			if (access(buf, R_OK) == 0)
@@ -170,30 +162,26 @@ StartRc(char *rcfilename, int nopanic)
 	FILE *fp;
 	char *oldrc_name = rc_name;
 
-  /* always fix termcap/info capabilities */
+	/* always fix termcap/info capabilities */
 	extra_incap = CatExtra("TF", extra_incap);
 
-  /* Special settings for vt100 and others */
-	if (display &&
-	    (!strncmp(D_termname, "vt", 2) || !strncmp(D_termname, "xterm", 5)))
-		extra_incap = CatExtra("xn:f0=\033Op:f1=\033Oq:f2=\033Or:f3=\033Os:f4=\033Ot:f5=\033Ou:f6=\033Ov:f7=\033Ow:f8=\033Ox:f9=\033Oy:f.=\033On:f,=\033Ol:fe=\033OM:f+=\033Ok:f-=\033Om:f*=\033Oj:f/=\033Oo:fq=\033OX",
-		    extra_incap);
+	/* Special settings for vt100 and others */
+	if (display && (!strncmp(D_termname, "vt", 2) || !strncmp(D_termname, "xterm", 5)))
+		extra_incap = CatExtra("xn:f0=\033Op:f1=\033Oq:f2=\033Or:f3=\033Os:f4=\033Ot:f5=\033Ou:f6=\033Ov:f7=\033Ow:f8=\033Ox:f9=\033Oy:f.=\033On:f,=\033Ol:fe=\033OM:f+=\033Ok:f-=\033Om:f*=\033Oj:f/=\033Oo:fq=\033OX", extra_incap);
 
 	rc_name = findrcfile(rcfilename);
 	if (rc_name == NULL || (fp = secfopen(rc_name, "r")) == NULL) {
 		const char *rc_nonnull = rc_name ? rc_name : rcfilename;
-		if (!rc_recursion && RcFileName &&
-		    !strcmp(RcFileName, rc_nonnull)) {
-      /*
-       * User explicitly gave us that name,
-       * this is the only case, where we get angry, if we can't read
-       * the file.
-       */
-			debug3("StartRc: '%s','%s', '%s'\n", RcFileName,
-			    rc_name ? rc_name : "(null)", rcfilename);
+		if (!rc_recursion && RcFileName && !strcmp(RcFileName, rc_nonnull)) {
+		/*
+		 * User explicitly gave us that name,
+		 * this is the only case, where we get angry, if we can't read
+		 * the file.
+		 */
+			debug3("StartRc: '%s','%s', '%s'\n", RcFileName, rc_name ? rc_name : "(null)", rcfilename);
 			if (!nopanic)
 				Panic(0, "Unable to open \"%s\".", rc_nonnull);
-      /* possibly NOTREACHED */
+				/* possibly NOTREACHED */
 		}
 
 		debug1("StartRc: '%s' no good. ignored\n", rc_nonnull);
@@ -212,10 +200,8 @@ StartRc(char *rcfilename, int nopanic)
 		if (strcmp(args[0], "echo") == 0) {
 			if (!display)
 				continue;
-			if (argc < 2 || (argc == 3 && strcmp(args[1], "-n")) ||
-			    argc > 3) {
-				Msg(0, "%s: 'echo [-n] \"string\"' expected.",
-				    rc_name);
+			if (argc < 2 || (argc == 3 && strcmp(args[1], "-n")) || argc > 3) {
+				Msg(0, "%s: 'echo [-n] \"string\"' expected.", rc_name);
 				continue;
 			}
 			AddStr(args[argc - 1]);
@@ -229,9 +215,7 @@ StartRc(char *rcfilename, int nopanic)
 				continue;
 			debug("sleeeeeeep\n");
 			if (argc != 2) {
-				Msg(0,
-				    "%s: sleep: one numeric argument expected.",
-				    rc_name);
+				Msg(0, "%s: sleep: one numeric argument expected.", rc_name);
 				continue;
 			}
 			DisplaySleep1000(1000 * atoi(args[1]), 1);
@@ -245,9 +229,7 @@ StartRc(char *rcfilename, int nopanic)
 			if (!display)
 				continue;
 			if (argc < 3 || argc > 4) {
-				Msg(0,
-				    "%s: %s: incorrect number of arguments.",
-				    rc_name, args[0]);
+				Msg(0, "%s: %s: incorrect number of arguments.", rc_name, args[0]);
 				continue;
 			}
 
@@ -256,8 +238,7 @@ StartRc(char *rcfilename, int nopanic)
 					*cp++ = '\0';
 				len = strlen(p);
 				if (p[len - 1] == '*') {
-					if (!(len - 1) ||
-					    !strncmp(p, D_termname, len - 1))
+					if (!(len - 1) || !strncmp(p, D_termname, len - 1))
 						break;
 				} else if (!strcmp(p, D_termname))
 					break;
@@ -300,10 +281,9 @@ FinishRc(char *rcfilename)
        * this is the only case, where we get angry, if we can't read
        * the file.
        */
-			debug3("FinishRc:'%s','%s','%s'\n", RcFileName,
-			    rc_name ? rc_name : "(null)", rcfilename);
+			debug3("FinishRc:'%s','%s','%s'\n", RcFileName, rc_name ? rc_name : "(null)", rcfilename);
 			Panic(0, "Unable to open \"%s\".", rc_nonnull);
-       /* NOTREACHED */
+			/* NOTREACHED */
 		}
 		debug1("FinishRc: '%s' no good. ignored\n", rc_nonnull);
 		if (rc_name)
@@ -412,10 +392,8 @@ WriteFile(struct acluser *user, char *fn, int dump)
 		if (fn == 0) {
 			if (fore == 0)
 				return;
-			if (hardcopydir && *hardcopydir &&
-			    strlen(hardcopydir) < sizeof(fnbuf) - 21)
-				sprintf(fnbuf, "%s/hardcopy.%d", hardcopydir,
-				    fore->w_number);
+			if (hardcopydir && *hardcopydir && strlen(hardcopydir) < sizeof(fnbuf) - 21)
+				sprintf(fnbuf, "%s/hardcopy.%d", hardcopydir, fore->w_number);
 			else
 				sprintf(fnbuf, "hardcopy.%d", fore->w_number);
 			fn = fnbuf;
@@ -434,8 +412,7 @@ WriteFile(struct acluser *user, char *fn, int dump)
 		public = !strcmp(fn, DEFAULT_BUFFERFILE);
 # ifdef HAVE_LSTAT
 		exists = !lstat(fn, &stb);
-		if (public && exists &&
-		    (S_ISLNK(stb.st_mode) || stb.st_nlink > 1)) {
+		if (public && exists && (S_ISLNK(stb.st_mode) || stb.st_nlink > 1)) {
 			Msg(0, "No write to links, please.");
 			return;
 		}
@@ -452,9 +429,7 @@ WriteFile(struct acluser *user, char *fn, int dump)
 # ifdef HAVE_LSTAT
 			if (exists) {
 				if ((fd = open(fn, O_WRONLY, 0666)) >= 0) {
-					if (fstat(fd, &stb2) == 0 &&
-					    stb.st_dev == stb2.st_dev &&
-					    stb.st_ino == stb2.st_ino)
+					if (fstat(fd, &stb2) == 0 && stb.st_dev == stb2.st_dev && stb.st_ino == stb2.st_ino)
 						ftruncate(fd, 0);
 					else {
 						close(fd);
@@ -471,8 +446,7 @@ WriteFile(struct acluser *user, char *fn, int dump)
 #endif /* COPY_PASTE */
 			f = fopen(fn, mode);
 		if (f == NULL) {
-			debug2("WriteFile: fopen(%s,\"%s\") failed\n", fn,
-			    mode);
+			debug2("WriteFile: fopen(%s,\"%s\") failed\n", fn, mode);
 			UserReturn(0);
 		} else {
 			switch (dump) {
@@ -488,9 +462,7 @@ WriteFile(struct acluser *user, char *fn, int dump)
 				}
 				if (dump == DUMP_SCROLLBACK) {
 #ifdef COPY_PASTE
-					for (i = fore->w_histheight -
-					    fore->w_scrollback_height;
-					    i < fore->w_histheight; i++) {
+					for (i = fore->w_histheight - fore->w_scrollback_height; i < fore->w_histheight; i++) {
 						p = (char *)(WIN(i)->image);
 						for (k = fore->w_width - 1;
 						    k >= 0 && p[k] == ' '; k--)
@@ -520,8 +492,7 @@ WriteFile(struct acluser *user, char *fn, int dump)
 			case DUMP_EXCHANGE:
 				p = user->u_plop.buf;
 				for (i = user->u_plop.len; i-- > 0; p++)
-					if (*p == '\r' &&
-					    (i == 0 || p[1] != '\n'))
+					if (*p == '\r' && (i == 0 || p[1] != '\n'))
 						putc('\n', f);
 					else
 						putc(*p, f);
@@ -541,8 +512,7 @@ WriteFile(struct acluser *user, char *fn, int dump)
 			break;
 		case DUMP_HARDCOPY:
 		case DUMP_SCROLLBACK:
-			Msg(0, "Screen image %s to \"%s\".",
-			    (*mode == 'a') ? "appended" : "written", fn);
+			Msg(0, "Screen image %s to \"%s\".", (*mode == 'a') ? "appended" : "written", fn);
 			break;
 #ifdef COPY_PASTE
 		case DUMP_EXCHANGE:
@@ -594,9 +564,7 @@ ReadFile(char *fn, int *lenp)
 		Msg(errno, "Got only %d bytes from %s", l, fn);
 	} else {
 		if (read(i, &c, 1) > 0)
-			Msg(0,
-			    "Slurped only %d characters (of %d) into buffer - try again",
-			    l, size);
+			Msg(0, "Slurped only %d characters (of %d) into buffer - try again", l, size);
 		else
 			Msg(0, "Slurped %d characters into buffer", l);
 	}
@@ -682,7 +650,8 @@ secopen(char *name, int flags, int mode)
 #else
 	if (eff_uid == real_uid)
 		return open(name, flags, mode);
-  /* Truncation/creation is done in UserContext */
+
+	/* Truncation/creation is done in UserContext */
 	if ((flags & O_TRUNC) || ((flags & O_CREAT) && access(name, F_OK))) {
 		if (UserContext() > 0) {
 			if ((fd = open(name, flags, mode)) >= 0) {
@@ -722,8 +691,7 @@ secopen(char *name, int flags, int mode)
 			break;
 		}
 		if ((stb.st_mode & q) != q) {
-			debug1("secopen: permission denied (%03o)\n",
-			    stb.st_mode & 07777);
+			debug1("secopen: permission denied (%03o)\n", stb.st_mode & 07777);
 			close(fd);
 			errno = EACCES;
 			return -1;
