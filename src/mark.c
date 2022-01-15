@@ -115,8 +115,7 @@ linestart(int y)
 	register int x;
 	register unsigned char *i;
 
-	for (x = markdata->left_mar, i = WIN(y)->image + x;
-	    x < fore->w_width - 1; x++)
+	for (x = markdata->left_mar, i = WIN(y)->image + x; x < fore->w_width - 1; x++)
 		if (*i++ != ' ')
 			break;
 	if (x == fore->w_width - 1)
@@ -365,11 +364,10 @@ rem(int x1, int y1, int x2, int y2, int redisplay, char *pt, int yend)
 			l += 3;
 		}
 #endif
-		if (i != y2 &&
-		    (to != fore->w_width - 1 || ml->image[to + 1] == ' ')) {
-	  /*
-	   * this code defines, what glues lines together
-	   */
+		if (i != y2 && (to != fore->w_width - 1 || ml->image[to + 1] == ' ')) {
+			/*
+			 * this code defines, what glues lines together
+			 */
 			switch (markdata->nonl) {
 			case 0:		/* lines separated by newlines */
 				if (pt)
@@ -496,8 +494,7 @@ MarkRoutine()
 		x = fore->w_width - 1;
 
 	LGotoPos(flayer, x, W2D(y));
-	LMsg(0, "Copy mode - Column %d Line %d(+%d) (%d,%d)", x + 1, W2D(y + 1),
-		fore->w_histheight, fore->w_width, fore->w_height);
+	LMsg(0, "Copy mode - Column %d Line %d(+%d) (%d,%d)", x + 1, W2D(y + 1), fore->w_histheight, fore->w_width, fore->w_height);
 	markdata->cx = markdata->x1 = x;
 	markdata->cy = markdata->y1 = y;
 	flayer->l_x = x;
@@ -748,6 +745,7 @@ processchar:
 				rep_cnt = 0;
 			if (rep_cnt > 100)
 				rep_cnt = 100;
+
 			revto_line(markdata->left_mar,
 			    fore->w_histheight - fore->w_scrollback_height +
 			    (int)(rep_cnt * (fore->w_scrollback_height +
@@ -762,8 +760,7 @@ processchar:
 	  /* rep_cnt is here the WIN line number */
 			if (rep_cnt == 0)
 				rep_cnt = fore->w_histheight + fore->w_height;
-			revto_line(markdata->left_mar, --rep_cnt,
-			    (fore->w_height - 1) / 2);
+			revto_line(markdata->left_mar, --rep_cnt, (fore->w_height - 1) / 2);
 			break;
 		case 'H':
 			revto(markdata->left_mar, D2W(0));
@@ -835,8 +832,7 @@ processchar:
 				revto(cx, cy);
 			}
 			if (od == 'v' || od == 'V')
-				LMsg(0,
-				    (markdata->left_mar != 8) ? ":set nonu" : ":set nu");
+				LMsg(0, (markdata->left_mar != 8) ? ":set nonu" : ":set nu");
 			break;
 		case 'J':
 		/* how do you join lines in VI ? */
@@ -894,8 +890,7 @@ processchar:
 				if (rep_cnt == 0)
 					rep_cnt = 1;
 				if (!markdata->second) {
-					nextword(&cx, &cy,
-					    NW_BACK|NW_ENDOFWORD, 1);
+					nextword(&cx, &cy, NW_BACK|NW_ENDOFWORD, 1);
 					revto(cx, cy);
 					markdata->second++;
 					cx = markdata->x1 = markdata->cx;
@@ -922,8 +917,7 @@ processchar:
 				markdata->x1 = cx;
 				markdata->y1 = cy;
 				revto(cx, cy);
-				LMsg(0, "First mark set - Column %d Line %d",
-				    cx + 1, W2D(cy) + 1);
+				LMsg(0, "First mark set - Column %d Line %d", cx + 1, W2D(cy) + 1);
 				break;
 			} else {
 				int append_mode = markdata->append_mode;
@@ -931,8 +925,7 @@ processchar:
 
 				x2 = cx;
 				y2 = cy;
-				newcopylen = rem(markdata->x1, markdata->y1,
-				    x2, y2, 2, (char *)0, 0); /* count */
+				newcopylen = rem(markdata->x1, markdata->y1, x2, y2, 2, (char *)0, 0); /* count */
 				if (md_user->u_plop.buf && !append_mode)
 					UserFreeCopyBuffer(md_user);
 				yend = fore->w_height - 1;
@@ -963,24 +956,20 @@ processchar:
 			 */
 						case 0:
 							if (join_with_cr) {
-								md_user->u_plop.buf[
-								    md_user->u_plop.len] = '\r';
+								md_user->u_plop.buf[md_user->u_plop.len] = '\r';
 								md_user->u_plop.len++;
 							}
-							md_user->u_plop.buf[
-							    md_user->u_plop.len] = '\n';
+							md_user->u_plop.buf[md_user->u_plop.len] = '\n';
 							md_user->u_plop.len++;
 							break;
 						case 1:
 							break;
 						case 2:
-							md_user->u_plop.buf[
-							    md_user->u_plop.len] = ' ';
+							md_user->u_plop.buf[md_user->u_plop.len] = ' ';
 							md_user->u_plop.len++;
 							break;
 						case 3:
-							md_user->u_plop.buf[
-							    md_user->u_plop.len] = ',';
+							md_user->u_plop.buf[md_user->u_plop.len] = ',';
 							md_user->u_plop.len++;
 							break;
 						}
@@ -1025,8 +1014,7 @@ processchar:
 				} else if (button == ' ') {
 					/* Left click */
 					cx = flayer->l_mouseevent.buffer[1];
-					cy = D2W(flayer->l_mouseevent.buffer[
-					    2]);
+					cy = D2W(flayer->l_mouseevent.buffer[2]);
 					revto(cx, cy);
 					od = ' ';
 				} else
@@ -1178,8 +1166,7 @@ revto_line(int tx, int ty, int line)
 					break;
 		}
 
-		if (x <= ce && x >= markdata->left_mar &&
-		    x <= markdata->right_mar) {
+		if (x <= ce && x >= markdata->left_mar && x <= markdata->right_mar) {
 #ifdef DW_CHARS
 			if (dw_right(ml, x, fore->w_encoding)) {
 				if (t == revst)
@@ -1266,8 +1253,7 @@ MarkRedisplayLine(int y, int xs, int xe, int isblank) /* NOTE: y is in DISPLAY c
 			xs--;
 		if (dw_left(ml, xe, fore->w_encoding) && xe < fore->w_width - 1)
 			xe++;
-		if (xs == 0 && y > 0 && wy > 0 &&
-		    WIN(wy - 1)->image[flayer->l_width] == 0)
+		if (xs == 0 && y > 0 && wy > 0 && WIN(wy - 1)->image[flayer->l_width] == 0)
 			LCDisplayLineWrap(flayer, ml, y, xs, xe, isblank);
 		else
 			LCDisplayLine(flayer, ml, y, xs, xe, isblank);
@@ -1284,8 +1270,7 @@ MarkRedisplayLine(int y, int xs, int xe, int isblank) /* NOTE: y is in DISPLAY c
 	cp = wy * fore->w_width + xs;
 
 	rm = markdata->right_mar;
-	for (x = fore->w_width, wi = ml->image + fore->w_width; x >= 0;
-	    x--, wi--)
+	for (x = fore->w_width, wi = ml->image + fore->w_width; x >= 0; x--, wi--)
 		if (*wi != ' ')
 			break;
 	if (x < rm)
@@ -1414,8 +1399,7 @@ MarkScrollUpDisplay(int n)
 	i = (n < flayer->l_height) ? n : (flayer->l_height);
 	LScrollV(flayer, i, 0, flayer->l_height - 1, 0);
 	while (i-- > 0)
-		MarkRedisplayLine(flayer->l_height - i - 1, 0,
-		    flayer->l_width - 1, 1);
+		MarkRedisplayLine(flayer->l_height - i - 1, 0, flayer->l_width - 1, 1);
 	return n;
 }
 
