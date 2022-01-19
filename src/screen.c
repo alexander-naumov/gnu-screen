@@ -1207,13 +1207,13 @@ int main(int ac, char** av)
     SetTtyname(false, &st);
     if (!*av)
       Panic(0, "Please specify a command.");
-    if (!strcmp("sessionname", *av)) {
+    if (!strncmp("sessionname", *av, 11)) {
       if (!*++av)
         Panic(0, "Please specify a parameter.");
       if (strlen(*av) > 80)
         Panic(0, "Parameter of command 'sessionname' is too long.");
-    }
     *--av;
+    }
     SET_GUID();
     SendCmdMessage(sty, SockMatch, av, queryflag >= 0);
     exit(0);
