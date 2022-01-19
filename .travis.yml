@@ -19,7 +19,7 @@ script:
   - make
   - ./screen -v
   - ./screen -h
-  - ./screen -S -d -m bash -c 'ping -c 8 localhost'
+  - ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
   - ./screen -ls; true
   - ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
   - ./screen -ls
@@ -29,14 +29,14 @@ script:
   - make
   - ./screen -v
   - ./screen -h
-  - ./screen -S -d -m bash -c 'ping -c 8 localhost'
+  - ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
   - ./screen -ls; true
   - ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
   - ./screen -ls
   - ./screen -S shortname -X sessionname; true
   - ./screen -ls; true
   - ./screen -S shortname -X sessionname testtest
-  - ./screen -r
+  - ./screen -r; true
   - ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true
   - ./screen -ls; true
   - ls -la /tmp/debug/
