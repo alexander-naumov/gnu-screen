@@ -20,10 +20,10 @@ script:
   - ./screen -v
   - ./screen -h
   - ./screen -S -d -m bash -c 'ping -c 8 localhost'
-  - ./screen -ls
+  - ./screen -ls; true
   - ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
   - ./screen -ls
-  - ./screen -S shortname -X sessionname
+  - ./screen -S shortname -X sessionname; true
   - make clean
   - ./configure CFLAGS="-Wall -DDEBUG"
   - make
