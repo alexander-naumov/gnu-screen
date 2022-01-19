@@ -30,15 +30,15 @@ script:
   - ./screen -v
   - ./screen -h
   - ./screen -S -d -m bash -c 'ping -c 8 localhost'
-  - ./screen -ls
+  - ./screen -ls; true
   - ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
   - ./screen -ls
   - ./screen -S shortname -X sessionname
-  - ./screen -ls
+  - ./screen -ls; true
   - ./screen -S shortname -X sessionname testtest
   - ./screen -r
   - ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'
-  - ./screen -ls
+  - ./screen -ls; true
   - ls -la /tmp/debug/
   - cat /tmp/debug/SCREEN*
   - man ./doc/screen.1
