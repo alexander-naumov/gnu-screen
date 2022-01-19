@@ -33,11 +33,11 @@ script:
   - ./screen -ls; true
   - ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
   - ./screen -ls
-  - ./screen -S shortname -X sessionname
+  - ./screen -S shortname -X sessionname; true
   - ./screen -ls; true
   - ./screen -S shortname -X sessionname testtest
   - ./screen -r
-  - ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'
+  - ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true
   - ./screen -ls; true
   - ls -la /tmp/debug/
   - cat /tmp/debug/SCREEN*
