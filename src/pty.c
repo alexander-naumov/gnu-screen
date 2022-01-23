@@ -31,6 +31,10 @@
 #include <fcntl.h>
 #include <signal.h>
 
+#if defined(__OpenBSD__)
+#include <utils.h>  /* for openpty() */
+#endif
+
 #include "config.h"
 #include "screen.h"
 
