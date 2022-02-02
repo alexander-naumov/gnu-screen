@@ -1,3 +1,15 @@
+Version 4.9.0 (30/01/2022):
+  * Hardstatus option for used encoding (escape string '%e')
+  * OpenBSD uses native openpty() from its utils.h
+  * Fixes:
+    - fix combining char handling that could lead to a segfault
+    - CVE-2021-26937: possible denial of service via a crafted UTF-8 character sequence (bug #60030)
+    - make screen exit code be 0 when checking --help
+    - session names limit is 80 symbols (bug #61534)
+    - option -X ignores specified user in multiuser env (bug #37437)
+    - a lot of reformations/fixes/cleanups of man page and source code
+
+
 Version 4.8.0 (05/02/2020)
   * Improve startup time by only polling for files to close
   Fixes:
