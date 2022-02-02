@@ -671,6 +671,54 @@ int SttyMode(struct mode *m, char *opt)
 #endif
       }
 
+      else if (!strncmp("parenb", opt, 6)) {
+#if defined(POSIX) || defined(TERMIO)
+     m->tio.c_cflag |= PARENB;
+#else
+     debug("SttyMode: no parenb in old bsd land.\n");
+#endif
+      }
+
+      else if (!strncmp("-parenb", opt, 6)) {
+#if defined(POSIX) || defined(TERMIO)
+     m->tio.c_cflag &= ~PARENB;
+#else
+     debug("SttyMode: no -parenb in old bsd land.\n");
+#endif
+      }
+
+      else if (!strncmp("parodd", opt, 6)) {
+#if defined(POSIX) || defined(TERMIO)
+     m->tio.c_cflag |= PARODD;
+#else
+     debug("SttyMode: no parodd in old bsd land.\n");
+#endif
+      }
+
+      else if (!strncmp("-parodd", opt, 6)) {
+#if defined(POSIX) || defined(TERMIO)
+     m->tio.c_cflag &= ~PARODD;
+#else
+     debug("SttyMode: no -parodd in old bsd land.\n");
+#endif
+      }
+
+      else if (!strncmp("cstopb", opt, 6)) {
+#if defined(POSIX) || defined(TERMIO)
+     m->tio.c_cflag |= CSTOPB;
+#else
+     debug("SttyMode: no cstopb in old bsd land.\n");
+#endif
+      }
+
+      else if (!strncmp("-cstopb", opt, 7)) {
+#if defined(POSIX) || defined(TERMIO)
+     m->tio.c_cflag &= ~CSTOPB;
+#else
+     debug("SttyMode: no -cstopb in old bsd land.\n");
+#endif
+      }
+
       else if (!strncmp("istrip", opt, 6)) {
 #if defined(POSIX) || defined(TERMIO)
 	  m->tio.c_iflag |= ISTRIP;
