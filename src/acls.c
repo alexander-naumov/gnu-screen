@@ -392,7 +392,7 @@ struct acluser **up;
   if (!users)
     {
       debug("Last user deleted. Feierabend.\n");
-      Finit(0);	/* Destroying whole session. Noone could ever attach again. */
+      Finit(0);	/* Destroying whole session. No one could ever attach again. */
     }
   return 0;
 }
@@ -402,7 +402,7 @@ struct acluser **up;
 
 /*
  * returns 0 if the copy buffer was really deleted.
- * Also removes any references into the users copybuffer
+ * Also removes any references into the user's copybuffer
  */
 int
 UserFreeCopyBuffer(u)
@@ -497,7 +497,7 @@ char *from, *to;
 /*
  * The user pointer stored at *up will be substituted by a pointer
  * to the named user's structure, if passwords match.
- * returns NULL if successfull, an static error string otherwise
+ * returns NULL if successful, an static error string otherwise
  */
 char *
 DoSu(up, name, pw1, pw2)
@@ -560,7 +560,7 @@ char *name, *pw1, *pw2;
 	      sorry++;
 	    }
 	}
-      else					/* no pasword provided */
+      else					/* no password provided */
         if (*pass)				/* but need one */
 	  sorry++;
 #endif /* CHECKLOGIN */
@@ -572,7 +572,7 @@ char *name, *pw1, *pw2;
               sorry++;
 	    }
 	}
-      else					/* no pasword provided */
+      else					/* no password provided */
         if (*u->u_password)			/* but need one */
 	  sorry++;
     }
@@ -654,7 +654,7 @@ struct win *w;
 }
 
 
-/* if mode starts with '-' we remove the users exec bit for cmd */
+/* if mode starts with '-' we remove the user's exec bit for cmd */
 /*
  * NOTE: before you make this function look the same as 
  * AclSetPermWin, try to merge both functions. 
@@ -786,7 +786,7 @@ struct win *win;
 	{
 	  /*
 	   * Hack. I do not want to duplicate all the above code for
-	   * AclSetPermCmd. This asumes that there are not more bits 
+	   * AclSetPermCmd. This assumes that there are not more bits
 	   * per cmd than per win.
 	   */
 	  debug1("AclSetPermWin: default_c_bits '%s'.\n", mode);
@@ -800,7 +800,7 @@ struct win *win;
 }
 
 /* 
- * String is broken down into comand and window names, mode applies
+ * String is broken down into command and window names, mode applies
  * A command name matches first, so do not use these as window names.
  * uu should be NULL, except if you want to change his umask.
  */
@@ -1008,7 +1008,7 @@ char **argv;
 }
 
 /*
- * Preprocess argments, so that umask can be set with UsersAcl
+ * Preprocess arguments, so that umask can be set with UsersAcl
  * 
  * all current users		umask ±rwxn
  * one specific user		umask user1±rwxn

@@ -1649,7 +1649,7 @@ PrintStart()
 {
   curr->w_pdisplay = 0;
 
-  /* find us a nice display to print on, fore prefered */
+  /* find us a nice display to print on, fore preferred */
   display = curr->w_lastdisp;
   if (!(display && curr == D_fore && (printcmd || D_PO)))
     for (display = displays; display; display = display->d_next)
@@ -2340,7 +2340,7 @@ char *fmt;
 int n1, n2;
 {
   register int len;
-  char rbuf[40];	/* enough room for all replys */
+  char rbuf[40];	/* enough room for all replies */
 
   sprintf(rbuf, fmt, n1, n2);
   len = strlen(rbuf);

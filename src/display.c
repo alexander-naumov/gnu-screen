@@ -1022,7 +1022,7 @@ int x2, y2;
 
   /* Calculate the cost to move the cursor to the right x position */
   costx = EXPENSIVE;
-  if (x1 >= 0)	/* relativ x positioning only if we know where we are */
+  if (x1 >= 0)	/* relative x positioning only if we know where we are */
     {
       if (dx > 0)
 	{
@@ -2308,7 +2308,7 @@ char *str;
 
 
 /*
- *  Refreshes the harstatus of the fore window. Shouldn't be here...
+ *  Refreshes the hardstatus of the fore window. Shouldn't be here...
  */
 void
 RefreshHStatus()
