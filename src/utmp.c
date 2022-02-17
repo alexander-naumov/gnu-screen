@@ -582,6 +582,15 @@ struct win *wi;
 	addToUtmp(wi->w_tty, host, wi->w_ptyfd);
       else
 	removeLineFromUtmp(wi->w_tty, wi->w_ptyfd);
+      /*
+       * As documented in libutempter: "During execution of the privileged
+       * process spawned by these functions, SIGCHLD signal handler will be
+       * temporarily set to the default action."
+       * Thus in case a SIGCHLD has been lost, we send a SIGCHLD to oneself
+       * in order to avoid zombies: https://savannah.gnu.org/bugs/?25089
+       */
+      kill(getpid(), SIGCHLD);
+
       return 1;	/* pray for success */
     }
 #endif
