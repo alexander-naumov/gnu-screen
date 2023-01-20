@@ -514,7 +514,7 @@ int main(int ac, char** av)
   logreopen_register(lf_secreopen);
 
   av0 = *av;   /* if this is a login screen, assume -RR */
-  if (*av0 == '-') {
+  if (av0 && *av0 == '-') {
     rflag = 4;
 #ifdef MULTI
     xflag = 1;
