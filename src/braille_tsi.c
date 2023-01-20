@@ -49,7 +49,7 @@ static int  tsi_line_type; /* indicates number of cells on powerbraille
 
 static int  display_status_tsi __P((void));
 static int  write_line_tsi __P((char*, int, int));
-static void buttonpress_tsi __P((structkey2rc*));
+static void buttonpress_tsi __P((struct key2rc*));
 static void buttonpress_navigator_40 __P((void));
 static void buttonpress_powerbraille_40 __P((void));
 static void buttonpress_powerbraille_80 __P((void));
