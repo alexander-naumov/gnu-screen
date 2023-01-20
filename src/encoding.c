@@ -675,14 +675,14 @@ int c;
       AddUtf8(combchars[c - 0xd800]->c1);
       c = combchars[c - 0xd800]->c2;
     }
+
+  /* replace out of range values with U+FFFD "replacement character" */
+  if (c < 0 || c > 0x10ffff)
+    c = 0xfffd;
+
   if (c >= 0x10000)
     {
-      if (c >= 0x200000)
-	{
-	  AddChar((c & 0x3000000) >> 12 ^ 0xf8);
-	  c = (c & 0xffffff) ^ ((0xf0 ^ 0x80) << 18);
-	}
-      AddChar((c & 0x1fc0000) >> 18 ^ 0xf0);
+      AddChar((c & 0x1c0000) >> 18 ^ 0xf0);
       c = (c & 0x3ffff) ^ ((0xe0 ^ 0x80) << 12);
     }
   if (c >= 0x800)
@@ -719,17 +719,14 @@ char *p;
 int c;
 {
   int l = 1;
+  /* replace out of range values with U+FFFD "replacement character" */
+  if (c < 0 || c > 0x10ffff)
+    c = 0xfffd;
+
   if (c >= 0x10000)
     {
-      if (c >= 0x200000)
-	{
-	  if (p)
-	    *p++ = (c & 0x3000000) >> 12 ^ 0xf8;
-	  l++;
-	  c = (c & 0xffffff) ^ ((0xf0 ^ 0x80) << 18);
-	}
       if (p)
-        *p++ = (c & 0x1fc0000) >> 18 ^ 0xf0;
+        *p++ = (c & 0x1c0000) >> 18 ^ 0xf0;
       l++;
       c = (c & 0x3ffff) ^ ((0xe0 ^ 0x80) << 12);
     }
