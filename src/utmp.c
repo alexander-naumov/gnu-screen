@@ -353,7 +353,7 @@ RemoveLoginSlot()
 	}
       UT_CLOSE;
     }
-  debug1(" slot %d zapped\n", (int)D_loginslot);
+  debug1(" slot %ld zapped\n", (long)D_loginslot);
   if (D_loginslot == (slot_t)0)
     {
       /* couldn't remove slot, do a 'mesg n' at least. */
@@ -381,7 +381,7 @@ RestoreLoginSlot()
   ASSERT(display);
   if (utmpok && D_loginslot != (slot_t)0 && D_loginslot != (slot_t)-1)
     {
-      debug1(" logging you in again (slot %#x)\n", (int)D_loginslot);
+      debug1(" logging you in again (slot %#lx)\n", (long)D_loginslot);
       if (pututslot(D_loginslot, &D_utmp_logintty, D_loginhost, (struct win *)0) == 0)
         Msg(errno,"Could not write %s", UtmpName);
     }
@@ -424,7 +424,7 @@ struct win *wi;
       debug1("SetUtmp failed (tty %s).\n",wi->w_tty);
       return -1;
     }
-  debug2("SetUtmp %d will get slot %d...\n", wi->w_number, (int)slot);
+  debug2("SetUtmp %d will get slot %ld...\n", wi->w_number, (long)slot);
 
   bzero((char *)&u, sizeof(u));
   if ((saved_ut = bcmp((char *) &wi->w_savut, (char *)&u, sizeof(u))))
@@ -505,7 +505,7 @@ struct win *wi;
   slot_t slot;
 
   slot = wi->w_slot;
-  debug1("RemoveUtmp slot=%#x\n", slot);
+  debug1("RemoveUtmp slot=%#lx\n", (long)slot);
   if (!utmpok)
     return -1;
   if (slot == (slot_t)0 || slot == (slot_t)-1)

@@ -1871,7 +1871,7 @@ void Hangup()
 {
   if (display == 0)
     return;
-  debug1("Hangup %x\n", display);
+  debug1("Hangup %lx\n", (long)display);
   if (D_userfd >= 0) {
     close(D_userfd);
     D_userfd = -1;
@@ -2015,7 +2015,7 @@ void Detach(int mode)
   }
 
   pid = D_userpid;
-  debug2("display: %#x displays: %#x\n", (unsigned int)display, (unsigned int)displays);
+  debug2("display: %#lx displays: %#lx\n", (long)display, (long)displays);
   FreeDisplay();
 
   if (displays == 0) /* Flag detached-ness */
@@ -2104,7 +2104,7 @@ DEFINE_VARARGS_FN(Msg)
   char buf[MAXPATHLEN*2];
   PROCESS_MESSAGE(buf);
 
-  debug2("Msg('%s') (%#x);\n", buf, (unsigned int)display);
+  debug2("Msg('%s') (%#lx);\n", buf, (long)display);
 
   if (display && displays)
     MakeStatus(buf);
@@ -2137,7 +2137,7 @@ DEFINE_VARARGS_FN(Panic)
   char buf[MAXPATHLEN*2];
   PROCESS_MESSAGE(buf);
 
-  debug3("Panic('%s'); display=%x displays=%x\n", buf, display, displays);
+  debug3("Panic('%s'); display=%lx displays=%lx\n", buf, (long)display, (long)displays);
   if (displays == 0 && display == 0) {
     printf("%s\r\n", buf);
     if (PanicPid)
@@ -3034,7 +3034,7 @@ char *MakeWinMsgEv(char *str, struct win *win, int esc, int padlen, struct event
     else
       now.tv_sec += tick - (now.tv_sec % tick);
     ev->timeout = now;
-    debug2("NEW timeout %d %d\n", ev->timeout.tv_sec, tick);
+    debug2("NEW timeout %ld %d\n", (long)ev->timeout.tv_sec, tick);
   }
   return winmsg_buf;
 }
@@ -3322,7 +3322,7 @@ static void serv_select_fn(struct event *ev, char *data)
   for (display = displays; display; display = display->d_next) {
     if (D_status == STATUS_ON_WIN || D_cvlist == 0 || D_cvlist->c_next == 0)
       continue;
-    debug1("serv_select_fn: Restore on cv %#x\n", (int)D_forecv);
+    debug1("serv_select_fn: Restore on cv %#lx\n", (long)D_forecv);
     CV_CALL(D_forecv, LayRestore();LaySetCursor());
   }
 }

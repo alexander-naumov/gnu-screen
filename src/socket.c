@@ -1876,7 +1876,7 @@ struct msg *mp;
     {
       char *oldrcname = rc_name;
       rc_name = "-X";
-      debug3("Running command on display %x window %x (%d)\n", display, fore, fore ? fore->w_number : -1);
+      debug3("Running command on display %lx window %lx (%d)\n", (long)display, (long)fore, fore ? fore->w_number : -1);
       flayer = fore ? &fore->w_layer : 0;
       if (fore && fore->w_savelayer && (fore->w_blocked || fore->w_savelayer->l_cvlist == 0))
 	flayer = fore->w_savelayer;

@@ -27,6 +27,7 @@
  */
 
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <signal.h>
 #include <fcntl.h>
 #ifndef sun
@@ -3772,7 +3773,7 @@ struct event *ev;
 char *data;
 {
   display = (struct display *)data;
-  debug1("disp_status_fn for display %x\n", (int)display);
+  debug1("disp_status_fn for display %lx\n", (long)display);
   if (D_status)
     RemoveStatus();
 }

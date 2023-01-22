@@ -770,14 +770,14 @@ int ilen;
 	}
       for (;;)
 	{
-	  debug3("cmp %c %c[%d]\n", ch, *D_seqp, D_seqp - D_kmaps);
+	  debug3("cmp %c %c[%ld]\n", ch, *D_seqp, (long)(D_seqp - D_kmaps));
 	  if (*D_seqp != ch)
 	    {
 	      l = D_seqp[D_seqp[-D_seql-1] + 1];
 	      if (l)
 		{
 		  D_seqp += l * 2 + 4;
-		  debug1("miss %d\n", D_seqp - D_kmaps);
+		  debug1("miss %ld\n", (long)(D_seqp - D_kmaps));
 		  continue;
 		}
 	      debug("complete miss\n");

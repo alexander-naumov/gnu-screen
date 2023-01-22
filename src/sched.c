@@ -139,15 +139,15 @@ sched()
 #ifdef DEBUG
 		debug("waiting for events");
 		if (timeoutev)
-			debug2(" timeout %d secs %d usecs", timeout.tv_sec, timeout.tv_usec);
+			debug2(" timeout %ld secs %ld usecs", (long)timeout.tv_sec, (long)timeout.tv_usec);
 		debug(":\n");
 		for (ev = evs; ev; ev = ev->next)
 			debug3(" - fd %d type %d pri %d\n", ev->fd, ev->type, ev->pri);
 		if (tevs)
 			debug("timed events:\n");
 		for (ev = tevs; ev; ev = ev->next)
-			debug3(" - pri %d sec %d usec %d\n", ev->pri,
-			    ev->timeout.tv_sec, ev->timeout.tv_usec);
+			debug3(" - pri %d sec %ld usec %ld\n", ev->pri,
+				(long)ev->timeout.tv_sec, (long)ev->timeout.tv_usec);
 #endif
 
 		FD_ZERO(&r);
@@ -228,7 +228,7 @@ void
 SetTimeout(struct event *ev, int timo)
 {
 	ASSERT(ev->type == EV_TIMEOUT);
-	debug2("event %x new timeout %d ms\n", ev, timo);
+	debug2("event %lx new timeout %d ms\n", (long)ev, timo);
 	gettimeofday(&ev->timeout, NULL);
 	ev->timeout.tv_sec += timo / 1000;
 	ev->timeout.tv_usec += (timo % 1000) * 1000;
