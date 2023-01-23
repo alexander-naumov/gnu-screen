@@ -1285,11 +1285,16 @@ ReceiveMsg()
           else
             queryflag = -1;
 
-          Kill(m.m.command.apid,
+          if (CheckPid(m.m.command.apid)) {
+            Msg(0, "Query attempt with bad pid(%d)!", m.m.command.apid);
+          }
+          else {
+            Kill(m.m.command.apid,
                (queryflag >= 0)
                    ? SIGCONT
                    : SIG_BYE); /* Send SIG_BYE if an error happened */
-          queryflag = -1;
+            queryflag = -1;
+          }
         }
         break;
       case MSG_COMMAND:
