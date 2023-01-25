@@ -1,5 +1,6 @@
 [![License](https://img.shields.io/github/license/alexander-naumov/screen)](https://github.com/alexander-naumov/screen/COPYING)
 [![Buid Status](https://app.travis-ci.com/alexander-naumov/screen.svg?branch=main&status=started)](https://app.travis-ci.com/github/alexander-naumov/screen)
+[![#screen on libera.chat](https://img.shields.io/badge/IRC-%23screen-blue)](https://kiwiirc.com/nextclient/irc.libera.chat/#screen)
 
 GNU Screen - screen manager with VT100/ANSI terminal emulation
 
