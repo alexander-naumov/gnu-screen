@@ -57,6 +57,8 @@ register const char *str;
 {
   register char *cp;
 
+  if(str == NULL)
+    Panic(0, "SaveStr() received NULL - possibly failed crypt()");
   if ((cp = malloc(strlen(str) + 1)) == NULL)
     Panic(0, "%s", strnomem);
   else
