@@ -35,3 +35,32 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/src
       run: make clean
+
+  macos:
+    strategy:
+      matrix:
+        os: [ macos-latest ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: autogen
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: ./autogen.sh
+
+    - name: configure
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: ./configure
+
+    - name: make
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: make
+
+    - name: make clean
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: make clean
