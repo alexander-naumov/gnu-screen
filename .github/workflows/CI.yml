@@ -57,7 +57,7 @@ jobs:
         ./configure --disable-pam
         gmake
 
-    - test:
+    - name: Test
       run: |
         ./screen -v
         ./screen -help
