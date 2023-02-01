@@ -36,6 +36,7 @@ jobs:
       working-directory: ${{github.workspace}}/src
       run: make clean
 
+
   openbsd:
     runs-on: macos-12
     steps:
@@ -47,7 +48,7 @@ jobs:
     - name: Install Dependencies
       run: pkg_add gmake git automake-1.15.1
 
-    - name: Build
+    - name: Build and Test
       run: |
         git clone https://github.com/alexander-naumov/screen.git
         cd screen/src
@@ -56,11 +57,9 @@ jobs:
         ./autogen.sh
         ./configure --disable-pam
         gmake
-
-    - name: Test
-      run: |
         ./screen -v
         ./screen -help
+
 
   macos:
     strategy:
