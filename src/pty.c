@@ -32,7 +32,7 @@
 #include <signal.h>
 
 #if defined(__OpenBSD__)
-#include <utils.h>  /* for openpty() */
+#include <util.h>  /* for openpty() */
 #endif
 
 #include "config.h"
