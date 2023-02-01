@@ -7,19 +7,33 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  ubuntu:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, ubuntu-20.04 ]
+    runs-on: ${{ matrix.os }}
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: cd src/
-      run: cd src
+
     - name: autogen
+      shell: bash
+      working-directory: ${{github.workspace}}/src
       run: ./autogen.sh
+
     - name: configure
+      shell: bash
+      working-directory: ${{github.workspace}}/src
       run: ./configure
+
     - name: make
+      shell: bash
+      working-directory: ${{github.workspace}}/src
       run: make
+
     - name: make clean
+      shell: bash
+      working-directory: ${{github.workspace}}/src
       run: make clean
