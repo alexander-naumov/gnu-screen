@@ -29,10 +29,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        base_image: ${{ matrix.base_image }}
-        cpu: ${{ matrix.cpu }}
-        cpu_info: ${{ matrix.cpu_info }}
 
     - name: autogen
       shell: bash
