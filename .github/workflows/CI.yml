@@ -8,7 +8,7 @@ on:
 
 jobs:
   ubuntu:
-    runs-on: ubuntu-latest
+    runs-on: [ ubuntu-latest, ubuntu-20.04 ]
     strategy:
       fail-fast: false
       matrix:
@@ -51,11 +51,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        image_additional_mb: 1024
-        base_image: ${{ matrix.base_image }}
-        cpu: ${{ matrix.cpu }}
-
+#      with:
+#        image_additional_mb: 1024
+#        base_image: ${{ matrix.base_image }}
+#        cpu: ${{ matrix.cpu }}
     - name: autogen
       shell: bash
       working-directory: ${{github.workspace}}/src
