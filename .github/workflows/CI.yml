@@ -107,9 +107,6 @@ jobs:
      with:
        operating-system: netbsd-latest
 
-   - name: Install Dependencies
-     run: pkgsrc make git automake-1.15.1
-
    - name: Build and Test
      run: |
         git clone https://github.com/alexander-naumov/screen.git
