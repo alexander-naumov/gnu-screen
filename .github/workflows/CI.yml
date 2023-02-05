@@ -108,7 +108,7 @@ jobs:
        operating-system: netbsd-latest
 
    - name: Install Dependencies
-     run: pkg_add make git automake-1.15.1
+     run: pkgsrc make git automake-1.15.1
 
    - name: Build and Test
      run: |
