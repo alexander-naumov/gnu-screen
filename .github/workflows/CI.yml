@@ -99,6 +99,26 @@ jobs:
         ./screen -v
         ./screen -help
 
+  netbsd:
+   run-on: macos-12
+   steps:
+   - name: Bootstrap NetBSD-latest
+     uses: mario-campos/emulate@v1
+     with:
+       operating-system: netbsd-latest
+
+   - name: Install Dependencies
+     run: pkg_add make git automake-1.15.1
+
+   - name: Build and Test
+     run: |
+        git clone https://github.com/alexander-naumov/screen.git
+        cd screen/src
+        ./autogen.sh
+        ./configure
+        make
+        ./screen -v
+        ./screen -help
 
   macos:
     strategy:
