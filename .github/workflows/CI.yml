@@ -113,7 +113,7 @@ jobs:
         cd screen/src
         ./autogen.sh
         ./configure
-        gmake
+        make
         ./screen -v
         ./screen -help
 
