@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [zero_raspbian, zero_raspios, zero_dietpi, zero2_raspios, zero2_dietpi, zero2_64_raspios, zero2_64_dietpi]
+        target: [zero_raspbian, zero_raspios, zero_dietpi, zero2_raspios, zero2_dietpi, zero2_64_raspios, zero2_64_dietpi, fedora_x86_64]
         include:
         - target: zero_raspbian
           cpu: arm1176
@@ -48,6 +48,9 @@ jobs:
           cpu: cortex-a53
           cpu_info: cpuinfo/raspberrypi_zero2_w_arm64
           base_image: dietpi:rpi_armv8_bullseye
+
+        - target: fedora_x86_64
+          distro: fedora_latest
 
     steps:
     - uses: actions/checkout@v3
