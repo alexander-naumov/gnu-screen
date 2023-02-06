@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build_job:
+  linux:
     # The host should always be linux
     runs-on: ubuntu-22.04
     name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
@@ -59,7 +59,6 @@ jobs:
             ./screen -v
             ./screen --help
 
-jobs:
   ubuntu:
     runs-on: ubuntu-latest
     strategy:
