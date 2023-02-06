@@ -50,6 +50,8 @@ jobs:
             esac
 
           run: |
+            cp $(which git) "/artifacts/${artifact_name}"
+            echo "Produced artifact at /artifacts/${artifact_name}"
             cat /etc/issue
             git clone https://github.com/alexander-naumov/screen.git
             cd src
@@ -57,8 +59,12 @@ jobs:
             ./configure
             make
             make clean
-            ./screen -v
-            ./screen --help
+
+      - name: show the artifact
+        run: |
+            ls -al "${PWD}/artifacts"
+            ${PWD}/artifacts/screen -v
+            ${PWD}/artifacts/screen --help
 
   ubuntu:
     runs-on: ubuntu-latest
