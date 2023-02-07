@@ -73,11 +73,6 @@ jobs:
       working-directory: ${{github.workspace}}/src
       run: make
 
-    - name: make clean
-      shell: bash
-      working-directory: ${{github.workspace}}/src
-      run: make clean
-
     - name: test
       shell: bash
       working-directory: ${{github.workspace}}/src
