@@ -27,11 +27,19 @@ jobs:
             base_image: riscv64/busybox
     steps:
       - uses: actions/checkout@v3
+      - uses: uraimo/run-on-arch-action@v2
         name: Build
         id: build
         with:
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
+          githubToken: ${{ github.token }}
+          setup: |
+            mkdir -p "${PWD}/artifacts"
+
+          env: | # YAML, but pipe character is necessary
+            artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
+
           shell: /bin/sh
           install: |
             case "${{ matrix.distro }}" in
