@@ -7,78 +7,12 @@ on:
     branches: [ "main" ]
 
 jobs:
-  linux:
-    # The host should always be linux
-    runs-on: ubuntu-22.04
-    name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
-
-    # Run steps on a matrix of 4 arch/distro combinations
-    strategy:
-      matrix:
-        include:
-          - arch: aarch64
-            distro: ubuntu18.04
-          - arch: ppc64le
-            distro: alpine_latest
-          - arch: s390x
-            distro: fedora_latest
-          - arch: none
-            distro: none
-            base_image: riscv64/busybox
-    steps:
-      - uses: actions/checkout@v3
-        name: Build
-        id: build
-        with:
-          arch: ${{ matrix.arch }}
-          distro: ${{ matrix.distro }}
-          githubToken: ${{ github.token }}
-          setup: |
-            mkdir -p "${PWD}/artifacts"
-
-          env: | # YAML, but pipe character is necessary
-            artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
-
-          shell: /bin/sh
-          install: |
-            case "${{ matrix.distro }}" in
-              ubuntu*|jessie|stretch|buster|bullseye)
-                apt-get update -q -y
-                apt-get install -q -y git
-                ;;
-              fedora*)
-                dnf -y update
-                dnf -y install git which
-                ;;
-              alpine*)
-                apk update
-                apk add git
-                ;;
-            esac
-
-          run: |
-            cp $(which git) "/artifacts/${artifact_name}"
-            echo "Produced artifact at /artifacts/${artifact_name}"
-            cat /etc/issue
-            git clone https://github.com/alexander-naumov/screen.git
-            cd src
-            ./autogen.sh
-            ./configure
-            make
-            make clean
-
-      - name: show the artifact
-        run: |
-            ls -al "${PWD}/artifacts"
-            ${PWD}/artifacts/screen -v
-            ${PWD}/artifacts/screen --help
-
   ubuntu:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        target: [zero_raspbian, zero_raspios, zero_dietpi, zero2_raspios, zero2_dietpi, zero2_64_raspios, zero2_64_dietpi, fedora_x86_64]
+        target: [zero_raspbian, zero_raspios, zero_dietpi, zero2_raspios, zero2_dietpi, zero2_64_raspios, zero2_64_dietpi]
         include:
         - target: zero_raspbian
           cpu: arm1176
@@ -115,15 +49,14 @@ jobs:
           cpu_info: cpuinfo/raspberrypi_zero2_w_arm64
           base_image: dietpi:rpi_armv8_bullseye
 
-        - target: fedora_x86_64
-          distro: fedora_latest
-
     steps:
     - uses: actions/checkout@v3
 
     - name: uname
       shell: bash
-      run: cat /etc/issue
+      run: |
+         cat /etc/issue
+         uname -a
 
     - name: autogen
       shell: bash
@@ -133,7 +66,7 @@ jobs:
     - name: configure
       shell: bash
       working-directory: ${{github.workspace}}/src
-      run: ./configure
+      run: ./configure CFLAGS=-Wall
 
     - name: make
       shell: bash
@@ -144,6 +77,48 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/src
       run: make clean
+
+    - name: test
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: |
+        ./screen -v
+        ./screen -h
+        ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
+        ./screen -ls; true
+        ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
+        ./screen -ls
+        ./screen -S shortname -X sessionname; true
+
+    - name: debug configure
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: ./configure CFLAGS="-Wall -DDEBUG"
+
+    - name: debug make
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: make
+
+    - name: debug test
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: |
+        ./screen -v
+        ./screen -h
+        ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
+        ./screen -ls; true
+        ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
+        ./screen -ls
+        ./screen -S shortname -X sessionname; true
+        ./screen -ls; true
+        ./screen -S shortname -X sessionname testtest
+        ./screen -r; true
+        ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true
+        ./screen -ls; true
+        ls -la ${{github.workspace}}/tmp/debug/
+        cat ${{github.workspace}}/tmp/debug/SCREEN*
+        man ./doc/screen.1
 
 
   openbsd:
@@ -164,7 +139,7 @@ jobs:
         export AUTOCONF_VERSION=2.69
         export AUTOMAKE_VERSION=1.15
         ./autogen.sh
-        ./configure --disable-pam
+        ./configure --disable-pam CFLAGS=-Wall
         gmake
         ./screen -v
         ./screen -help
