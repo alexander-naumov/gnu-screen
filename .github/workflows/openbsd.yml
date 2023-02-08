@@ -18,7 +18,7 @@ jobs:
     - name: Install Dependencies
       run: pkg_add gmake git automake-1.15.1
 
-    - name: Build and Test
+    - name: Build
       run: |
         git clone https://github.com/alexander-naumov/screen.git
         cd screen/src
@@ -27,6 +27,9 @@ jobs:
         ./autogen.sh
         ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
         gmake
+
+    - name: Test
+      run: |
         ./screen -v
         ./screen -help
 
