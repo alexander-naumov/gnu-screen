@@ -1,0 +1,32 @@
+name: OpenBSD build-test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  openbsd:
+    runs-on: macos-12
+    steps:
+    - name: Bootstrap OpenBSD-latest
+      uses: mario-campos/emulate@v1
+      with:
+        operating-system: openbsd-latest
+
+    - name: Install Dependencies
+      run: pkg_add gmake git automake-1.15.1
+
+    - name: Build and Test
+      run: |
+        git clone https://github.com/alexander-naumov/screen.git
+        cd screen/src
+        export AUTOCONF_VERSION=2.69
+        export AUTOMAKE_VERSION=1.15
+        ./autogen.sh
+        ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+        gmake
+        ./screen -v
+        ./screen -help
+
