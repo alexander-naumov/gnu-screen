@@ -1,4 +1,4 @@
-name: OpenBSD build-test
+name: OpenBSD
 
 on:
   push:
