@@ -30,6 +30,8 @@ jobs:
 
     - name: Test
       run: |
+        cd screen/src
+        ls -la
         ./screen -v
         ./screen -help
 
