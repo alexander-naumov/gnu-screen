@@ -77,7 +77,7 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/src
       run: |
- ^       ./screen -v
+        ./screen -v
         ./screen -h
         ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
         ./screen -ls; true
