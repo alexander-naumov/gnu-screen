@@ -25,13 +25,18 @@ jobs:
         export AUTOCONF_VERSION=2.69
         export AUTOMAKE_VERSION=1.15
         ./autogen.sh
+        echo "./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
         ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+        echo "gmake"
         gmake
 
     - name: Test
       run: |
         cd screen/src
-        ls -la
+        echo "ls"
+        ls
+        echo "screen -v"
         ./screen -v
+        echo "screen --help"
         ./screen -help
 
