@@ -39,9 +39,9 @@ jobs:
         ./screen -v
         echo "> screen --help"
         ./screen -help
-        getty tty
-        echo "> screen -S -d -m bash -c 'ping -c 8 localhost'; true"
-        ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
+        ssh -t localhost
+        echo "> screen -S -d -m ksh -c 'ping -c 8 localhost'; true"
+        ./screen -S -d -m ksh -c 'ping -c 8 localhost'; true
         echo "> screen -ls; true"
         ./screen -ls; true
         echo "> screen -S shortname -d -m bash -c 'ping -c 8 localhost'"
