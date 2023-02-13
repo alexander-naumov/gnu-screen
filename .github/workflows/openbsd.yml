@@ -41,6 +41,7 @@ jobs:
         ./screen -v
         echo "> screen --help"
         ./screen -help
+        script /dev/null
         echo "> screen -S -d -m bash -c 'ping -c 8 localhost'; true"
         ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
         echo "> screen -ls; true"
