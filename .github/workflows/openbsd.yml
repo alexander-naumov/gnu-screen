@@ -35,13 +35,11 @@ jobs:
         cd screen/src
         echo "> pwd"
         pwd
-        echo "> ls"
-        ls
         echo "> screen -v"
         ./screen -v
         echo "> screen --help"
         ./screen -help
-        script /dev/null
+        getty tty
         echo "> screen -S -d -m bash -c 'ping -c 8 localhost'; true"
         ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
         echo "> screen -ls; true"
