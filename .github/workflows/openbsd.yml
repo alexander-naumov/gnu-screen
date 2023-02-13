@@ -25,18 +25,55 @@ jobs:
         export AUTOCONF_VERSION=2.69
         export AUTOMAKE_VERSION=1.15
         ./autogen.sh
-        echo "./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
+        echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
         ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
-        echo "gmake"
+        echo "> gmake"
         gmake
 
     - name: Test
       run: |
         cd screen/src
-        echo "ls"
+        echo "> pwd"
+        pwd
+        echo "> ls"
         ls
-        echo "screen -v"
+        echo "> screen -v"
         ./screen -v
-        echo "screen --help"
+        echo "> screen --help"
         ./screen -help
-
+        echo "> screen -S -d -m bash -c 'ping -c 8 localhost'; true"
+        ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
+        echo "> screen -ls; true"
+        ./screen -ls; true
+        echo "> screen -S shortname -d -m bash -c 'ping -c 8 localhost'"
+        ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
+        echo "> screen -ls"
+        ./screen -ls
+        echo "> screen -S shortname -X sessionname; true"
+        ./screen -S shortname -X sessionname; true
+        echo "> screen -S -d -m bash -c 'ping -c 8 localhost'; true"
+        ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
+        echo "> screen -ls; true"
+        ./screen -ls; true
+        echo "> screen -S shortname -d -m bash -c 'ping -c 8 localhost'"
+        ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
+        echo "> screen -ls"
+        ./screen -ls
+        echo "> screen -S shortname -X sessionname; true"
+        ./screen -S shortname -X sessionname; true
+        echo "> screen -ls; true"
+        ./screen -ls; true
+        echo "> screen -S shortname -X sessionname testtest"
+        ./screen -S shortname -X sessionname testtest
+        echo "> screen -r; true"
+        ./screen -r; true
+        echo "> screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true"
+        ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true
+        echo "> screen -ls; true"
+        ./screen -ls; true
+        echo "> ls -la /tmp/debug/"
+        ls -la /tmp/debug/
+        echo "> cat /tmp/debug/SCREEN*"
+        cat /tmp/debug/SCREEN*
+        echo "> man ./doc/screen.1"
+        man ./doc/screen.1
