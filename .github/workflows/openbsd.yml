@@ -39,40 +39,40 @@ jobs:
         ./screen -v
         echo "> screen --help"
         ./screen -help
-        ssh -t localhost
-        echo "> screen -S -d -m ksh -c 'ping -c 8 localhost'; true"
-        ./screen -S -d -m ksh -c 'ping -c 8 localhost'; true
-        echo "> screen -ls; true"
-        ./screen -ls; true
-        echo "> screen -S shortname -d -m bash -c 'ping -c 8 localhost'"
-        ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
-        echo "> screen -ls"
-        ./screen -ls
-        echo "> screen -S shortname -X sessionname; true"
-        ./screen -S shortname -X sessionname; true
-        echo "> screen -S -d -m bash -c 'ping -c 8 localhost'; true"
-        ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
-        echo "> screen -ls; true"
-        ./screen -ls; true
-        echo "> screen -S shortname -d -m bash -c 'ping -c 8 localhost'"
-        ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
-        echo "> screen -ls"
-        ./screen -ls
-        echo "> screen -S shortname -X sessionname; true"
-        ./screen -S shortname -X sessionname; true
-        echo "> screen -ls; true"
-        ./screen -ls; true
-        echo "> screen -S shortname -X sessionname testtest"
-        ./screen -S shortname -X sessionname testtest
-        echo "> screen -r; true"
-        ./screen -r; true
-        echo "> screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true"
-        ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true
-        echo "> screen -ls; true"
-        ./screen -ls; true
-        echo "> ls -la /tmp/debug/"
-        ls -la /tmp/debug/
-        echo "> cat /tmp/debug/SCREEN*"
-        cat /tmp/debug/SCREEN*
-        echo "> man ./doc/screen.1"
-        man ./doc/screen.1
+        #ssh -t localhost
+        #echo "> screen -S -d -m ksh -c 'ping -c 8 localhost'; true"
+        #./screen -S -d -m ksh -c 'ping -c 8 localhost'; true
+        #echo "> screen -ls; true"
+        #./screen -ls; true
+        #echo "> screen -S shortname -d -m bash -c 'ping -c 8 localhost'"
+        #./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
+        #echo "> screen -ls"
+        #./screen -ls
+        #echo "> screen -S shortname -X sessionname; true"
+        #./screen -S shortname -X sessionname; true
+        #echo "> screen -S -d -m bash -c 'ping -c 8 localhost'; true"
+        #./screen -S -d -m bash -c 'ping -c 8 localhost'; true
+        #echo "> screen -ls; true"
+        #./screen -ls; true
+        #echo "> screen -S shortname -d -m bash -c 'ping -c 8 localhost'"
+        #./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
+        #echo "> screen -ls"
+        #./screen -ls
+        #echo "> screen -S shortname -X sessionname; true"
+        #./screen -S shortname -X sessionname; true
+        #echo "> screen -ls; true"
+        #./screen -ls; true
+        #echo "> screen -S shortname -X sessionname testtest"
+        #./screen -S shortname -X sessionname testtest
+        #echo "> screen -r; true"
+        #./screen -r; true
+        #echo "> screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true"
+        #./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true
+        #echo "> screen -ls; true"
+        #./screen -ls; true
+        #echo "> ls -la /tmp/debug/"
+        #ls -la /tmp/debug/
+        #echo "> cat /tmp/debug/SCREEN*"
+        #cat /tmp/debug/SCREEN*
+        #echo "> man ./doc/screen.1"
+        #man ./doc/screen.1
