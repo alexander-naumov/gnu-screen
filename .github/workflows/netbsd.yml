@@ -24,8 +24,8 @@ jobs:
         ./autogen.sh
         echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
         ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
-        echo "> gmake"
-        gmake
+        echo "> make"
+        make
 
     - name: Test
       run: |
