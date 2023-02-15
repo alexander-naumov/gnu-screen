@@ -1,0 +1,47 @@
+name: macOS
+
+on:
+  push:
+    branches: [ master, ci ]
+  pull_request:
+    branches: [ master ]
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+  CC: clang
+
+  macos:
+    strategy:
+      matrix:
+        os: [ macos-latest ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create Build Environment
+      working-directory: ${{github.workspace}}/src
+      run: ./autogen.sh
+
+    - name: Configure
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: ./configure --disable-pam CFLAGS="-Wall -DDEBUG" 
+
+    - name: Build
+      working-directory: ${{github.workspace}}/src
+      shell: bash
+      run: make
+
+    - name: Test
+      working-directory: ${{github.workspace}}/src
+      shell: bash
+      run: |
+        cd screen/src
+        echo "> pwd"
+        pwd
+        echo "> screen -v"
+        ./screen -v
+        echo "> screen --help"
+        ./screen -help
+
