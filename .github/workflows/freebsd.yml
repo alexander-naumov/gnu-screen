@@ -16,7 +16,7 @@ jobs:
         operating-system: freebsd-latest
 
     - name: Install Dependencies
-      run: pkg install -y gmake makeinfo git autoconf indexinfo automake
+      run: pkg install -y gmake print/texinfo git autoconf indexinfo automake
 
     - name: Build
       run: |
