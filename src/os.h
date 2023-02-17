@@ -250,7 +250,7 @@ extern int errno;
 #endif
 
 #if defined(UTMPOK) || defined(BUGGYGETLOGIN)
-# if defined(SVR4) && !defined(DGUX) && !defined(__hpux) && !defined(linux)
+# if defined(SVR4) && !defined(DGUX) && !defined(__hpux) && !defined(linux) || defined(__FreeBSD_version)
 #  include <utmpx.h>
 #  define UTMPFILE	UTMPX_FILE
 #  define utmp		utmpx
