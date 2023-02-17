@@ -1,0 +1,41 @@
+name: FreeBSD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  freebsd:
+    runs-on: macos-12
+    steps:
+    - name: Bootstrap FreeBSD-latest
+      uses: mario-campos/emulate@v1
+      with:
+        operating-system: freebsd-latest
+
+    - name: Install Dependencies
+      run: pkg install -y make git automake
+
+    - name: Build
+      run: |
+        git clone https://github.com/alexander-naumov/screen.git
+        cd screen/src
+        export AUTOCONF_VERSION=2.69
+        export AUTOMAKE_VERSION=1.15
+        ./autogen.sh
+        echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
+        ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+        echo "> gmake"
+        make
+
+    - name: Test
+      run: |
+        cd screen/src
+        echo "> pwd"
+        pwd
+        echo "> screen -v"
+        ./screen -v
+        echo "> screen --help"
+        ./screen -help
