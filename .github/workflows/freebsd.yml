@@ -16,7 +16,7 @@ jobs:
         operating-system: freebsd-latest
 
     - name: Install Dependencies
-      run: pkg install -y make git automake
+      run: pkg install -y gmake makeinfo git autoconf indexinfo automake
 
     - name: Build
       run: |
@@ -28,7 +28,7 @@ jobs:
         echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
         ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
         echo "> gmake"
-        make
+        gmake
 
     - name: Test
       run: |
