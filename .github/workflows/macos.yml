@@ -22,7 +22,11 @@ jobs:
 
     - name: Create Build Environment
       working-directory: ${{github.workspace}}/src
-      run: ./autogen.sh
+      run: |
+        ls -la
+        pwd
+        cd src
+        ./autogen.sh
 
     - name: Configure
       shell: bash
