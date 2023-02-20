@@ -20,13 +20,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Install dependency
+      working-directory: ${{github.workspace}}/src
+      run: brew install automake make gcc
+
     - name: Create Build Environment
       working-directory: ${{github.workspace}}/src
-      run: |
-        ls -la
-        pwd
-        cd src
-        ./autogen.sh
+      run: ./autogen.sh
 
     - name: Configure
       shell: bash
