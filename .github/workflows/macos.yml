@@ -22,7 +22,7 @@ jobs:
 
     - name: Install dependency
       working-directory: ${{github.workspace}}/src
-      run: brew install automake make gcc ncurses
+      run: brew install automake make gcc ncurses libSystem
 
     - name: Create Build Environment
       working-directory: ${{github.workspace}}/src
