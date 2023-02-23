@@ -22,9 +22,7 @@ jobs:
 
     - name: Install dependency
       working-directory: ${{github.workspace}}/src
-      run: |
-        brew install automake make gcc ncurses
-        xcode-select --install
+      run: brew install automake make gcc ncurses libevent
 
     - name: Create Build Environment
       working-directory: ${{github.workspace}}/src
