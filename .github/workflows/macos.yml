@@ -8,7 +8,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-  CC: clang
+  CC: gcc
 
 jobs:
   macos:
@@ -31,10 +31,7 @@ jobs:
     - name: Configure
       shell: bash
       working-directory: ${{github.workspace}}/src
-      run: |
-        export C_INCLUDE_PATH=/usr/include
-        export LIBRARY_PATH=/usr/lib 
-        ./configure --disable-pam CFLAGS="-Wall -DDEBUG" CPPFLAGS="-I/usr/include" LDFLAGS="-L/usr/lib"
+      run: ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
 
     - name: Build
       working-directory: ${{github.workspace}}/src
