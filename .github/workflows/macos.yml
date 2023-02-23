@@ -31,7 +31,7 @@ jobs:
     - name: Configure
       shell: bash
       working-directory: ${{github.workspace}}/src
-      run: ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+      run: ./configure --disable-pam CFLAGS="-Wall -DDEBUG -Wno-implicit-function-declaration"
 
     - name: Build
       working-directory: ${{github.workspace}}/src
