@@ -5,6 +5,7 @@
 [![Buid Status](https://app.travis-ci.com/alexander-naumov/screen.svg?branch=main&status=started)](https://app.travis-ci.com/github/alexander-naumov/screen)
 [![Ubuntu](https://github.com/alexander-naumov/screen/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/alexander-naumov/screen/actions/workflows/ubuntu.yml)
 [![OpenBSD](https://github.com/alexander-naumov/screen/actions/workflows/openbsd.yml/badge.svg)](https://github.com/alexander-naumov/screen/actions/workflows/openbsd.yml)
+[![macOS](https://github.com/alexander-naumov/screen/actions/workflows/macos.yml/badge.svg)](https://github.com/alexander-naumov/screen/actions/workflows/macos.yml)
 
 Screen is a full-screen window manager that multiplexes a physical
 terminal between several processes (typically interactive shells).
