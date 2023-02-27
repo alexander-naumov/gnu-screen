@@ -15,7 +15,7 @@ compiler:
 script:
   - cd src
   - ./autogen.sh
-  - ./configure CFLAGS=-Wall
+  - ./configure CFLAGS="-Wall -Wno-implicit-function-declaration"
   - make
   - ./screen -v
   - ./screen -h
@@ -25,7 +25,7 @@ script:
   - ./screen -ls
   - ./screen -S shortname -X sessionname; true
   - make clean
-  - ./configure CFLAGS="-Wall -DDEBUG"
+  - ./configure CFLAGS="-Wall -DDEBUG -Wno-implicit-function-declaration"
   - make
   - ./screen -v
   - ./screen -h
