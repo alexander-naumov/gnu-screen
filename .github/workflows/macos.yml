@@ -2,12 +2,11 @@ name: macOS
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, macos ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, macos ]
+
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
   CC: clang
 
 jobs:
@@ -42,7 +41,6 @@ jobs:
       working-directory: ${{github.workspace}}/src
       shell: bash
       run: |
-        #cd screen/src
         echo "> pwd"
         pwd
         echo "> screen -v"
