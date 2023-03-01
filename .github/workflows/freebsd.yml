@@ -2,9 +2,9 @@ name: FreeBSD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main", "freebsd" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "main", "freebsd" ]
 
 jobs:
   freebsd:
@@ -25,6 +25,13 @@ jobs:
         export AUTOCONF_VERSION=2.69
         export AUTOMAKE_VERSION=1.15
         ./autogen.sh
+        echo "> ./configure --disable-pam CFLAGS='-Wall'"
+        ./configure --disable-pam CFLAGS="-Wall"
+        echo "> gmake"
+        gmake
+
+    - name: DEBUG build
+      run: |
         echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
         ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
         echo "> gmake"
