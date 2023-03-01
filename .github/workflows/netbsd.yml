@@ -2,12 +2,12 @@ name: NetBSD
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "netbsd" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "netbsd" ]
 
 jobs:
-  openbsd:
+  netbsd:
     runs-on: macos-12
     steps:
     - name: Bootstrap NetBSD-latest
