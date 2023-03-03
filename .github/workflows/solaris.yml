@@ -1,0 +1,32 @@
+name: Solaris
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  solaris:
+    runs-on: macos-12
+    steps:
+    - name: Bootstrap Solaris
+      uses: actions/checkout@v3
+
+    - name: Install Dependencies
+      uses: vmactions/solaris-vm@v0
+      with:
+        prepare: |
+          pkgutil -y -i git gcc automake
+
+    - name: Build
+      run: |
+          uname -a
+          cat /etc/release
+          git clone https://github.com/alexander-naumov/screen.git
+          cd screen/src
+          ./autogen.sh
+          echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
+          ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+          make
+          echo "OK"
