@@ -23,18 +23,21 @@ jobs:
         uname -a
         git clone https://github.com/alexander-naumov/screen.git
         cd screen/src
-        export AUTOCONF_VERSION=2.69
-        export AUTOMAKE_VERSION=1.15
+        #export AUTOCONF_VERSION=2.69
+        #export AUTOMAKE_VERSION=1.15
+        echo "> ./autogen.sh"
         ./autogen.sh
-        echo "> ./configure --disable-pam CFLAGS='-Wall -Wno-implicit-function-declaration'"
-        ./configure --disable-pam CFLAGS="-Wall -Wno-implicit-function-declaration
+        echo "> clang -v"
+        clang -v
+        echo "> cc=clang ./configure --disable-pam CFLAGS='-Wall'"
+        cc=clang ./configure --disable-pam CFLAGS='-Wall'
         echo "> gmake"
         gmake
 
     - name: DEBUG build
       run: |
-        echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
-        ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+        echo "> cc=clang ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
+        cc=clang ./configure --disable-pam CFLAGS='-Wall -DDEBUG'
         echo "> gmake"
         gmake
 
