@@ -53,12 +53,12 @@
  * user managing code, this does not really belong into the acl stuff   *
  ************************************************************************/
 
-extern struct   comm comms[];
-extern struct   win *windows, **wtab;
-extern char     NullStr[];
-extern char     SockPath[];
-extern struct   display *display, *displays;
-struct acluser *users;
+extern struct comm	comms[];
+extern struct win	*windows, **wtab;
+extern char		NullStr[];
+extern char		SockPath[];
+extern struct display	*display, *displays;
+struct acluser		*users;
 
 #ifdef MULTIUSER
 int maxusercount = 0;	/* used in process.c: RC_MONITOR, RC_SILENCE */
@@ -107,7 +107,7 @@ GrowBitfield(AclBits *bfp, int len, int delta, int defaultbit)
 		return -1;
 	for (i = 0; i < (len + delta); i++) {
 		if (((i <  len) && (ACLBIT(i) & ACLBYTE(o, i))) || ((i >= len) && (defaultbit)))
-	ACLBYTE(n, i) |= ACLBIT(i);
+			ACLBYTE(n, i) |= ACLBIT(i);
 	}
 	if (len)
 		free((char *)o);
@@ -193,8 +193,7 @@ UserAdd(char *name, char *pass, struct acluser **up)
 		struct win *w;
 		struct acluser *u;
 
-		debug2("growing all bitfields %d += %d\n", maxusercount,
-		    USER_CHUNK);
+		debug2("growing all bitfields %d += %d\n", maxusercount, USER_CHUNK);
       /* the bitfields are full, grow a chunk */
       /* first, the used_uid_indicator: */
 		if (GrowBitfield(&userbits, maxusercount, USER_CHUNK, 0)) {
@@ -217,9 +216,7 @@ UserAdd(char *name, char *pass, struct acluser **up)
 			int i;
 
 			for (i = 0; i < ACL_BITS_PER_CMD; i++)
-				if (GrowBitfield(&comms[j].userbits[i],
-				    maxusercount, USER_CHUNK,
-				    default_c_bit[i])) {
+				if (GrowBitfield(&comms[j].userbits[i], maxusercount, USER_CHUNK, default_c_bit[i])) {
 					free((char *)*up);
 					*up = NULL;
 					return -1;
@@ -228,9 +225,7 @@ UserAdd(char *name, char *pass, struct acluser **up)
       /* fourth, default window creation bits per user */
 		for (u = users; u != *up; u = u->u_next) {
 			for (j = 0; j < ACL_BITS_PER_WIN; j++) {
-				if (GrowBitfield(&u->u_umask_w_bits[j],
-				    maxusercount, USER_CHUNK,
-				    default_w_bit[j])) {
+				if (GrowBitfield(&u->u_umask_w_bits[j], maxusercount, USER_CHUNK, default_w_bit[j])) {
 					free((char *)*up);
 					*up = NULL;
 					return -1;
@@ -244,19 +239,15 @@ UserAdd(char *name, char *pass, struct acluser **up)
 		for (w = windows; w; w = w->w_next) {
 	  /* five a: the access control list */
 			for (j = 0; j < ACL_BITS_PER_WIN; j++)
-				if (GrowBitfield(&w->w_userbits[j],
-				    maxusercount, USER_CHUNK,
-				    default_w_bit[j])) {
+				if (GrowBitfield(&w->w_userbits[j], maxusercount, USER_CHUNK, default_w_bit[j])) {
 					free((char *)*up);
 					*up = NULL;
 					return -1;
 				}
 	  /* five b: the activity notify list */
 	  /* five c: the silence notify list */
-			if (GrowBitfield(&w->w_mon_notify, maxusercount,
-			    USER_CHUNK, 0) ||
-			    GrowBitfield(&w->w_lio_notify, maxusercount,
-			    USER_CHUNK, 0)) {
+			if (GrowBitfield(&w->w_mon_notify, maxusercount, USER_CHUNK, 0) ||
+			    GrowBitfield(&w->w_lio_notify, maxusercount, USER_CHUNK, 0)) {
 				free((char *)*up);
 				*up = NULL;
 				return -1;
@@ -287,8 +278,7 @@ UserAdd(char *name, char *pass, struct acluser **up)
    * but allow himself everything on "his" windows.
    */
 	for (j = 0; j < ACL_BITS_PER_WIN; j++) {
-		if (GrowBitfield(&(*up)->u_umask_w_bits[j], 0, maxusercount,
-		    default_w_bit[j])) {
+		if (GrowBitfield(&(*up)->u_umask_w_bits[j], 0, maxusercount, default_w_bit[j])) {
 			free((char *)*up);
 			*up = NULL;
 			return -1;
@@ -379,8 +369,7 @@ UserDel(char *name, struct acluser **up)
 	free((char *)u);
 	if (!users) {
 		debug("Last user deleted. Feierabend.\n");
-		Finit(
-		    0);	/* Destroying whole session. No one could ever attach again. */
+		Finit(0);	/* Destroying whole session. No one could ever attach again. */
 	}
 	return 0;
 }
@@ -394,8 +383,8 @@ UserDel(char *name, struct acluser **up)
 int
 UserFreeCopyBuffer(struct acluser *u)
 {
-	struct win *w;
-	struct paster *pa;
+	struct win	*w;
+	struct paster	*pa;
 
 	if (!u->u_plop.buf)
 		return 1;
@@ -454,8 +443,8 @@ PasswordMatches(const char *pw, const char *password)
 int
 AclLinkUser(char *from, char *to)
 {
-	struct acluser **u1, **u2;
-	struct aclusergroup **g;
+	struct acluser		**u1, **u2;
+	struct aclusergroup	**g;
 
 	if (!*(u1 = FindUserPtr(from)) && UserAdd(from, NULL, u1))
 		return -1;
@@ -469,6 +458,7 @@ AclLinkUser(char *from, char *to)
 
 	if (!(*g = (struct aclusergroup *)malloc(sizeof(struct aclusergroup))))
 		return -1;			/* Could not alloc link. Poor screen */
+
 	(*g)->u = (*u2);
 	(*g)->next = NULL;
 	return 0;
@@ -522,8 +512,7 @@ DoSu(struct acluser **up, char *name, char *pw1, char *pw2)
 		}
 #endif /* SHADOWPW */
 
-		if (pw2 && *pw2 &&
-		    *pw2 != '\377') {	/* provided a system password */
+		if (pw2 && *pw2 && *pw2 != '\377') {	/* provided a system password */
 			if (!PasswordMatches(pw2, pass)) {
 				debug("System password mismatch\n");
 				sorry++;
@@ -532,8 +521,7 @@ DoSu(struct acluser **up, char *name, char *pw1, char *pw2)
 			if (*pass)				/* but need one */
 				sorry++;
 #endif /* CHECKLOGIN */
-		if (pw1 && *pw1 &&
-		    *pw1 != '\377') {	/* provided a screen password */
+		if (pw1 && *pw1 && *pw1 != '\377') {	/* provided a screen password */
 			if (!PasswordMatches(pw1, u->u_password)) {
 				debug("screen password mismatch\n");
 				sorry++;
@@ -546,13 +534,14 @@ DoSu(struct acluser **up, char *name, char *pw1, char *pw2)
 	debug2("syslog(LOG_NOTICE, \"screen %s: \"su %s\" ", SockPath, name);
 	debug2("%s for \"%s\"\n", sorry ? "failed" : "succeeded", (*up)->u_name);
 #ifndef NOSYSLOG
+
 # ifdef BSD_42
 	openlog("screen", LOG_PID);
 # else
 	openlog("screen", LOG_PID, LOG_AUTH);
 # endif /* BSD_42 */
-	syslog(LOG_NOTICE, "%s: \"su %s\" %s for \"%s\"", SockPath, name,
-	    sorry ? "failed" : "succeeded", (*up)->u_name);
+
+	syslog(LOG_NOTICE, "%s: \"su %s\" %s for \"%s\"", SockPath, name, sorry ? "failed" : "succeeded", (*up)->u_name);
 	closelog();
 #else
 	debug("NOT LOGGED.\n");
@@ -578,8 +567,7 @@ NewWindowAcl(struct win *w, struct acluser *u)
 {
 	int i, j;
 
-	debug2("NewWindowAcl %s's umask_w_bits for window %d\n",
-	    u ? u->u_name : "everybody", w->w_number);
+	debug2("NewWindowAcl %s's umask_w_bits for window %d\n", u ? u->u_name : "everybody", w->w_number);
 
   /* keep these in sync with UserAdd part five. */
 	if (GrowBitfield(&w->w_mon_notify, 0, maxusercount, 0) ||
@@ -595,8 +583,7 @@ NewWindowAcl(struct win *w, struct acluser *u)
 			return -1;
 		}
 		for (i = 0; i < maxusercount; i++)
-			if (u ? (ACLBIT(i) & ACLBYTE(u->u_umask_w_bits[j], i)) :
-			    default_w_bit[j])
+			if (u ? (ACLBIT(i) & ACLBYTE(u->u_umask_w_bits[j], i)) : default_w_bit[j])
 				ACLBYTE(w->w_userbits[j], i) |= ACLBIT(i);
 	}
 	return 0;
@@ -713,8 +700,7 @@ AclSetPermWin(struct acluser *uu, struct acluser *u, char *mode, struct win *win
 				    u->u_id);
 			if (!uu && (win->w_wlockuser == u) && neg &&
 			    (bit == ACL_WRITE)) {
-				debug2("%s lost writelock on win %d\n",
-				    u->u_name, win->w_number);
+				debug2("%s lost writelock on win %d\n", u->u_name, win->w_number);
 				win->w_wlockuser = NULL;
 				if (win->w_wlock == WLOCK_ON)
 					win->w_wlock = WLOCK_AUTO;
