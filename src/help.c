@@ -264,7 +264,7 @@ static void HelpAbort() {
 static int helppage() {
   struct helpdata *helpdata;
   int col, crow, n, key, x;
-  char buf[MAXKLEN], Esc_buf[5], cbuf[256];
+  char buf[MAXKLEN], Esc_buf[6], cbuf[MAXKLEN + 50];
   struct action *ktabp;
 
   helpdata = (struct helpdata *)flayer->l_data;
