@@ -1212,7 +1212,7 @@ int main(int ac, char** av)
         Panic(0, "Please specify a parameter.");
       if (strlen(*av) > 80)
         Panic(0, "Parameter of command 'sessionname' is too long.");
-    *--av;
+      --av;
     }
     SET_GUID();
     SendCmdMessage(sty, SockMatch, av, queryflag >= 0);
@@ -2729,12 +2729,11 @@ char *MakeWinMsgEv(char *str, struct win *win, int esc, int padlen, struct event
       case 'W':
       {
         struct win *oldfore = 0;
-        char *ss;
         if (display) {
           oldfore = D_fore;
           D_fore = win;
         }
-        ss = AddWindows(p, l - 1, (*s == 'w' ? 0 : 1) |
+        AddWindows(p, l - 1, (*s == 'w' ? 0 : 1) |
              (longflg ? 0 : 2) | (plusflg ? 4 : 0) |
              (minusflg ? 8 : 0), win ? win->w_number : -1);
         if (display)

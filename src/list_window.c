@@ -671,14 +671,12 @@ struct canvas *cv;
 struct win *p;
 {
   struct ListData *ldata;
-  struct gl_Window_Data *wdata;
 
   if (cv->c_layer->l_layfn != &ListLf)
     return;
   ldata = cv->c_layer->l_data;
   if (ldata->name != ListID)
     return;
-  wdata = ldata->data;
   CV_CALL(cv, WListUpdate(p, ldata));
 }
 
