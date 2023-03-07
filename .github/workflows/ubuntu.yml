@@ -77,51 +77,5 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/src
       run: |
-        ./screen -h
-
-#  netbsd:
-#   runs-on: macos-12
-#   steps:
-#   - name: Bootstrap NetBSD-latest
-#     uses: mario-campos/emulate@v1
-#     with:
-#       operating-system: netbsd-latest
-#
-#   - name: Build and Test
-#     run: |
-#        git clone https://github.com/alexander-naumov/screen.git
-#        cd screen/src
-#        ./autogen.sh
-#        ./configure
-#        make
-#        ./screen -v
-#        ./screen -help
-#
-#  macos:
-#    strategy:
-#      matrix:
-#        os: [ macos-latest ]
-#    runs-on: ${{ matrix.os }}
-#
-#    steps:
-#    - uses: actions/checkout@v3
-#
-#    - name: autogen
-#      shell: bash
-#      working-directory: ${{github.workspace}}/src
-#      run: ./autogen.sh
-#
-#    - name: configure
-#      shell: bash
-#      working-directory: ${{github.workspace}}/src
-#      run: ./configure
-#
-#    - name: make
-#      shell: bash
-#      working-directory: ${{github.workspace}}/src
-#      run: make
-#
-#    - name: make clean
-#      shell: bash
-#      working-directory: ${{github.workspace}}/src
-#      run: make clean
+        ./screen -v
+        ./screen --help
