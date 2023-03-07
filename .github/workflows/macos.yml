@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - using: 'node16'
+    - uses: actions/checkout@v2
 
     - name: Install dependency
       working-directory: ${{github.workspace}}/src
@@ -34,7 +34,6 @@ jobs:
         uname -a
         clang -v
         cc=clang ./configure --disable-pam CFLAGS='-Wall'
-        # -DDEBUG -Wno-implicit-function-declaration"
 
     - name: Build
       working-directory: ${{github.workspace}}/src
@@ -50,5 +49,31 @@ jobs:
         echo "> screen -v"
         ./screen -v
         echo "> screen --help"
-        ./screen -help
+        ./screen --help
+
+    - name: Clean
+      working-directory: ${{github.workspace}}/src
+      shell: bash
+      run: make clean
+
+    - name: Configure DEBUG
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: |
+        clang -v
+        cc=clang ./configure --disable-pam CFLAGS='-Wall -DDEBUG'
+
+    - name: Build DEBUG
+      working-directory: ${{github.workspace}}/src
+      shell: bash
+      run: make
+
+    - name: Test
+      working-directory: ${{github.workspace}}/src
+      shell: bash
+      run: |
+        echo "> screen -v"
+        ./screen -v
+        echo "> screen --help"
+        ./screen --help
 
