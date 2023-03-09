@@ -4257,25 +4257,45 @@ int key;
 	{
 	  if (blankerprg)
 	    {
-	      char path[MAXPATHLEN];
-	      char *p = path, **pp;
+	      size_t total_len = 0;
+	      //char path[MAXPATHLEN];
+	      char **pp;
 	      for (pp = blankerprg; *pp; pp++)
-		p += snprintf(p, sizeof(path) - (p - path) - 1, "%s ", *pp);
-	      *(p - 1) = '\0';
-	      OutputMsg(0, "blankerprg: %s", path);
+		total_len += strlen(*pp) + 1;
+
+	      char *path = (char *)malloc(total_len);
+	      if (path)
+	      {
+	        char *p = path;
+		for (pp = blankerprg; *pp; pp++)
+		{
+		  p += snprintf(p, total_len - (p - path), "%s ", *pp);
+		}
+	        *(p - 1) = '\0';
+	        OutputMsg(0, "blankerprg: %s", path);
+
+	        free(path);
+	      }
+	      else
+	      {
+	        OutputMsg(1, "Memory allocation failed.");
+	      }
 	    }
-	  else
-	    OutputMsg(0, "No blankerprg set.");
-	  break;
-	}
-      if (blankerprg)
-	{
-	  char **pp;
-	  for (pp = blankerprg; *pp; pp++)
-	    free(*pp);
-	  free(blankerprg);
-	  blankerprg = 0;
-	}
+	    else
+	    {
+	      OutputMsg(0, "No blankerprg set.");
+	    }
+	    break;
+	  }
+
+          if (blankerprg)
+	  {
+	    char **pp;
+	    for (pp = blankerprg; *pp; pp++)
+	      free(*pp);
+	    free(blankerprg);
+	    blankerprg = 0;
+	  }
       if (args[0][0])
 	blankerprg = SaveArgs(args);
       break;
