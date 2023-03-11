@@ -4257,45 +4257,34 @@ int key;
 	{
 	  if (blankerprg)
 	    {
-	      size_t total_len = 0;
-	      //char path[MAXPATHLEN];
-	      char **pp;
-	      for (pp = blankerprg; *pp; pp++)
-		total_len += strlen(*pp) + 1;
+	      char path[MAXPATHLEN];
+	      char *p = path, **pp;
+	      size_t available_space = MAXPATHLEN;
 
-	      char *path = (char *)malloc(total_len);
-	      if (path)
-	      {
-	        char *p = path;
-		for (pp = blankerprg; *pp; pp++)
-		{
-		  p += snprintf(p, total_len - (p - path), "%s ", *pp);
+	      for (pp = blankerprg; *pp && available_space > 1; pp++) {
+		int written = snprintf(p, available_space, "%s ", *pp);
+		if (written >= (int)available_space) {
+			OutputMsg(1, "No more buffer space...");
+			break;
 		}
-	        *(p - 1) = '\0';
-	        OutputMsg(0, "blankerprg: %s", path);
-
-	        free(path);
+		p += written;
+		available_space -= written;
 	      }
-	      else
-	      {
-	        OutputMsg(1, "Memory allocation failed.");
-	      }
+	      *(p - 1) = '\0';
+	      OutputMsg(0, "blankerprg: %s", path);
 	    }
-	    else
-	    {
-	      OutputMsg(0, "No blankerprg set.");
-	    }
-	    break;
-	  }
-
-          if (blankerprg)
-	  {
-	    char **pp;
-	    for (pp = blankerprg; *pp; pp++)
-	      free(*pp);
-	    free(blankerprg);
-	    blankerprg = 0;
-	  }
+	  else
+	    OutputMsg(0, "No blankerprg set.");
+	  break;
+	}
+      if (blankerprg)
+	{
+	  char **pp;
+	  for (pp = blankerprg; *pp; pp++)
+	    free(*pp);
+	  free(blankerprg);
+	  blankerprg = 0;
+	}
       if (args[0][0])
 	blankerprg = SaveArgs(args);
       break;
