@@ -2650,8 +2650,8 @@ the \fBstartup_message\fP command.
 .RS 0
 .PP
 Lock this display.
-Call a screenlock program (/local/bin/lck or /usr/bin/lock or a builtin if no
-other is available). Screen does not accept any command keys until this program
+Call a screenlock program.
+Screen does not accept any command keys until this program
 terminates. Meanwhile processes in the windows may continue, as the windows 
 are in the `detached' state. The screenlock program may be changed through the
 environment variable $LOCKPRG (which must be set in the shell from which 
