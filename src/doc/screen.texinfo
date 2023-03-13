@@ -2759,7 +2759,7 @@ Per default the hardstatus line of new windows is empty.
 Changes the current window's hardstatus line to @var{status}.
 @end deffn
 
-@node Mousetrack, , Hardstatus, Miscellaneous
+@node Mousetrack, , Hardstatus, Window Settings
 @section Mousetrack
 
 @deffn Command mousetrack [ @code{on|off} ]
