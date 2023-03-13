@@ -1179,7 +1179,7 @@ Name this session.  @xref{Session Name}.
 @item setenv [@var{var} [@var{string}]]
 Set an environment variable for new windows.  @xref{Setenv}.
 @item setsid @var{state}
-Controll process group creation for windows.  @xref{Setsid}.
+Control process group creation for windows.  @xref{Setsid}.
 @item shell @var{command}
 Set the default program for new windows.  @xref{Shell}.
 @item shelltitle @var{title}
@@ -3545,7 +3545,7 @@ with @samp{-U}, otherwise @code{off}.
 
 @deffn Command cjkwidth [state]
 (none)@*
-Toggle how ambiguoous characters are treated. If cjkwidth is on screen
+Toggle how ambiguous characters are treated. If cjkwidth is on screen
 interprets them as double (full) width characters. If off then they are seen
 as one cell (half) width characters.
 @end deffn
