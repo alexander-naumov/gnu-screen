@@ -5386,7 +5386,7 @@ sequence @code{ESC [ 5 i}, but pipe the output into @var{cmd}.
 This should normally be a command like @samp{lpr} or
 @samp{cat > /tmp/scrprint}.
 @code{Printcmd} without an argument displays the current setting.
-The ansi sequence @code{ESC \} ends printing and closes the pipe.
+The ansi sequence @code{ESC [ 4 i} ends printing and closes the pipe.
 
 Warning: Be careful with this command! If other user have write
 access to your terminal, they will be able to fire off print commands.
