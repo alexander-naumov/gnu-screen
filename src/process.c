@@ -4259,17 +4259,8 @@ int key;
 	    {
 	      char path[MAXPATHLEN];
 	      char *p = path, **pp;
-	      size_t available_space = MAXPATHLEN;
-
-	      for (pp = blankerprg; *pp && available_space > 1; pp++) {
-		int written = snprintf(p, available_space, "%s ", *pp);
-		if (written >= (int)available_space) {
-			OutputMsg(1, "No more buffer space...");
-			break;
-		}
-		p += written;
-		available_space -= written;
-	      }
+	      for (pp = blankerprg; *pp; pp++)
+		p += snprintf(p, sizeof(path) - (p - path) - 1, "%s ", *pp);
 	      *(p - 1) = '\0';
 	      OutputMsg(0, "blankerprg: %s", path);
 	    }
