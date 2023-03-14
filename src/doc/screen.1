@@ -3257,8 +3257,9 @@ The parameter is optional and if omitted, you get prompted for an identifier.
 When a new window is established, the first available number
 is assigned to this window.
 Thus, the first window can be activated by \*Qselect 0\*U.
-The number of windows is limited at compile-time by the MAXWIN
-configuration parameter (which defaults to 40).
+The number of windows is set by the MAXWIN
+configuration parameter (which defaults to 100),
+but it can be changed by using `maxwin' command.
 There are two special WindowIDs, \*Q\-\*U selects the
 internal blank window and \*Q.\*U selects the current window. The
 latter is useful if used with screen's \*Q\-X\*U option.

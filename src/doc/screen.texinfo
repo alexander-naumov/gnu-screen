@@ -1264,8 +1264,9 @@ Keep dead windows.  @xref{Zombie}.
 This section describes the commands for creating a new window for
 running programs.  When a new window is created, the first available
 number is assigned to it.
-The number of windows is limited at compile-time by the MAXWIN
-configuration parameter (which defaults to 40).
+The number of windows is set by the MAXWIN configuration parameter
+(which defaults to 100), but it can be changed by using @code{maxwin}
+command.
 
 @menu
 * Chdir::                       Change the working directory for new windows.
