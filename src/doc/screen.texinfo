@@ -1365,7 +1365,7 @@ you'd like to run a tty-enhancer which is expecting to execute the
 program specified in @code{$SHELL}.  
 If the command begins with a @samp{-} character, the shell will be started as a
 login-shell. Typical shells do only minimal initialization when not started as a login-shell.
-E.g. Bash will not read your @file{~/.bashrc} unless it is a login-shell.
+E.g. Bash will not read your @file{~/.bash_profile} unless it is a login-shell.
 
 @code{defshell} is currently a synonym to the @code{shell} .screenrc command.
 @end deffn
