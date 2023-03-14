@@ -1,3 +1,16 @@
+Version 4.9.1 (20/08/2023):
+  * Support stop/parity bits on serial port (#23952)
+  * Add needed system headers in checks and return values
+    for implicit function declarations
+  * Fixes:
+    - Avoid zombies after shell exit (#25089)
+    - Missed signal sending permission check on failed
+      query messages (CVE-2023-24626)
+    - manpage fixes
+    - source code fixes during cleanup
+    - UTF-8 encoding can emit invalid UTF-8 sequences
+      for out of range unicode values (#62097)
+
 Version 4.9.0 (30/01/2022):
   * Hardstatus option for used encoding (escape string '%e')
   * OpenBSD uses native openpty() from its utils.h
