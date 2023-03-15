@@ -1,2 +1,3 @@
 #!/bin/sh
-autoreconf -i
+exec autoreconf
+rm -rf autom4te.cache
