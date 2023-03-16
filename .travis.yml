@@ -1,19 +1,38 @@
-language:	c
-os:			linux
-dist:		focal
+dist:     focal
+language: c
+
+os:
+  - linux
+    #  - osx
+    #  - freebsd
+
 arch:
   - amd64
   - arm64
+  - s390x
+  - ppc64le
 
 compiler:
   - gcc
   - clang
 
-#git:
-#  depth: false
+matrix:
+  exclude:
+    - os: osx
+      compiler: gcc
+
+addons:
+  apt:
+    packages:
+      - autoconf
+      - automake
+
+before_script:
+  - export AUTOCONF_VERSION=2.71
 
 script:
   - cd src
+  - autoconf --version
   - ./autogen.sh
   - ./configure CFLAGS='-Wall'
   - make
