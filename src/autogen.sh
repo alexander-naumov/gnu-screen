@@ -1,3 +1,3 @@
 #!/bin/sh
-exec autoreconf
+exec autoreconf --install
 rm -rf autom4te.cache
