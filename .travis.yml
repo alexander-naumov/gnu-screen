@@ -28,14 +28,15 @@ addons:
       - automake
 
 before_script:
-  - sudo apt-get update -q
-  - sudo apt-get install --only-upgrade autoconf
-  - export AUTOCONF_VERSION=2.71
+  - sudo apt-get update
+  - sudo apt-get install autoconf
 
 script:
+  - autoconf --version
+  - export AUTOCONF_VERSION=2.71
+  - autoconf --version
   - arch
   - cd src
-  - autoconf --version
   - ./autogen.sh
   - ./configure CFLAGS='-Wall'
   - make
