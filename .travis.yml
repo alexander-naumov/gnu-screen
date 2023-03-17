@@ -16,10 +16,10 @@ compiler:
   - gcc
   - clang
 
-matrix:
-  exclude:
-    - os: osx
-      compiler: gcc
+#matrix:
+#  exclude:
+#    - os: osx
+#      compiler: gcc
 
 addons:
   apt:
@@ -28,9 +28,12 @@ addons:
       - automake
 
 before_script:
+  - sudo apt-get update -q
+  - sudo apt-get install --only-upgrade autoconf
   - export AUTOCONF_VERSION=2.71
 
 script:
+  - arch
   - cd src
   - autoconf --version
   - ./autogen.sh
