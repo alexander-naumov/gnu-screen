@@ -269,8 +269,9 @@ static void exit_with_usage(char *myname, char *message, char *arg)
 		printf("\nError: ");
 		printf(message, arg);
 		printf("\n");
+		exit(1);
 	}
-	exit(1);
+	exit(0);
 }
 
 int main(int argc, char **argv)
