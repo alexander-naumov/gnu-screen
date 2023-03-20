@@ -62,6 +62,8 @@ jobs:
          gcc -v
          dpkg -l libpam0g-dev
 
+    - name: Install libpam0g-dev
+      run: sudo apt install libpam0g-dev
 
     - name: autogen
       shell: bash
