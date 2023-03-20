@@ -54,11 +54,11 @@ script:
   - ./screen -h
   - ./screen -S -d -m bash -c 'ping -c 8 localhost'; true
   - ./screen -ls; true
-  - ./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
+  - ./screen -S shortnameDEBUG -d -m bash -c 'ping -c 8 localhost'
   - ./screen -ls
-  - ./screen -S shortname -X sessionname; true
+  - ./screen -S shortnameDEBUG -X sessionname; true
   - ./screen -ls; true
-  - ./screen -S shortname -X sessionname testtest
+  - ./screen -S shortnameDEBUG -X sessionname testtest
   - ./screen -r; true
   - ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true
   - ./screen -ls; true
