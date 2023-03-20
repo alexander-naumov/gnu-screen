@@ -57,6 +57,11 @@ jobs:
       run: |
          cat /etc/issue
          uname -a
+         autoconf --version
+         make -v
+         gcc -v
+         dpkg -l libpam0g-dev
+
 
     - name: autogen
       shell: bash
