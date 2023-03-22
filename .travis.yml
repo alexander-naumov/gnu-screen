@@ -62,6 +62,6 @@ script:
   - ./screen -r; true
   - ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true
   - ./screen -ls; true
-  - ls -la /tmp/debug/
-  - cat /tmp/debug/SCREEN*
+  - ls -la /tmp/debug/ ; true
+  - cat /tmp/debug/SCREEN* ; true
   - man ./doc/screen.1
