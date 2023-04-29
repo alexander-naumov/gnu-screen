@@ -2,9 +2,9 @@ name: Ubuntu
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "screen-v4" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "screen-v4" ]
 
 jobs:
   ubuntu:

@@ -2,9 +2,9 @@ name: macOS
 
 on:
   push:
-    branches: [ main, macos ]
+    branches: [ "main", "screen-v4" ]
   pull_request:
-    branches: [ main, macos ]
+    branches: [ "main", "screen-v4" ]
 
 env:
   CC: clang
