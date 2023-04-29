@@ -2451,11 +2451,12 @@ struct mchar *mc;
     }
 
 # define MKillDwLeft(p, ml, x)					\
-  if (dw_left(ml, x, p->w_encoding))				\
-    {								\
+  if (x + 1 < p->w_width) {					\
+    if (dw_left(ml, x, p->w_encoding)) {			\					\
       copy_mchar2mline(&mchar_blank, ml, x);			\
       copy_mchar2mline(&mchar_blank, ml, x + 1);		\
     }
+  }
 #else
 # define MKillDwRight(p, ml, x) ;
 # define MKillDwLeft(p, ml, x) ;
@@ -2565,7 +2566,7 @@ int n, ys, ye, bce;
 	  ml->colorx = null;
 # endif
 #endif
-	  bclear((char *)ml->image, p->w_width + 1);
+	  bclear((char *)ml->image, p->w_width);
 #ifdef COLOR
 	  if (bce)
 	    MBceLine(p, i, 0, p->w_width, bce);
@@ -2613,7 +2614,7 @@ int n, ys, ye, bce;
 	  ml->colorx = null;
 # endif
 #endif
-	  bclear((char *)ml->image, p->w_width + 1);
+	  bclear((char *)ml->image, p->w_width);
 #ifdef COLOR
 	  if (bce)
 	    MBceLine(p, i, 0, p->w_width, bce);
@@ -2781,7 +2782,7 @@ int ins;
 #endif
   MFixLine(p, y, c);
   ml = &p->w_mlines[y];
-  copy_mchar2mline(&mchar_null, ml, p->w_width);
+  copy_mchar2mline(&mchar_null, ml, p->w_width - 1);
   if (y == bot)
     MScrollV(p, 1, top, bot, bce);
   else if (y < p->w_height - 1)
