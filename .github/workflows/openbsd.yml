@@ -6,72 +6,35 @@ jobs:
   openbsd:
     runs-on: macos-12
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Build
-      uses: cross-platform-actions/action@v0.21.1
-      with:
-        operating_system: openbsd
-        version: '7.4'
-        hypervisor: xhyve
+      - name: Build
+        uses: cross-platform-actions/action@v0.21.1
+        with:
+          operating_system: openbsd
+          version: '7.4'
+          hypervisor: xhyve
+          run: |
+            uname -a
+            echo $SHELL
+            echo "> pkg_add gmake git automake-1.15.1"
+            pkg_add gmake git automake-1.15.1
+            git clone https://github.com/alexander-naumov/screen.git
+            cd screen/src
+            export AUTOCONF_VERSION=2.71
+            export AUTOMAKE_VERSION=1.15
+            ./autogen.sh
+            echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
+            ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+            echo "> gmake"
+            gmake
+
+      - name: Test
         run: |
-          uname -a
-          echo $SHELL
-          echo "> pkg_add gmake git automake-1.15.1"
-          pkg_add gmake git automake-1.15.1
-          git clone https://github.com/alexander-naumov/screen.git
           cd screen/src
-          export AUTOCONF_VERSION=2.71
-          export AUTOMAKE_VERSION=1.15
-          ./autogen.sh
-          echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
-          ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
-          echo "> gmake"
-          gmake
-
-    - name: Test
-      run: |
-        cd screen/src
-        echo "> pwd"
-        pwd
-        echo "> screen -v"
-        ./screen -v
-        echo "> screen --help"
-        ./screen -help
-        #ssh -t localhost
-        #echo "> screen -S -d -m ksh -c 'ping -c 8 localhost'; true"
-        #./screen -S -d -m ksh -c 'ping -c 8 localhost'; true
-        #echo "> screen -ls; true"
-        #./screen -ls; true
-        #echo "> screen -S shortname -d -m bash -c 'ping -c 8 localhost'"
-        #./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
-        #echo "> screen -ls"
-        #./screen -ls
-        #echo "> screen -S shortname -X sessionname; true"
-        #./screen -S shortname -X sessionname; true
-        #echo "> screen -S -d -m bash -c 'ping -c 8 localhost'; true"
-        #./screen -S -d -m bash -c 'ping -c 8 localhost'; true
-        #echo "> screen -ls; true"
-        #./screen -ls; true
-        #echo "> screen -S shortname -d -m bash -c 'ping -c 8 localhost'"
-        #./screen -S shortname -d -m bash -c 'ping -c 8 localhost'
-        #echo "> screen -ls"
-        #./screen -ls
-        #echo "> screen -S shortname -X sessionname; true"
-        #./screen -S shortname -X sessionname; true
-        #echo "> screen -ls; true"
-        #./screen -ls; true
-        #echo "> screen -S shortname -X sessionname testtest"
-        #./screen -S shortname -X sessionname testtest
-        #echo "> screen -r; true"
-        #./screen -r; true
-        #echo "> screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true"
-        #./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'; true
-        #echo "> screen -ls; true"
-        #./screen -ls; true
-        #echo "> ls -la /tmp/debug/"
-        #ls -la /tmp/debug/
-        #echo "> cat /tmp/debug/SCREEN*"
-        #cat /tmp/debug/SCREEN*
-        #echo "> man ./doc/screen.1"
-        #man ./doc/screen.1
+          echo "> pwd"
+          pwd
+          echo "> screen -v"
+          ./screen -v
+          echo "> screen --help"
+          ./screen -help
