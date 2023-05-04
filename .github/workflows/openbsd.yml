@@ -11,7 +11,7 @@ jobs:
     - name: Build
       uses: cross-platform-actions/action@v0.21.1
       with:
-        operating-system: openbsd
+        operating_system: openbsd
         version: '7.4'
         hypervisor: xhyve
         run: |
