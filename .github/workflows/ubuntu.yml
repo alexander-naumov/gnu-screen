@@ -2,52 +2,20 @@ name: Ubuntu
 
 on:
   push:
-    branches: [ "main", "screen-v4" ]
+    branches: [ main, screen-v4 ]
   pull_request:
-    branches: [ "main", "screen-v4" ]
+    branches: [ main, screen-v4 ]
+
+
+env:
+  CC: clang
 
 jobs:
   ubuntu:
-    runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        target: [zero_raspbian, zero_raspios, zero_dietpi, zero2_raspios, zero2_dietpi, zero2_64_raspios, zero2_64_dietpi]
-        include:
-        - target: zero_raspbian
-          cpu: arm1176
-          cpu_info: cpuinfo/raspberrypi_zero_w
-          base_image: raspbian_lite:latest
-
-        - target: zero_raspios
-          cpu: arm1176
-          cpu_info: cpuinfo/raspberrypi_zero_w
-          base_image: raspios_lite:latest
-
-        - target: zero_dietpi
-          cpu: arm1176
-          cpu_info: cpuinfo/raspberrypi_zero_w
-          base_image: dietpi:rpi_armv6_bullseye
-
-        - target: zero2_raspios
-          cpu: cortex-a7
-          cpu_info: cpuinfo/raspberrypi_zero2_w
-          base_image: raspios_lite:latest
-
-        - target: zero2_dietpi
-          cpu: cortex-a7
-          cpu_info: cpuinfo/raspberrypi_zero2_w
-          base_image: dietpi:rpi_armv7_bullseye
-
-        - target: zero2_64_raspios
-          cpu: cortex-a53
-          cpu_info: cpuinfo/raspberrypi_zero2_w_arm64
-          base_image: raspios_lite_arm64:latest
-
-        - target: zero2_64_dietpi
-          cpu: cortex-a53
-          cpu_info: cpuinfo/raspberrypi_zero2_w_arm64
-          base_image: dietpi:rpi_armv8_bullseye
+        os: [ ubuntu-latest, ubuntu-22.04 ]
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v3
