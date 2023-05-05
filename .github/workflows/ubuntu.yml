@@ -14,7 +14,6 @@ jobs:
   ubuntu:
     strategy:
       matrix:
-        arch: [ aarch64 ]
         os: [ ubuntu-latest, ubuntu-22.04 ]
     runs-on: ${{ matrix.os }}
 
