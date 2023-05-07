@@ -10,6 +10,8 @@ jobs:
 
       - name: Build
         uses: cross-platform-actions/action@v0.21.1
+        env:
+          LOGNAME=root
         with:
           operating_system: openbsd
           architecture: arm64
