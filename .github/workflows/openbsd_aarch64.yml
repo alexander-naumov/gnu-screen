@@ -10,8 +10,6 @@ jobs:
 
       - name: Build
         uses: cross-platform-actions/action@v0.21.1
-        env:
-          LOGNAME=root
         with:
           operating_system: openbsd
           architecture: arm64
@@ -23,7 +21,7 @@ jobs:
             ls -lah
             whoami
             env | sort
-            doas pkg_add gmake git automake-1.15.1
+            pkg_add gmake git automake-1.15.1
             cd src
             export AUTOCONF_VERSION=2.71
             export AUTOMAKE_VERSION=1.15
