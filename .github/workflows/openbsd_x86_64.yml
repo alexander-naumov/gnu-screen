@@ -21,7 +21,7 @@ jobs:
             ls -lah
             whoami
             env | sort
-            pkg_add gmake git automake-1.15.1
+            sudo kg_add gmake git automake-1.15.1
             cd src
             export AUTOCONF_VERSION=2.71
             export AUTOMAKE_VERSION=1.15
