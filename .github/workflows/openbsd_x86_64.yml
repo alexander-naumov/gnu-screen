@@ -14,6 +14,7 @@ jobs:
           operating_system: openbsd
           version: '7.4'
           hypervisor: xhyve
+          options: --user root
           run: |
             uname -a
             echo $SHELL

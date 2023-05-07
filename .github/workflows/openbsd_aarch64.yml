@@ -14,6 +14,7 @@ jobs:
           operating_system: openbsd
           architecture: arm64
           version: '7.4'
+          options: --user root
           run: |
             uname -a
             echo $SHELL
