@@ -7,13 +7,15 @@ jobs:
     runs-on: macos-12
     steps:
       - uses: actions/checkout@v3
+      - uses: cross-platform-actions/action@v0.21.1
 
-      - name: Build
-        uses: cross-platform-actions/action@v0.21.1
         with:
+          architecture: x86_64
           operating_system: openbsd
           version: '7.4'
           hypervisor: xhyve
+          sync_files: runner-to-vm
+          shell: bash
           run: |
             uname -a
             echo $SHELL
@@ -21,7 +23,7 @@ jobs:
             ls -lah
             whoami
             env | sort
-            sudo pkg_add gmake git automake-1.15.1
+            sudo pkg_add gmake automake
             export AUTOCONF_VERSION=2.71
             export AUTOMAKE_VERSION=1.15
             cd src
