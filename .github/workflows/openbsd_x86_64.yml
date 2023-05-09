@@ -24,8 +24,9 @@ jobs:
             whoami
             env | sort
             sudo pkg_add gmake automake autoconf-2.71
-            #export AUTOCONF_VERSION=2.71
-            #export AUTOMAKE_VERSION=1.15
+            export AUTOCONF_VERSION=2.71
+            export AUTOMAKE_VERSION=1.16
+            ls -la /usr/local/bin/aclocal-*
             cd src
             ls -lah
             ./autogen.sh
