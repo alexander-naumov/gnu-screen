@@ -11,6 +11,7 @@ jobs:
 
         with:
           architecture: x86_64
+          memory: 4G
           operating_system: openbsd
           version: '7.4'
           hypervisor: xhyve
@@ -23,9 +24,9 @@ jobs:
             ls -lah
             whoami
             env | sort
-            sudo pkg_add gmake automake autoconf-2.71
+            sudo pkg_add gmake automake-1.16.5 autoconf-2.71
             export AUTOCONF_VERSION=2.71
-            export AUTOMAKE_VERSION=1.16
+            export AUTOMAKE_VERSION=1.16.5
             ls -la /usr/local/bin/aclocal-*
             cd src
             ls -lah
