@@ -1233,7 +1233,7 @@ static bool CheckPassword(const char *password) {
 		return false;
 	}
 
-#ifdef _PWD_H
+#ifndef _PWD_H
 	passwd = crypt(password, p->pw_passwd);
 	ret    = (strcmp(passwd, p->pw_passwd) == 0);
 #else
