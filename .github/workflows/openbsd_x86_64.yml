@@ -37,10 +37,7 @@ jobs:
 
       - name: Test
         run: |
-          cd screen/src
-          echo "> pwd"
           pwd
-          echo "> screen -v"
+          ls -la screen
           ./screen -v
-          echo "> screen --help"
           ./screen -help
