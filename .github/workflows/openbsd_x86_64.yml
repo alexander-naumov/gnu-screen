@@ -34,12 +34,5 @@ jobs:
             echo $?
             ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
             gmake
-
-      - name: Test
-        run: |
-          pwd
-          ls -lah
-          cd src
-          ls -lah
-          ./screen -v
-          ./screen --help
+            ./screen -v
+            ./screen --help
