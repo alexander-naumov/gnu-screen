@@ -4,7 +4,8 @@
 [![License](https://img.shields.io/github/license/alexander-naumov/gnu-screen)](https://github.com/alexander-naumov/gnu-screen/COPYING)
 [![Buid Status](https://app.travis-ci.com/alexander-naumov/gnu-screen.svg?branch=main&status=started)](https://app.travis-ci.com/github/alexander-naumov/gnu-screen)
 [![Ubuntu](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu.yml)
-[![OpenBSD](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd.yml)
+[![OpenBSD](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_aarch64.yml)
+[![OpenBSD](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_x86_64.yml)
 
 Screen is a full-screen window manager that multiplexes a physical
 terminal between several processes (typically interactive shells).
