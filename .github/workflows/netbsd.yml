@@ -11,7 +11,8 @@ jobs:
     runs-on: macos-12
     steps:
     - name: Bootstrap NetBSD-latest
-      uses: mario-campos/emulate@v1
+      uses: actions/checkout@v4
+      #uses: mario-campos/emulate@v1
       with:
         operating-system: netbsd-latest
 
