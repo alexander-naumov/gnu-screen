@@ -186,6 +186,7 @@ struct Display {
 	Event d_idleev;		/* screen blanker */
 	pid_t   d_blankerpid;
 	Event d_blankerev;
+	Event d_mousetimeoutev;		/* mouse sequence timeout event */
 };
 
 #define DISPLAY(x) display->x
@@ -301,6 +302,7 @@ struct Display {
 #define D_idleev	DISPLAY(d_idleev)
 #define D_blankerev	DISPLAY(d_blankerev)
 #define D_blankerpid	DISPLAY(d_blankerpid)
+#define D_mousetimeoutev	DISPLAY(d_mousetimeoutev)
 
 
 #define GRAIN 4096	/* Allocation grain size for output buffer */

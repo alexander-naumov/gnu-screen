@@ -52,4 +52,6 @@ extern struct action umtab[];
 
 extern struct kmap_ext *kmap_exts;
 
+extern int maptimeout;
+
 #endif /* SCREEN_PROCESS_H */

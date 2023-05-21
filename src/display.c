@@ -71,6 +71,7 @@ static void disp_blocked_fn(Event *, void *);
 static void disp_map_fn(Event *, void *);
 static void disp_idle_fn(Event *, void *);
 static void disp_blanker_fn(Event *, void *);
+static void disp_mousetimeout_fn(Event *, void *);
 static void disp_processinput (Display *, unsigned char *, size_t);
 static void WriteLP(int, int);
 static void INSERTCHAR(uint32_t);
@@ -213,6 +214,9 @@ Display *MakeDisplay(char *uname, char *utty, char *term, int fd, pid_t pid, str
 	D_blankerev.data = (char *)display;
 	D_blankerev.handler = disp_blanker_fn;
 	D_blankerev.fd = -1;
+	D_mousetimeoutev.type = EV_TIMEOUT;
+	D_mousetimeoutev.data = (char *)display;
+	D_mousetimeoutev.handler = disp_mousetimeout_fn;
 	D_OldMode = *Mode;
 	D_status_obuffree = -1;
 	Resize_obuf();		/* Allocate memory for buffer */
@@ -2626,16 +2630,22 @@ static void disp_readev_fn(Event *event, void *data)
 					/* potential escape sequence */
 					mark = bp - 1;
 					D_mouse_parse.state = CSI_ESC_SEEN;
+					SetTimeout(&D_mousetimeoutev, maptimeout);
+					evenq(&D_mousetimeoutev);
 				}
 				break;
 			case CSI_ESC_SEEN:
 				if (c == '[') {
 					/* continue buffering an escape sequence */
 					D_mouse_parse.state = CSI_BEGIN;
+					evdeq(&D_mousetimeoutev);
+					SetTimeout(&D_mousetimeoutev, maptimeout);
+					evenq(&D_mousetimeoutev);
 				} else
 					D_mouse_parse.state = CSI_INACTIVE;
 				break;
 			case CSI_BEGIN:
+				evdeq(&D_mousetimeoutev);
 				if (c == 'M') {
 					/* VT200 mouse sequence */
 					D_mouse_parse.state = CSI_PB;
@@ -2787,6 +2797,34 @@ static void disp_processinput(Display * display, unsigned char *buf, size_t size
 		return;
 	}
 	(*D_processinput) ((char *)buf, size);
+}
+
+static void disp_mousetimeout_fn(Event *event, void *data)
+{
+	unsigned char buf[2] = {'\033', '['};
+	int size = 0;
+
+	(void)event; /* unused */
+
+	display = (Display *)data;
+
+	switch (D_mouse_parse.state) {
+	case CSI_PY:
+	case CSI_PX:
+	case CSI_PB:
+		/* Do not restore */
+		break;
+	case CSI_BEGIN:
+		++size;
+		/* fall through */
+	case CSI_ESC_SEEN:
+		++size;
+		disp_processinput(display, buf, size);
+		break;
+	default:
+		break;
+	};
+	D_mouse_parse.state = CSI_INACTIVE;
 }
 
 static void disp_status_fn(Event *event, void *data)

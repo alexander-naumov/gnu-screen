@@ -145,7 +145,7 @@ struct action dmtab[KMAP_KEYS + KMAP_AKEYS];
 struct action mmtab[KMAP_KEYS + KMAP_AKEYS];
 struct kmap_ext *kmap_exts;
 int kmap_extn;
-static int maptimeout = 300;
+int maptimeout = 300;
 
 #ifndef MAX_DIGRAPH
 #define MAX_DIGRAPH 512
