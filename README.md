@@ -4,8 +4,16 @@
 [![License](https://img.shields.io/github/license/alexander-naumov/gnu-screen)](https://github.com/alexander-naumov/gnu-screen/COPYING)
 [![Buid Status](https://app.travis-ci.com/alexander-naumov/gnu-screen.svg?branch=main&status=started)](https://app.travis-ci.com/github/alexander-naumov/gnu-screen)
 [![Ubuntu](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu.yml)
-[![OpenBSD](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_aarch64.yml)
-[![OpenBSD](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_x86_64.yml)
+
+[![OpenBSD 7.4 x86_64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_x86_64.yml)
+[![OpenBSD 7.4 aarch64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_aarch64.yml)
+
+[![FreeBSD 13.0 x86_64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/freebsd.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/freebsd.yml)
+
+[![NetBSD 9.2 x86_64](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_9_2_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_9_2_x86_64.yml)
+[![NetBSD 9.3 x86_64](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_9_3_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_9_3_x86_64.yml)
+[![NetBSD 10.0 x86_64](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_10_0_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_10_0_x86_64.yml)
+[![NetBSD 10.0 aarch64](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_10_0_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_10_0_aarch64.yml)
 
 Screen is a full-screen window manager that multiplexes a physical
 terminal between several processes (typically interactive shells).
