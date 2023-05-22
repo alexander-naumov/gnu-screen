@@ -1,0 +1,38 @@
+name: OpenBSD 7.5 x86_64
+
+on: [push]
+
+jobs:
+  openbsd:
+    runs-on: macos-12
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cross-platform-actions/action@v0.21.1
+
+        with:
+          architecture: x86_64
+          memory: 4G
+          operating_system: openbsd
+          version: '7.5'
+          hypervisor: xhyve
+          sync_files: runner-to-vm
+          shell: bash
+          run: |
+            uname -a
+            echo $SHELL
+            pwd
+            ls -lah
+            whoami
+            env | sort
+            sudo pkg_add gmake automake-1.16.5 autoconf-2.71
+            export AUTOCONF_VERSION=2.71
+            export AUTOMAKE_VERSION=1.16
+            ls -la /usr/local/bin/aclocal-*
+            cd src
+            ls -lah
+            ./autogen.sh
+            echo $?
+            ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+            gmake
+            ./screen -v
+            ./screen --help

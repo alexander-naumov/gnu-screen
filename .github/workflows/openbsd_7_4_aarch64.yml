@@ -1,0 +1,37 @@
+name: OpenBSD 7.4 aarch64
+
+on: [push]
+
+jobs:
+  openbsd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cross-platform-actions/action@v0.21.1
+
+        with:
+          operating_system: openbsd
+          memory: 4G
+          architecture: arm64
+          version: '7.4'
+          sync_files: runner-to-vm
+          shell: bash
+          run: |
+            uname -a
+            echo $SHELL
+            pwd
+            ls -lah
+            whoami
+            env | sort
+            sudo pkg_add gmake automake-1.16.5 autoconf-2.71
+            export AUTOCONF_VERSION=2.71
+            export AUTOMAKE_VERSION=1.16
+            ls -la /usr/local/bin/aclocal-*
+            cd src
+            ls -lah
+            ./autogen.sh
+            echo $?
+            ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+            gmake
+            ./screen -v
+            ./screen --help

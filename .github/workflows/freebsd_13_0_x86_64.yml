@@ -1,4 +1,4 @@
-name: FreeBSD
+name: FreeBSD 13.0 x86_64
 
 on:
   push:

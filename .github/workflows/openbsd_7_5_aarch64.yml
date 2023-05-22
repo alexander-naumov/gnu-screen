@@ -1,20 +1,19 @@
-name: OpenBSD x86_64
+name: OpenBSD 7.5 aarch64
 
 on: [push]
 
 jobs:
   openbsd:
-    runs-on: macos-12
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: cross-platform-actions/action@v0.21.1
 
         with:
-          architecture: x86_64
-          memory: 4G
           operating_system: openbsd
-          version: '7.4'
-          hypervisor: xhyve
+          memory: 4G
+          architecture: arm64
+          version: '7.5'
           sync_files: runner-to-vm
           shell: bash
           run: |
