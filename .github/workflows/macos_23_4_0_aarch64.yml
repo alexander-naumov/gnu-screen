@@ -1,4 +1,4 @@
-name: macOS
+name: macOS 23.4.0 aarch64
 
 on:
   push:

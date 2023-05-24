@@ -3,6 +3,7 @@
 [![#screen on libera.chat](https://img.shields.io/badge/IRC-%23screen-blue)](https://kiwiirc.com/nextclient/irc.libera.chat/#screen)
 [![License](https://img.shields.io/github/license/alexander-naumov/gnu-screen)](https://github.com/alexander-naumov/gnu-screen/COPYING)
 [![Buid Status](https://app.travis-ci.com/alexander-naumov/gnu-screen.svg?branch=main&status=started)](https://app.travis-ci.com/github/alexander-naumov/gnu-screen)
+
 [![Ubuntu](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu.yml)
 
 [![OpenBSD 7.4 x86_64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_7_4_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_7_4_x86_64.yml)
