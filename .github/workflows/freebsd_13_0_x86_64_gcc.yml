@@ -1,0 +1,52 @@
+name: FreeBSD 13.0 x86_64
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  freebsd:
+    runs-on: macos-12
+    steps:
+    - name: Bootstrap FreeBSD-latest
+      uses: mario-campos/emulate@v1
+      with:
+        operating-system: freebsd-latest
+
+    - name: Install Dependencies
+      run: pkg install -y gmake print/texinfo git gcc autoconf indexinfo automake
+
+    - name: Build
+      run: |
+        uname -a
+        git clone https://github.com/alexander-naumov/gnu-screen.git
+        cd screen/src
+        #export AUTOCONF_VERSION=2.69
+        #export AUTOMAKE_VERSION=1.15
+        echo "> ./autogen.sh"
+        ./autogen.sh
+        echo "> gcc -v"
+        gcc -v
+        echo "> cc=gcc ./configure --disable-pam CFLAGS='-Wall'"
+        cc=gcc ./configure --disable-pam CFLAGS='-Wall'
+        echo "> gmake"
+        gmake
+
+    - name: DEBUG build
+      run: |
+        echo "> cc=gcc ./configure CFLAGS='-Wall -DDEBUG'"
+        cc=gcc ./configure CFLAGS='-Wall -DDEBUG'
+        echo "> gmake"
+        gmake
+
+    - name: Test
+      run: |
+        cd screen/src
+        echo "> pwd"
+        pwd
+        echo "> screen -v"
+        ./screen -v
+        echo "> screen --help"
+        ./screen -help
