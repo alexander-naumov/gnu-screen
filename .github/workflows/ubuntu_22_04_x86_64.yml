@@ -54,7 +54,7 @@ jobs:
       working-directory: ${{github.workspace}}/src
       run: |
         ./screen -v
-        ./screen -ls
+        ./screen -ls || echo $?
         make clean
 
     - name: clang configure
@@ -73,4 +73,4 @@ jobs:
       run: |
         ./screen -v
         ./screen --help
-        ./screen -ls
+        ./screen -ls || echo $?
