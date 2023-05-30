@@ -2,9 +2,9 @@ name: Ubuntu 22.04 x86_64
 
 on:
   push:
-    branches: [ main, screen-v4 ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, screen-v4 ]
+    branches: [ main ]
 
 
 env:
@@ -28,6 +28,7 @@ jobs:
          autoconf --version
          make -v
          gcc -v
+         clang -v
          dpkg -l libpam0g-dev
 
     - name: Install libpam0g-dev
@@ -38,12 +39,30 @@ jobs:
       working-directory: ${{github.workspace}}/src
       run: ./autogen.sh
 
-    - name: configure
+    - name: gcc configure
       shell: bash
       working-directory: ${{github.workspace}}/src
-      run: ./configure CFLAGS="-Wall -DDEBUG"
+      run: cc=gcc ./configure CFLAGS="-Wall -DDEBUG"
 
-    - name: make
+    - name: gcc build
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: make
+
+    - name: test
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: |
+        ./screen -v
+        ./screen -ls
+        make clean
+
+    - name: clang configure
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: cc=clang ./configure CFLAGS="-Wall -DDEBUG"
+
+    - name: clang build
       shell: bash
       working-directory: ${{github.workspace}}/src
       run: make
@@ -54,3 +73,4 @@ jobs:
       run: |
         ./screen -v
         ./screen --help
+        ./screen -ls
