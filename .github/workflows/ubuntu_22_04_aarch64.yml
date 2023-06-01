@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-    build_job:
+  build_job:
     # The host should always be linux
     runs-on: ubuntu-22.04
     name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
