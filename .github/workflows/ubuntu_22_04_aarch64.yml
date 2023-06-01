@@ -6,22 +6,20 @@ on:
   pull_request:
     branches: [ main ]
 
-
-env:
-  CC: clang
-
 jobs:
-  ubuntu:
+    build_job:
+    # The host should always be linux
+    runs-on: ubuntu-22.04
+    name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
+
     strategy:
       matrix:
-        os: [ ubuntu-22.04 ]
-        architecture:
-            - name: arm64
-              qemu: aarch64
-    runs-on: ${{ matrix.os }}
+        include:
+          - arch: aarch64
+            distro: ubuntu22.04
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: uname
       shell: bash
