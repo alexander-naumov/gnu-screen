@@ -20,6 +20,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - uses: uraimo/run-on-arch-action@v2
 
     - name: uname
       shell: bash
