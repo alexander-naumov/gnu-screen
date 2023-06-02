@@ -80,3 +80,58 @@ jobs:
         # ${PWD}/artifacts on the host.
         run: |
           ls -al "${PWD}/artifacts"
+
+      - name: uname
+        shell: bash
+        run: |
+           cat /etc/issue
+           uname -a
+           autoconf --version
+           make -v
+           gcc -v
+           clang -v
+           dpkg -l libpam0g-dev
+
+      - name: Install libpam0g-dev
+        run: sudo apt install libpam0g-dev
+
+      - name: autogen
+        shell: bash
+        working-directory: ${{github.workspace}}/src
+        run: ./autogen.sh
+
+      - name: gcc configure
+        shell: bash
+        working-directory: ${{github.workspace}}/src
+        run: cc=gcc ./configure CFLAGS="-Wall -DDEBUG"
+
+      - name: gcc build
+        shell: bash
+        working-directory: ${{github.workspace}}/src
+        run: make
+
+      - name: test
+        shell: bash
+        working-directory: ${{github.workspace}}/src
+        run: |
+          ./screen -v
+          ./screen -ls || echo $?
+          make clean
+
+      - name: clang configure
+        shell: bash
+        working-directory: ${{github.workspace}}/src
+        run: cc=clang ./configure CFLAGS="-Wall -DDEBUG"
+
+      - name: clang build
+        shell: bash
+        working-directory: ${{github.workspace}}/src
+        run: make
+
+      - name: test
+        shell: bash
+        working-directory: ${{github.workspace}}/src
+        run: |
+          ./screen -v
+          ./screen --help
+          ./screen -ls || echo $?
