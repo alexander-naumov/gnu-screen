@@ -57,6 +57,8 @@ jobs:
           install: |
             case "${{ matrix.distro }}" in
               ubuntu*|jessie|stretch|buster|bullseye)
+                uname -a
+                echo HELLLLLLO
                 apt-get update -q -y
                 apt-get install -q -y git
                 ;;
