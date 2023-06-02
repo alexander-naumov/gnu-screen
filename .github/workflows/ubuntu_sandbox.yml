@@ -22,7 +22,7 @@ jobs:
             distro: none
             base_image: riscv64/busybox
     steps:
-#      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - uses: uraimo/run-on-arch-action@v2.7.2
         name: Build artifact
         id: build
