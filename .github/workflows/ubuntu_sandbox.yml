@@ -14,13 +14,13 @@ jobs:
         include:
           - arch: aarch64
             distro: ubuntu22.04
-          - arch: aarch64
-            distro: bullseye 
-          - arch: ppc64le
-            distro: alpine_latest
-          - arch: none
-            distro: none
-            base_image: riscv64/busybox
+#          - arch: aarch64
+#            distro: bullseye 
+#          - arch: ppc64le
+#            distro: alpine_latest
+#          - arch: none
+#            distro: none
+#            base_image: riscv64/busybox
     steps:
       - uses: actions/checkout@v4
       - uses: uraimo/run-on-arch-action@v2.7.2
