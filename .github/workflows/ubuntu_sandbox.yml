@@ -58,9 +58,13 @@ jobs:
             case "${{ matrix.distro }}" in
               ubuntu*|jessie|stretch|buster|bullseye)
                 uname -a
-                echo HELLLLLLO
+                cat /etc/issue
+                autoconf --version
+                make -v
+                gcc -v
+                clang -v
                 apt-get update -q -y
-                apt-get install -q -y git
+                apt-get install -q -y git libpam0g-dev
                 ;;
               fedora*)
                 dnf -y update
@@ -81,6 +85,7 @@ jobs:
         # Items placed in /artifacts in the container will be in
         # ${PWD}/artifacts on the host.
         run: |
+          uname -a
           ls -al "${PWD}/artifacts"
 
       - name: uname
