@@ -59,12 +59,12 @@ jobs:
               ubuntu*|jessie|stretch|buster|bullseye)
                 uname -a
                 cat /etc/issue
+                apt-get update -q -y
+                apt-get install -q -y git libpam0g-dev autoconf make gcc clang
                 autoconf --version
                 make -v
                 gcc -v
                 clang -v
-                apt-get update -q -y
-                apt-get install -q -y git libpam0g-dev
                 ;;
               fedora*)
                 dnf -y update
