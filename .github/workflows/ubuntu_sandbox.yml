@@ -81,23 +81,9 @@ jobs:
             cp $(which git) "/artifacts/${artifact_name}"
             echo "Produced artifact at /artifacts/${artifact_name}"
 
-        name: Show the artifact
-        id: show
-        with:
-          arch: ${{ matrix.arch }}
-          distro: ${{ matrix.distro }}
-
-          githubToken: ${{ github.token }}
-
-          setup: |
-            mkdir -p "${PWD}/artifacts"
-
-          dockerRunArgs: |
-            --volume "${PWD}/artifacts:/artifacts"
-
+      - name: Build screen
           env: | # YAML, but pipe character is necessary
-            artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
-
+             artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
           shell: /bin/sh
 
         # Items placed in /artifacts in the container will be in
