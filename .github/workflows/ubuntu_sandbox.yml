@@ -82,16 +82,20 @@ jobs:
             echo "Produced artifact at /artifacts/${artifact_name}"
 
       - name: Build screen
-        env: | # YAML, but pipe character is necessary
-             artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
-        shell: /bin/sh
+        with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
 
-        # Items placed in /artifacts in the container will be in
-        # ${PWD}/artifacts on the host.
-        run: |
-          uname -a
-          autoconf --version
-          ls -al "${PWD}/artifacts"
+          env: | # YAML, but pipe character is necessary
+               artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
+          shell: /bin/sh
+
+          # Items placed in /artifacts in the container will be in
+          # ${PWD}/artifacts on the host.
+          run: |
+            uname -a
+            autoconf --version
+            ls -al "${PWD}/artifacts"
 
       - name: uname
         shell: bash
