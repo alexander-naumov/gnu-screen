@@ -65,6 +65,15 @@ jobs:
                 make -v
                 gcc -v
                 clang -v
+                git clone https://github.com/alexander-naumov/gnu-screen.git
+                cd gnu-screen
+                ./autogen.sh
+                cc=gcc ./configure CFLAGS="-Wall -DDEBUG"
+                make
+                ./screen -v
+                ./screen -ls || echo $?
+                make clean
+
                 ;;
               fedora*)
                 dnf -y update
@@ -80,15 +89,6 @@ jobs:
           run: |
             cp $(which git) "/artifacts/${artifact_name}"
             echo "Produced artifact at /artifacts/${artifact_name}"
-
-      - name: Build screen
-        with:
-          arch: ${{ matrix.arch }}
-          distro: ${{ matrix.distro }}
-
-          env: | # YAML, but pipe character is necessary
-               artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
-          shell: /bin/sh
 
           # Items placed in /artifacts in the container will be in
           # ${PWD}/artifacts on the host.
