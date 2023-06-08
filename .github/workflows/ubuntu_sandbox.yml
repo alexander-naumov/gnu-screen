@@ -57,22 +57,90 @@ jobs:
           install: |
             case "${{ matrix.distro }}" in
               ubuntu*|jessie|stretch|buster|bullseye)
+
+                echo "-----------------------------------------------------"
+                echo "uname -a"
                 uname -a
+
+                echo "-----------------------------------------------------"
+                echo "cat /etc/issue"
                 cat /etc/issue
+
+                echo "-----------------------------------------------------"
+                echo "apt-get update -q -y"
                 apt-get update -q -y
+
+                echo "-----------------------------------------------------"
+                echo "apt-get install -q -y git libpam0g-dev autoconf make gcc clang"
                 apt-get install -q -y git libpam0g-dev autoconf make gcc clang
+
+                echo "-----------------------------------------------------"
+                echo "autoconf --version"
                 autoconf --version
+
+                echo "-----------------------------------------------------"
+                echo "make -v"
                 make -v
+
+                echo "-----------------------------------------------------"
+                echo "gcc -v"
                 gcc -v
+
+                echo "-----------------------------------------------------"
+                echo "clang -v"
                 clang -v
+
+                echo "-----------------------------------------------------"
+                echo "git clone"
                 git clone https://github.com/alexander-naumov/gnu-screen.git
+
+                echo "-----------------------------------------------------"
+                echo "cd gnu-screen/src/"
                 cd gnu-screen/src
+
+                echo "-----------------------------------------------------"
+                echo "./autogen.sh"
                 ./autogen.sh
+
+                echo "-----------------------------------------------------"
+                echo "cc=gcc ./configure CFLAGS='-Wall -DDEBUG'"
                 cc=gcc ./configure CFLAGS="-Wall -DDEBUG"
+
+                echo "-----------------------------------------------------"
+                echo "make"
                 make
+
+                echo "-----------------------------------------------------"
+                echo "./screen -v"
                 ./screen -v
+
+                echo "-----------------------------------------------------"
+                echo "./screen -ls"
                 ./screen -ls || echo $?
+
+                echo "-----------------------------------------------------"
+                echo "make clean"
                 make clean
+
+                echo "-----------------------------------------------------"
+                echo "cc=clang ./configure CFLAGS='-Wall -DDEBUG'"
+                cc=clang ./configure CFLAGS="-Wall -DDEBUG"
+
+                echo "-----------------------------------------------------"
+                echo "make"
+                make
+
+                echo "-----------------------------------------------------"
+                echo "./screen -v"
+                ./screen -v
+
+                echo "-----------------------------------------------------"
+                echo "./screen -ls"
+                ./screen -ls || echo $?
+
+                echo "-----------------------------------------------------"
+                echo "./screen --help"
+                ./screen --help
 
                 ;;
               fedora*)
