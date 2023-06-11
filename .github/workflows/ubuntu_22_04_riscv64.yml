@@ -146,3 +146,7 @@ jobs:
                 ;;
             esac
 
+          run: |
+            uname -a
+            cp $(which git) "/artifacts/${artifact_name}"
+            echo "Produced artifact at /artifacts/${artifact_name}"
