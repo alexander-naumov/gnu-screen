@@ -61,7 +61,7 @@ jobs:
 
                 echo "-----------------------------------------------------"
                 echo "> apk add git autoconf automake make gcc clang"
-                apk add git autoconf automake make gcc clang
+                apk add git autoconf automake make ncurses-dev gcc clang
 
                 echo "-----------------------------------------------------"
                 echo "> autoconf --version"
