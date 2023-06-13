@@ -61,8 +61,8 @@ jobs:
                 apk update
 
                 echo "-----------------------------------------------------"
-                echo "> apk add git autoconf make gcc clang"
-                apk add git autoconf make gcc clang
+                echo "> apk add git autoconf automake make gcc clang"
+                apk add git autoconf automake make gcc clang
 
                 echo "-----------------------------------------------------"
                 echo "> autoconf --version"
