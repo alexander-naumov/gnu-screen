@@ -17,7 +17,8 @@ jobs:
       uses: vmactions/solaris-vm@v0
       with:
         prepare: |
-          pkgutil -y -i git automake autoconf gcc #clang
+          pkgutil -y -i git automake autoconf gcc clang
+          pkg add gcc git automake autoconf clang
           gcc -v
 
     - name: Build
