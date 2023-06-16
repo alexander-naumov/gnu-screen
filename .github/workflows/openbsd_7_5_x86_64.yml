@@ -4,10 +4,10 @@ on: [push]
 
 jobs:
   openbsd:
-    runs-on: macos-12
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cross-platform-actions/action@v0.21.1
+      - uses: cross-platform-actions/action@v0.24.0
 
         with:
           architecture: x86_64
