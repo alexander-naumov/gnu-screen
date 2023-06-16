@@ -1,0 +1,152 @@
+name: Ubuntu 20.04 aarch64
+
+on: [push, pull_request]
+
+jobs:
+  build_job:
+    # The host should always be linux
+    runs-on: ubuntu-20.04
+    name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
+
+    # Run steps on a matrix of 4 arch/distro combinations
+    strategy:
+      matrix:
+        include:
+          - arch: aarch64
+            distro: ubuntu20.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: uraimo/run-on-arch-action@v2.7.2
+        name: Build
+        id: build
+        with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
+
+          # Not required, but speeds up builds
+          githubToken: ${{ github.token }}
+
+          # Create an artifacts directory
+          setup: |
+            mkdir -p "${PWD}/artifacts"
+
+          # Mount the artifacts directory as /artifacts in the container
+          dockerRunArgs: |
+            --volume "${PWD}/artifacts:/artifacts"
+
+          # Pass some environment variables to the container
+          env: | # YAML, but pipe character is necessary
+            artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
+
+          # The shell to run commands with in the container
+          shell: /bin/sh
+
+          # Install some dependencies in the container. This speeds up builds if
+          # you are also using githubToken. Any dependencies installed here will
+          # be part of the container image that gets cached, so subsequent
+          # builds don't have to re-install them. The image layer is cached
+          # publicly in your project's package repository, so it is vital that
+          # no secrets are present in the container state or logs.
+          install: |
+            case "${{ matrix.distro }}" in
+              ubuntu*|jessie|stretch|buster|bullseye)
+
+                echo "-----------------------------------------------------"
+                echo "> uname -a"
+                uname -a
+
+                echo "-----------------------------------------------------"
+                echo "> cat /etc/issue"
+                cat /etc/issue
+
+                echo "-----------------------------------------------------"
+                echo "> apt-get update -q -y"
+                apt-get update -q -y
+
+                echo "-----------------------------------------------------"
+                echo "> apt-get install -q -y git libpam0g-dev autoconf make gcc clang"
+                apt-get install -q -y git libpam0g-dev autoconf make gcc clang
+
+                echo "-----------------------------------------------------"
+                echo "> autoconf --version"
+                autoconf --version
+
+                echo "-----------------------------------------------------"
+                echo "> make -v"
+                make -v
+
+                echo "-----------------------------------------------------"
+                echo "> gcc -v"
+                gcc -v
+
+                echo "-----------------------------------------------------"
+                echo "> clang -v"
+                clang -v
+
+                echo "-----------------------------------------------------"
+                echo "> git clone"
+                git clone https://github.com/alexander-naumov/gnu-screen.git
+
+                echo "-----------------------------------------------------"
+                echo "> cd gnu-screen/src/"
+                cd gnu-screen/src
+
+                echo "-----------------------------------------------------"
+                echo "> ./autogen.sh"
+                ./autogen.sh
+
+                echo "-----------------------------------------------------"
+                echo "> cc=gcc ./configure CFLAGS='-Wall -DDEBUG'"
+                cc=gcc ./configure CFLAGS="-Wall -DDEBUG"
+
+                echo "-----------------------------------------------------"
+                echo "> make"
+                make
+
+                echo "-----------------------------------------------------"
+                echo "> ./screen -v"
+                ./screen -v
+
+                echo "-----------------------------------------------------"
+                echo "> ./screen -ls"
+                ./screen -ls || echo $?
+
+                echo "-----------------------------------------------------"
+                echo "> make clean"
+                make clean
+
+                echo "-----------------------------------------------------"
+                echo "> cc=clang ./configure CFLAGS='-Wall -DDEBUG'"
+                cc=clang ./configure CFLAGS="-Wall -DDEBUG"
+
+                echo "-----------------------------------------------------"
+                echo "> make"
+                make
+
+                echo "-----------------------------------------------------"
+                echo "> ./screen -v"
+                ./screen -v
+
+                echo "-----------------------------------------------------"
+                echo "> ./screen -ls"
+                ./screen -ls || echo $?
+
+                echo "-----------------------------------------------------"
+                echo "> ./screen --help"
+                ./screen --help
+
+                ;;
+              fedora*)
+                dnf -y update
+                dnf -y install git which
+                ;;
+              alpine*)
+                apk update
+                apk add git
+                ;;
+            esac
+
+          run: |
+            uname -a
+            cp $(which git) "/artifacts/${artifact_name}"
+            echo "Produced artifact at /artifacts/${artifact_name}"
