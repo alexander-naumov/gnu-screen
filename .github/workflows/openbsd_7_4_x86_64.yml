@@ -18,21 +18,66 @@ jobs:
           sync_files: runner-to-vm
           shell: bash
           run: |
+            echo "------------------------------------------------------------"
+            echo "> uname -a"
             uname -a
+
+            echo "------------------------------------------------------------"
+            echo "> echo $SHELL"
             echo $SHELL
-            pwd
-            ls -lah
-            whoami
+
+            echo "------------------------------------------------------------"
+            echo "> env | sort"
             env | sort
+
+            echo "------------------------------------------------------------"
+            echo "> sudo pkg_add gmake automake-1.16.5 autoconf-2.71"
             sudo pkg_add gmake automake-1.16.5 autoconf-2.71
+
+            echo "------------------------------------------------------------"
+            echo "> export AUTOCONF_VERSION=2.71"
             export AUTOCONF_VERSION=2.71
+
+            echo "------------------------------------------------------------"
+            echo "> export AUTOMAKE_VERSION=1.16"
             export AUTOMAKE_VERSION=1.16
+
+            echo "------------------------------------------------------------"
+            echo "> ls -la /usr/local/bin/aclocal-*"
             ls -la /usr/local/bin/aclocal-*
+
+            echo "------------------------------------------------------------"
+            echo "> cd src"
             cd src
+
+            echo "------------------------------------------------------------"
+            echo "> ls -lah"
             ls -lah
+
+            echo "------------------------------------------------------------"
+            echo "> ./autogen.sh"
             ./autogen.sh
+
+            echo "------------------------------------------------------------"
+            echo "> echo $?"
             echo $?
+
+            echo "------------------------------------------------------------"
+            echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
             ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+
+            echo "------------------------------------------------------------"
+            echo "> gmake"
             gmake
+
+            echo "------------------------------------------------------------"
+            echo "> ./screen -v"
             ./screen -v
+
+            echo "------------------------------------------------------------"
+            echo "> ./screen -ls || echo $?"
+            ./screen -ls || echo $?
+
+            echo "------------------------------------------------------------"
+            echo "> ./screen --help"
             ./screen --help
