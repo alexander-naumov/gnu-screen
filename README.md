@@ -14,7 +14,7 @@ There is a scrollback history buffer for each virtual terminal and
 a copy-and-paste mechanism that allows moving text regions between
 windows.
 
-|  | ```__________x86_64__________``` | ```__________aarch64__________``` | ```____________riscv64____________``` |
+|  ```_______OS_______```| ```__________x86_64__________``` | ```__________aarch64__________``` | ```__________riscv64__________``` |
 |--|:---:|:---:|:---:|
 | <h2>Ubuntu</h2><br>(clang and gcc build)<br>(-Wall -DDEBUG)|[![Ubuntu 22.04 x86_64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_x86_64.yml)|[![Ubuntu 22.04 aarch64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_aarch64.yml)|[![Ubuntu 22.04 riscv64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_riscv64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_riscv64.yml)|
 | <h2>Alpine Linux</h2><br>(gcc build with [musl libc](https://musl.libc.org/))<br>(--disable-pam)<br>(-Wall -DDEBUG)||[![Alpine latest aarch64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/alpine_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/alpine_aarch64.yml)||
