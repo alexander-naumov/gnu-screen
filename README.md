@@ -14,10 +14,25 @@ There is a scrollback history buffer for each virtual terminal and
 a copy-and-paste mechanism that allows moving text regions between
 windows.
 
+<style>
+table th:first-of-type {
+    width: 25%;
+}
+table th:nth-of-type(2) {
+    width: 25%;
+}
+table th:nth-of-type(3) {
+    width: 25%;
+}
+table th:nth-of-type(4) {
+    width: 25%;
+}
+</style>
+
 |  | x86_64 | aarch64 | riscv64 |
-|--|--------|---------|---------|
+|--|:---:|:---:|:---:|
 | <h2>Ubuntu</h2><br>(clang and gcc build)<br>(-Wall -DDEBUG)|[![Ubuntu 22.04 x86_64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_x86_64.yml)|[![Ubuntu 22.04 aarch64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_aarch64.yml)|[![Ubuntu 22.04 riscv64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_riscv64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/ubuntu_22_04_riscv64.yml)|
-| <h2>Alpine Linux</h2><br>(gcc + [musl libc](https://musl.libc.org/) build)<br>(--disable-pam)<br>(-Wall -DDEBUG)||[![Alpine latest aarch64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/alpine_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/alpine_aarch64.yml)||
+| <h2>Alpine Linux</h2><br>(gcc build with [musl libc](https://musl.libc.org/))<br>(--disable-pam)<br>(-Wall -DDEBUG)||[![Alpine latest aarch64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/alpine_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/alpine_aarch64.yml)||
 | <h2>macOS</h2><br>(clang build)<br>(--disable-pam)<br>(-Wall -DDEBUG)||[![macOS 23.4.0 aarch64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/macos_23_4_0_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/macos_23_4_0_aarch64.yml)|
 | <h2>FreeBSD</h2><br>(clang and gcc build)<br>(-Wall -DDEBUG)|[![FreeBSD 14.0 x86_64](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/14.0_x86.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/14.0_x86.yml)<br>[![FreeBSD 13.3 x86_64](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.3_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.3_x86_64.yml)<br>[![FreeBSD 13.2 x86_64](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.2_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.2_x86_64.yml)<br>[![FreeBSD 13.1 x86_64](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.1_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.1_x86_64.yml)<br>[![FreeBSD 13.0 x86_64](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.0_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.0_x86_64.yml)|[![FreeBSD 14.0 aarch64](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/14.0_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/14.0_aarch64.yml)<br>[![FreeBSD 13.3 aarch64](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.3_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.3_aarch64.yml)<br>[![FreeBSD 13.2 aarch64](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.2_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.2_aarch64.yml)<br>[![FreeBSD 13.1 aarch64](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.1_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.1_aarch64.yml)<br>[![FreeBSD 13.0 aarch64](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.0_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-freebsd/actions/workflows/13.0_aarch64.yml)|
 | <h2>OpenBSD</h2><br>(clang build)<br>(--disable-pam)<br>(-Wall -DDEBUG)|[![OpenBSD 7.5 x86_64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_7_5_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_7_5_x86_64.yml)[![OpenBSD 7.4 x86_64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_7_4_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_7_4_x86_64.yml)|[![OpenBSD 7.5 aarch64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_7_5_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_7_5_aarch64.yml)[![OpenBSD 7.4 aarch64](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_7_4_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/openbsd_7_4_aarch64.yml)|
