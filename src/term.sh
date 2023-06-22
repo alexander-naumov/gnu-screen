@@ -27,7 +27,7 @@ extern int tgetnum(char *);
 extern char *tgetstr(char *, char **);
 extern char *tgoto(const char *, int, int);
 extern int tputs(const char *, int, int (*)(int));
-extern char *tparm();
+extern char *tparm(char *str, ...);
 
 struct term
 {
