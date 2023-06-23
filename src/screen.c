@@ -928,7 +928,7 @@ int main(int argc, char **argv)
 				*ap = '-';
 		if (strlen(socknamebuf) > FILENAME_MAX)
 			socknamebuf[FILENAME_MAX - 1] = 0;
-		snprintf(SocketPath + strlen(SocketPath), sizeof(SocketPath) - strlen(SocketPath) + 1, "/%s", socknamebuf);
+		snprintf(SocketPath + strlen(SocketPath), sizeof(SocketPath) - strlen(SocketPath) + 2, "/%s", socknamebuf);
 		SET_GUID();
 		Attacher();
 		/* NOTREACHED */
@@ -993,7 +993,7 @@ int main(int argc, char **argv)
 	if (strlen(socknamebuf) > FILENAME_MAX) {
 		socknamebuf[FILENAME_MAX] = 0;
 	}
-	snprintf(SocketPath + strlen(SocketPath), sizeof(SocketPath) - strlen(SocketPath) + 1, "/%s", socknamebuf);
+	snprintf(SocketPath + strlen(SocketPath), sizeof(SocketPath) - strlen(SocketPath) + 2, "/%s", socknamebuf);
 
 	ServerSocket = MakeServerSocket();
 #ifdef SYSTEM_SCREENRC
