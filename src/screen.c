@@ -45,9 +45,12 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <limits.h>
-
 #include <locale.h>
+
+#if defined(__sun)
+#include <limits.h>
+#endif
+
 #if defined(HAVE_LANGINFO_H)
 #include <langinfo.h>
 #endif
