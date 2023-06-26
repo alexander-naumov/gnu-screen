@@ -54,7 +54,10 @@ jobs:
       working-directory: ${{github.workspace}}/src
       run: |
         ./screen -v
+        ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost'
         ./screen -ls || echo $?
+        ./screen -S averyvery -d -m bash -c 'ping -c 8 localhost'
+        ./screen -ls
         make clean
 
     - name: clang configure
