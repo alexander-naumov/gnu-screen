@@ -104,12 +104,8 @@ jobs:
                 make
 
                 echo "-----------------------------------------------------"
-                echo "> ./screen -v"
+                echo "> screen -v"
                 ./screen -v
-
-                echo "-----------------------------------------------------"
-                echo "> ./screen -ls"
-                ./screen -ls || echo $?
 
                 echo "-----------------------------------------------------"
                 echo "> make clean"
@@ -124,15 +120,31 @@ jobs:
                 make
 
                 echo "-----------------------------------------------------"
-                echo "> ./screen -v"
+                echo "> screen -v"
                 ./screen -v
 
                 echo "-----------------------------------------------------"
-                echo "> ./screen -ls"
+                echo "> screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost' (should ret 1)"
+                ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost' || echo $?
+
+                echo "-----------------------------------------------------"
+                echo "> screen -ls (should ret 1)"
                 ./screen -ls || echo $?
 
                 echo "-----------------------------------------------------"
-                echo "> ./screen --help"
+                echo "> screen -S averyvery -d -m bash -c 'ping -c 8 localhost'"
+                ./screen -S averyvery -d -m bash -c 'ping -c 8 localhost'
+
+                echo "-----------------------------------------------------"
+                echo "> screen -ls"
+                ./screen -ls
+
+                echo "-----------------------------------------------------"
+                echo "> make clean"
+                make clean
+
+                echo "-----------------------------------------------------"
+                echo "> screen --help"
                 ./screen --help
 
                 ;;
