@@ -45,12 +45,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <locale.h>
-
-#if defined(__sun)
 #include <limits.h>
-#endif
 
+#include <locale.h>
 #if defined(HAVE_LANGINFO_H)
 #include <langinfo.h>
 #endif
@@ -567,10 +564,10 @@ int main(int argc, char **argv)
 							exit_with_usage(myname, "Specify session-name with -S", NULL);
 						SocketMatch = *++argv;
 					}
-					if (strlen(SocketMatch) > 80)
-						exit_with_usage(myname, "Session-name is too long (max length is 80 symbols)", NULL);
 					if (!*SocketMatch)
 						exit_with_usage(myname, "Empty session-name?", NULL);
+					if (strlen(SocketMatch) > 80)
+						exit_with_usage(myname, "Session-name is too long (max length is 80 symbols)", NULL);
 					break;
 				case 'X':
 					cmdflag = true;
@@ -882,12 +879,6 @@ int main(int argc, char **argv)
 		SetTtyname(false, &st);
 		if (!*argv)
 			Panic(0, "Please specify a command.");
-		if (!strncmp("sessionname", *argv, 11)) {
-			if (!*++argv)
-				Panic(0, "Please specify a parameter.");
-			if (strlen(*argv) > 80)
-				Panic(0, "Parameter of command 'sessionname' is too long.");
-		}
 		SET_GUID();
 		SendCmdMessage(sty, SocketMatch, argv, queryflag >= 0);
 		exit(0);
