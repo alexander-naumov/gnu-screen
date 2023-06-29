@@ -61,105 +61,120 @@
 
 extern char **environ;
 
-int force_vt = 1;
-int VBellWait, MsgWait, MsgMinWait, SilenceWait;
+int           force_vt = 1;
+int           VBellWait;
+int           MsgWait;
+int           MsgMinWait;
+int           SilenceWait;
 
-char *ShellProg;
-char *ShellArgs[2];
+char         *ShellProg;
+char         *ShellArgs[2];
 
-struct backtick;
+struct        backtick;
 
 static struct passwd *getpwbyname(char *, struct passwd *);
-static void SigChldHandler(void);
-static void SigChld(int);
-static void SigInt(int);
-static void CoreDump(int);
-static void FinitHandler(int);
-static void DoWait(void);
-static void serv_read_fn(Event *, void *);
-static void serv_select_fn(Event *, void *);
-static void logflush_fn(Event *, void *);
-static int IsSymbol(char *, char *);
-static char *ParseChar(char *, char *);
-static int ParseEscape(char *);
-static void SetTtyname(bool fatal, struct stat *st);
+static void   SigChldHandler(void);
+static void   SigChld(int);
+static void   SigInt(int);
+static void   CoreDump(int);
+static void   FinitHandler(int);
+static void   DoWait(void);
+static void   serv_read_fn(Event *, void *);
+static void   serv_select_fn(Event *, void *);
+static void   logflush_fn(Event *, void *);
+static int    IsSymbol(char *, char *);
+static char  *ParseChar(char *, char *);
+static int    ParseEscape(char *);
+static void   SetTtyname(bool fatal, struct stat *st);
 
 int nversion;			/* numerical version, used for secondary DA */
 
 /* the attacher */
-struct passwd *ppp;
-char *attach_tty;
-int attach_fd = -1;
-char *attach_term;
-char *LoginName;
-struct mode attach_Mode;
+struct    passwd *ppp;
+char     *attach_tty;
+int       attach_fd = -1;
+char     *attach_term;
+char     *LoginName;
+struct    mode attach_Mode;
+
 /* Indicator whether the current tty exists in another namespace. */
-bool attach_tty_is_in_new_ns = false;
+bool      attach_tty_is_in_new_ns = false;
+
 /* Content of the tty symlink when attach_tty_is_in_new_ns == true. */
-char attach_tty_name_in_ns[MAXPATHLEN];
+char      attach_tty_name_in_ns[MAXPATHLEN];
 
-char SocketPath[MAXPATHLEN];
-char *SocketName;			/* SocketName is pointer in SocketPath */
-char *SocketMatch = NULL;		/* session id command line argument */
-int ServerSocket = -1;
-Event serv_read;
-Event serv_select;
-Event logflushev;
+char      SocketPath[MAXPATHLEN];
+char     *SocketName;               /* SocketName is pointer in SocketPath */
+char     *SocketMatch = NULL;       /* session id command line argument */
+int       ServerSocket = -1;
+Event     serv_read;
+Event     serv_select;
+Event     logflushev;
 
-char **NewEnv = NULL;
+char    **NewEnv = NULL;
+char     *RcFileName = NULL;
+char     *home;
 
-char *RcFileName = NULL;
-char *home;
+char     *screenlogfile;            /* filename layout */
+int       log_flush = 10;           /* flush interval in seconds */
+bool      logtstamp_on = false;     /* tstamp disabled */
+char     *logtstamp_string;         /* stamp layout */
+int       logtstamp_after = 120;    /* first tstamp after 120s */
+char     *hardcopydir = NULL;
+char     *BellString;
+char     *VisualBellString;
+char     *ActivityString;
+char     *BufferFile;
+char     *PowDetachString;
+char     *hstatusstring;
+char     *captionstring;
+char     *wliststr;
+char     *wlisttit;
+bool      auto_detach = true;
+bool      adaptflag;
+bool      iflag;
+bool      lsflag;
+bool      quietflag;
+bool      wipeflag;
+bool      xflag;
+int       rflag;
+int       dflag;
+int       queryflag = -1;
+bool      hastruecolor = false;
 
-char *screenlogfile;		/* filename layout */
-int log_flush = 10;		/* flush interval in seconds */
-bool logtstamp_on = false;	/* tstamp disabled */
-char *logtstamp_string;		/* stamp layout */
-int logtstamp_after = 120;	/* first tstamp after 120s */
-char *hardcopydir = NULL;
-char *BellString;
-char *VisualBellString;
-char *ActivityString;
-char *BufferFile;
-char *PowDetachString;
-char *hstatusstring;
-char *captionstring;
-char *wliststr;
-char *wlisttit;
-bool auto_detach = true;
-bool adaptflag, iflag, lsflag, quietflag, wipeflag, xflag;
-int rflag, dflag;
-int queryflag = -1;
-bool hastruecolor = false;
+char     *multi;
+int       multiattach;
+int       tty_mode;
+int       tty_oldmode = -1;
 
-char *multi;
-int multiattach;
-int tty_mode;
-int tty_oldmode = -1;
+char      HostName[MAXSTR];
+pid_t     MasterPid;
+pid_t     PanicPid;
+uid_t     real_uid;
+uid_t     eff_uid;
+uid_t     multi_uid;
+uid_t     own_uid;
+gid_t     real_gid
+git_t     eff_gid;
+bool      default_startup;
+int       ZombieKey_destroy;
+int       ZombieKey_resurrect;
+int       ZombieKey_onerror;
+char     *preselect = NULL;         /* only used in Attach() */
 
-char HostName[MAXSTR];
-pid_t MasterPid, PanicPid;
-uid_t real_uid, eff_uid;
-uid_t multi_uid;
-uid_t own_uid;
-gid_t real_gid, eff_gid;
-bool default_startup;
-int ZombieKey_destroy, ZombieKey_resurrect, ZombieKey_onerror;
-char *preselect = NULL;		/* only used in Attach() */
+char     *screenencodings;
 
-char *screenencodings;
+bool      cjkwidth;
 
-bool cjkwidth;
-
-Layer *flayer;
-Window *fore;
-Window *mru_window;
-Window *first_window;
-Window *last_window;
-Window *console_window;
+Layer    *flayer;
+Window   *fore;
+Window   *mru_window;
+Window   *first_window;
+Window   *last_window;
+Window   *console_window;
 
 #ifdef ENABLE_TELNET
-int af;
+int       af;
 #endif
 
 /*
@@ -276,21 +291,21 @@ static void exit_with_usage(char *myname, char *message, char *arg)
 
 int main(int argc, char **argv)
 {
-	int n;
-	char *ap;
-	char *av0;
-	char socknamebuf[FILENAME_MAX + 1];
-	int mflag = 0;
-	char *myname = (argc == 0) ? "screen" : argv[0];
-	char *SocketDir;
-	struct stat st;
-	mode_t oumask;
-	struct NewWindow nwin;
-	bool detached = false;	/* start up detached */
-	char *sockp;
-	char *sty = NULL;
-	char *multi_home = NULL;
-	bool cmdflag = 0;
+	int       n;
+	char     *ap;
+	char     *av0;
+	char      socknamebuf[FILENAME_MAX + 1];
+	int       mflag = 0;
+	char     *myname = (argc == 0) ? "screen" : argv[0];
+	char     *SocketDir;
+	struct    stat st;
+	mode_t    oumask;
+	struct    NewWindow nwin;
+	bool      detached = false;	/* start up detached */
+	char     *sockp;
+	char     *sty = NULL;
+	char     *multi_home = NULL;
+	bool      cmdflag = 0;
 
 	/*
 	 *  First, close all unused descriptors
@@ -300,43 +315,43 @@ int main(int argc, char **argv)
 	snprintf(version, 59, "%d.%d.%d (build on %s) ", VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, BUILD_DATE);
 	nversion = VERSION_MAJOR * 10000 + VERSION_MINOR * 100 + VERSION_REVISION;
 
-	BellString = SaveStr("Bell in window %n");
-	VisualBellString = SaveStr("   Wuff,  Wuff!!  ");
-	ActivityString = SaveStr("Activity in window %n");
-	screenlogfile = SaveStr("screenlog.%n");
-	logtstamp_string = SaveStr("-- %n:%t -- time-stamp -- %M/%d/%y %c:%s --\n");
-	hstatusstring = SaveStr("%h");
-	captionstring = SaveStr("%4n %t");
-	wlisttit = SaveStr(" Num Name%=Flags");
-	wliststr = SaveStr("%4n %t%=%f");
-	BufferFile = SaveStr(DEFAULT_BUFFERFILE);
-	ShellProg = NULL;
-	PowDetachString = NULL;
-	default_startup = (argc > 1) ? false : true;
-	adaptflag = false;
-	VBellWait = VBELLWAIT * 1000;
-	MsgWait = MSGWAIT * 1000;
-	MsgMinWait = MSGMINWAIT * 1000;
-	SilenceWait = SILENCEWAIT;
-	zmodem_sendcmd = SaveStr("!!! sz -vv -b ");
-	zmodem_recvcmd = SaveStr("!!! rz -vv -b -E");
+	BellString        = SaveStr("Bell in window %n");
+	VisualBellString  = SaveStr("   Wuff,  Wuff!!  ");
+	ActivityString    = SaveStr("Activity in window %n");
+	screenlogfile     = SaveStr("screenlog.%n");
+	logtstamp_string  = SaveStr("-- %n:%t -- time-stamp -- %M/%d/%y %c:%s --\n");
+	hstatusstring     = SaveStr("%h");
+	captionstring     = SaveStr("%4n %t");
+	wlisttit          = SaveStr(" Num Name%=Flags");
+	wliststr          = SaveStr("%4n %t%=%f");
+	BufferFile        = SaveStr(DEFAULT_BUFFERFILE);
+	ShellProg         = NULL;
+	PowDetachString   = NULL;
+	default_startup   = (argc > 1) ? false : true;
+	adaptflag         = false;
+	VBellWait         = VBELLWAIT * 1000;
+	MsgWait           = MSGWAIT * 1000;
+	MsgMinWait        = MSGMINWAIT * 1000;
+	SilenceWait       = SILENCEWAIT;
+	zmodem_sendcmd    = SaveStr("!!! sz -vv -b ");
+	zmodem_recvcmd    = SaveStr("!!! rz -vv -b -E");
 
 	CompileKeys(NULL, 0, mark_key_tab);
 	InitBuiltinTabs();
-	screenencodings = SaveStr(SCREENENCODINGS);
-	cjkwidth = 0;
-	nwin = nwin_undef;
-	nwin_options = nwin_undef;
+	screenencodings   = SaveStr(SCREENENCODINGS);
+	cjkwidth          = 0;
+	nwin              = nwin_undef;
+	nwin_options      = nwin_undef;
 	strncpy(screenterm, "screen", MAXTERMLEN);
 	screenterm[MAXTERMLEN] = '\0';
 #ifdef ENABLE_TELNET
-	af = AF_UNSPEC;
+	af                = AF_UNSPEC;
 #endif
 
-	real_uid = getuid();
-	real_gid = getgid();
-	eff_uid = geteuid();
-	eff_gid = getegid();
+	real_uid          = getuid();
+	real_gid          = getgid();
+	eff_uid           = geteuid();
+	eff_gid           = getegid();
 
 	av0 = *argv;
 	/* if this is a login screen, assume -RR */
