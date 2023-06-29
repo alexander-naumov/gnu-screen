@@ -154,8 +154,8 @@ uid_t     real_uid;
 uid_t     eff_uid;
 uid_t     multi_uid;
 uid_t     own_uid;
-gid_t     real_gid
-git_t     eff_gid;
+gid_t     real_gid;
+gid_t     eff_gid;
 bool      default_startup;
 int       ZombieKey_destroy;
 int       ZombieKey_resurrect;
