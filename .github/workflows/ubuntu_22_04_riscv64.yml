@@ -108,6 +108,10 @@ jobs:
                 ./screen -v
 
                 echo "-----------------------------------------------------"
+                echo "> screen --help"
+                ./screen --help
+
+                echo "-----------------------------------------------------"
                 echo "> make clean"
                 make clean
 
@@ -142,10 +146,6 @@ jobs:
                 echo "-----------------------------------------------------"
                 echo "> make clean"
                 make clean
-
-                echo "-----------------------------------------------------"
-                echo "> screen --help"
-                ./screen --help
 
                 ;;
               fedora*)
