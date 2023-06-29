@@ -1655,17 +1655,6 @@ Otherwise (default) only `LF' is used.
 When no parameter is given, the state is toggled.
 .RE
 .TP
-.BR "debug [ on | off ]"
-.RS 0
-.PP
-Turns runtime debugging on or off. If
-.I screen
-has been compiled with option \-DDEBUG debugging available and is turned on per
-default. Note that this command only affects debugging output from the main
-\*QSCREEN\*U process correctly. Debug output from attacher processes can only
-be turned off once and forever.
-.RE
-.TP
 .BR "defc1 [ on | off ]"
 .RS 0
 .PP
@@ -3582,19 +3571,6 @@ instead set the $SCREENCAP variable prior to running
 .IR screen .
 See the discussion on the \*QVIRTUAL TERMINAL\*U in this manual, and the termcap(5)
 man page for more information on termcap definitions.
-.RE
-.TP
-.B time
-.RI [ string ]
-.RS 0
-.PP
-Uses the message line to display the time of day, the host name, and the load
-averages over 1, 5, and 15 minutes (if this is available on your system).
-For window specific information, use \*Qinfo\*U.
-
-If a string is specified, it changes the format of the time report like it is
-described in the \*QSTRING ESCAPES\*U chapter. Screen uses a default of
-"%c:%s %M %d %H%? %l%?".
 .RE
 .TP
 .BR "title " [ \fIwindowtitle ]
