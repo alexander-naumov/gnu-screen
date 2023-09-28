@@ -1,3 +1,15 @@
+Version 5.0.0 (08.07.24):
+  * Rewriten autentication mechanism
+  * Add escape %T to show current tty for window
+  * Add escape %C to show number of currently open windows
+  * Use wcwdith() instead of UTF-8 hard-coded tables (#63634)
+  * Removed commands:
+	- time
+	- debug
+	- password
+  * Fixes:
+	- Screen buffers ESC keypresses indefinitely (#57748)
+
 Version 4.9.1 (20/08/2023):
   * Support stop/parity bits on serial port (#23952)
   * Add needed system headers in checks and return values
