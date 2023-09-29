@@ -1,0 +1,94 @@
+name: Functional test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+
+env:
+  CC: clang
+
+jobs:
+  ubuntu:
+    strategy:
+      matrix:
+        os: [ ubuntu-24.04 ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: uname
+      shell: bash
+      run: |
+         cat /etc/issue
+         uname -a
+         autoconf --version
+         make -v
+         gcc -v
+         clang -v
+         dpkg -l libpam0g-dev
+
+    - name: Install libpam0g-dev
+      run: sudo apt install libpam0g-dev mc
+
+    - name: Install pyte
+      run: pip install pyte
+
+    - name: autogen
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: ./autogen.sh
+
+    - name: gcc configure
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: cc=gcc ./configure CFLAGS="-Wall -DDEBUG"
+
+    - name: gcc build
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: make
+
+    - name: test
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: |
+         echo "% screen -v"
+         ./screen -v
+         echo "% screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost' (should ret 1)"
+         ./screen -S averyverylongsesssionnameaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -d -m bash -c 'ping -c 8 localhost' || echo $?
+         echo "% screen -ls (should ret 1)"
+         ./screen -ls || echo $?
+         echo "% screen -S averyvery -d -m bash -c 'ping -c 8 localhost'"
+         ./screen -S averyvery -d -m bash -c 'ping -c 8 localhost'
+         echo "% screen -ls"
+         ./screen -ls
+         echo "% make clean"
+         make clean
+
+    - name: clang configure
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: cc=clang ./configure CFLAGS="-Wall"
+
+    - name: clang build
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: make
+
+    - name: test
+      shell: bash
+      working-directory: ${{github.workspace}}/src
+      run: |
+        ./screen -v
+        ./screen --help
+        ./screen -ls || echo $?
+
+    - name: test
+      shell: bash
+      working-directory: ${{github.workspace}}/tests
+      run: |
+        ./pyte_test.py
