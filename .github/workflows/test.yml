@@ -35,7 +35,8 @@ jobs:
       run: sudo apt install libpam0g-dev mc
 
     - name: Install pyte
-      run: pip install pyte
+      #run: pip install pyte
+      run: sudo apt install python3-pyte
 
     - name: autogen
       shell: bash
