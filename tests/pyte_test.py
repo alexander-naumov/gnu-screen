@@ -60,7 +60,7 @@ def screen_detach():
         print(error)
 
 
-child = spawn_process('''screen''')
+child = spawn_process('../src/screen')
 child.expect("Press")
 out = emulate_ansi_terminal(child.before+child.buffer, clean=False)
 pprint(out)
