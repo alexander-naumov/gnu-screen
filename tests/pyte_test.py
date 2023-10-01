@@ -68,12 +68,15 @@ child.sendline('')
 
 child.send('	')
 
+run(1, "pwd")
+run(1, "cd ../src/")
+run(1, "ls")
 run(1, "mc")
 
 child.send('|	c')
 
 run(1, "echo $TERM")
-run(5, "ping -c 5 google.de")
+run(5, "ping -c 5 localhost")
 
 #os.system('clear')
 
