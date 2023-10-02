@@ -4,6 +4,7 @@
 [![License](https://img.shields.io/github/license/alexander-naumov/gnu-screen)](https://github.com/alexander-naumov/gnu-screen/COPYING)
 [![Buid Status](https://app.travis-ci.com/alexander-naumov/gnu-screen.svg?branch=main&status=started)](https://app.travis-ci.com/github/alexander-naumov/gnu-screen)
 [![Functional test](https://github.com/alexander-naumov/gnu-screen/actions/workflows/test.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen/actions/workflows/test.yml)
+[![build result](https://build.opensuse.org/projects/Base:System/packages/screen/badge.svg?type=default)](https://build.opensuse.org/package/show/Base:System/screen)
 [![ML](https://img.shields.io/badge/mailing%20list-screen%20devel@gnu.org-blue)](https://lists.gnu.org/mailman/listinfo/screen-devel)
 
 Screen is a full-screen window manager that multiplexes a physical
