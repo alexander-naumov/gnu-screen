@@ -1812,7 +1812,6 @@ static void zmodem_found(Window *p, int send, char *bp, size_t len)
 
 void zmodem_abort(Window *p, Display *d)
 {
-	Display *olddisplay = display;
 	Layer *oldflayer = flayer;
 	if (p) {
 		if (p->w_savelayer && p->w_savelayer->l_next) {
@@ -1831,7 +1830,6 @@ void zmodem_abort(Window *p, Display *d)
 		D_readev.condpos = D_readev.condneg = NULL;
 		Activate(D_fore ? D_fore->w_norefresh : 0);
 	}
-	display = olddisplay;
 	flayer = oldflayer;
 }
 

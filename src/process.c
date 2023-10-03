@@ -1190,7 +1190,7 @@ static void DoCommandZmodem(struct action *act)
 		int i;
 		for (i = 0; i < 4; i++)
 			if (!strcmp(zmodes[i], *args))
-				return;
+				break;
 		if (i == 4 && !strcmp(*args, "on"))
 			i = 1;
 		if (i == 4) {

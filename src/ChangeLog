@@ -9,6 +9,7 @@ Version 5.0.0 (08.07.24):
 	- password
   * Fixes:
 	- Screen buffers ESC keypresses indefinitely (#57748)
+	- Crashes after passing through a zmodem transfer (#25291)
 
 Version 4.9.1 (20/08/2023):
   * Support stop/parity bits on serial port (#23952)
