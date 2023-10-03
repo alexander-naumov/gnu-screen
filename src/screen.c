@@ -789,6 +789,8 @@ int main(int argc, char **argv)
 	} else {
 #ifndef SOCKET_DIR
 		if (SocketDir == NULL) {
+			if (strlen(home) > MAXPATHLEN - 8)
+				Panic(0, "$HOME too long - sorry.");
 			sprintf(SocketPath, "%s/.screen", home);
 			SocketDir = SocketPath;
 		}
