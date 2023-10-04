@@ -1,5 +1,5 @@
 .\" vi:set wm=5
-.TH SCREEN 1 "2024 MMM DDD" "GNU Screen 5.0.0"
+.TH SCREEN 1 "Jul 2024" "GNU Screen 5.0.0"
 .
 .
 .SH NAME
@@ -5185,8 +5185,8 @@ Window number of a window (at creation time).
 
 .SH FILES
 .PD 0
-.IP .../screen-4.?.??/etc/screenrc 34
-.IP .../screen-4.?.??/etc/etcscreenrc
+.IP .../screen-5.0.0/etc/screenrc 34
+.IP .../screen-5.0.0/etc/etcscreenrc
 Examples in the 
 .I screen
 distribution package for private and global initialization files.
@@ -5198,7 +5198,7 @@ initialization commands
 .IP $HOME/.screenrc
 Read in after /usr/local/etc/screenrc
 .IP $SCREENDIR/S\-<login>
-.IP /local/screens/S\-<login>
+.IP $HOME/.screen
 Socket directories (default)
 .IP /usr/tmp/screens/S\-<login>
 Alternate socket directories.
@@ -5251,22 +5251,6 @@ Copyright (C) 1993-2003
 	Michael Schroeder <mlschroe@immd4.informatik.uni\-erlangen.de>
 Copyright (C) 1987 Oliver Laumann
 .fi
-
-.PP
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3, or (at your option)
-any later version.
-.PP
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-.PP
-You should have received a copy of the GNU General Public License
-along with this program (see the file COPYING); if not, write to the
-Free Software Foundation, Inc.,
-59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 
 .SH CONTRIBUTORS
 .nf
@@ -5365,9 +5349,6 @@ To detach a
 .I screen
 session use the \-D or \-d command line option.
 .IP \(bu
-If a password is set, the command line options \-d and \-D still detach a
-session without asking.
-.IP \(bu
 Both \*Qbreaktype\*U and \*Qdefbreaktype\*U change the break generating
 method used by all terminal devices. The first should change a window
 specific setting, where the latter should change only the default for new 
@@ -5378,9 +5359,6 @@ sourced. Each user's personal settings have to be included in the .screenrc
 file from which the session is booted, or have to be changed manually.
 .IP \(bu
 A weird imagination is most useful to gain full advantage of all the features.
-.IP \(bu
-Send bug-reports, fixes, enhancements, t-shirts, money, beer & pizza to
-.BR screen-devel@gnu.org .
 
 .SH "SEE ALSO"
 .BR termcap(5),
