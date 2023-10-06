@@ -46,7 +46,6 @@
 
 /* escape characters (alphabetical order) */
 typedef enum {
-	WINESC_WIN_COUNT       = 'C',
 	WINESC_ESC_SEEN        = 'E',
 	WINESC_FOCUS           = 'F',
 	WINESC_WFLAGS          = 'f',
@@ -55,6 +54,7 @@ typedef enum {
 	WINESC_HSTATUS         = 'h',
 	WINESC_WIN_LOGNAME     = 'N',
 	WINESC_WIN_NUM         = 'n',
+	WINESC_WIN_COUNT       = 'O',
 	WINESC_PID             = 'p',
 	WINESC_COPY_MODE       = 'P',  /* copy/_P_aste mode */
 	WINESC_SESS_NAME       = 'S',
