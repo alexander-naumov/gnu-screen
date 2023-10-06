@@ -44,26 +44,27 @@
 
 #define RENDBUF_SIZE 128 /* max rendition byte count */
 
-/* escape characters */
+/* escape characters (alphabetical order) */
 typedef enum {
-	WINESC_WFLAGS          = 'f',
+	WINESC_WIN_COUNT       = 'C',
 	WINESC_ESC_SEEN        = 'E',
 	WINESC_FOCUS           = 'F',
-	WINESC_HSTATUS         = 'h',
+	WINESC_WFLAGS          = 'f',
+	WINESC_WIN_GROUP       = 'g',
 	WINESC_HOST            = 'H',
-	WINESC_WIN_COUNT       = 'C',
-	WINESC_WIN_NUM         = 'n',
+	WINESC_HSTATUS         = 'h',
 	WINESC_WIN_LOGNAME     = 'N',
+	WINESC_WIN_NUM         = 'n',
 	WINESC_PID             = 'p',
 	WINESC_COPY_MODE       = 'P',  /* copy/_P_aste mode */
-	WINESC_WIN_SIZE        = 's',
 	WINESC_SESS_NAME       = 'S',
+	WINESC_WIN_SIZE        = 's',
+	WINESC_WIN_TTY         = 'T',
 	WINESC_WIN_TITLE       = 't',
-	WINESC_WIN_GROUP       = 'g',
-	WINESC_WIN_NAMES       = 'w',
 	WINESC_WIN_NAMES_NOCUR = 'W',
-	WINESC_CMD_ARGS        = 'x',
+	WINESC_WIN_NAMES       = 'w',
 	WINESC_CMD             = 'X',
+	WINESC_CMD_ARGS        = 'x',
 	WINESC_REND_START      = '{',
 	WINESC_REND_END        = '}',
 	WINESC_REND_POP        = '-',
@@ -73,7 +74,6 @@ typedef enum {
 	WINESC_PAD             = '=',
 	WINESC_TRUNC           = '<',
 	WINESC_TRUNC_POS       = '>',
-	WINESC_WIN_TTY         = 'T',
 } WinMsgEscapeChar;
 
 /* escape sequence */
