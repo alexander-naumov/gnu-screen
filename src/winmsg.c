@@ -1,4 +1,6 @@
-/* Copyright (c) 2013
+/* Copyrigth (c) 2024
+ *      Alexander Naumov (alexander_naumov@opensuse.org)
+ * Copyright (c) 2013
  *      Mike Gerwitz (mtg@gnu.org)
  * Copyright (c) 2010
  *      Juergen Weigert (jnweiger@immd4.informatik.uni-erlangen.de)
@@ -52,6 +54,11 @@ WinMsgBuf *g_winmsg;
 
 /* maximum limit on MakeWinMsgEv recursion */
 #define WINMSG_RECLIMIT 10
+
+#ifndef USE_LOCALE
+static const char days[]   = "SunMonTueWedThuFriSat";
+static const char months[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
+#endif
 
 /* escape char for backtick output */
 #define WINMSG_BT_ESC '\005'
@@ -406,6 +413,75 @@ winmsg_esc_ex(WinArgv, Window *win)
 	}
 }
 
+static void
+__WinMsgEscEsc_YEAR(WinMsgBufContext *wmbc, struct tm *tm)
+{
+	wmbc_printf(wmbc, "%04d", tm->tm_year + 1900);
+}
+
+static void
+__WinMsgEscEsc_year(WinMsgBufContext *wmbc, struct tm *tm)
+{
+            wmbc_printf(wmbc, "%02d", tm->tm_year % 100);
+}
+
+static void
+__WinMsgEscEsc_MONTH(WinMsgBufContext *wmbc, struct tm *tm)
+{
+#ifdef USE_LOCALE
+            strftime(wmbc, l, (longflg ? "%B" : "%b"), tm);
+#else
+            wmbc_printf(wmbc, "%3.3s", months + 3 * tm->tm_mon);
+#endif
+}
+
+static void
+__WinMsgEscEsc_month(WinMsgBufContext *wmbc, struct tm *tm)
+{
+            wmbc_printf(wmbc, "%02d", tm->tm_mon + 1);
+}
+
+static void
+__WinMsgEscEsc_DAY(WinMsgBufContext *wmbc, struct tm *tm)
+{
+#ifdef USE_LOCALE
+            strftime(wmbc, l, (longflg ? "%A" : "%a"), tm);
+#else
+            wmbc_printf(wmbc, "%3.3s", days + 3 * tm->tm_wday);
+#endif
+}
+
+static void
+__WinMsgEscEsc_day(WinMsgBufContext *wmbc, struct tm *tm)
+{
+            wmbc_printf(wmbc, "%02d", tm->tm_mday % 100);
+}
+
+static void
+__WinMsgEscEsc_HOUR(WinMsgBufContext *wmbc, struct tm *tm)
+{
+            wmbc_printf(wmbc, tm->tm_hour >= 12 ? "PM" : "AM");
+}
+
+static void
+__WinMsgEscEsc_hour(WinMsgBufContext *wmbc, struct tm *tm)
+{
+            wmbc_printf(wmbc, tm->tm_hour >= 12 ? "pm" : "am");
+}
+
+
+static void
+__WinMsgEscEsc_TIME(WinMsgBufContext *wmbc, struct tm *tm, WinMsgEsc esc)
+{
+            wmbc_printf(wmbc, esc.flags.zero ? "%02d:%02d" : "%2d:%02d", (tm->tm_hour + 11) % 12 + 1, tm->tm_min);
+}
+
+static void
+__WinMsgEscEsc_time(WinMsgBufContext *wmbc, struct tm *tm, WinMsgEsc esc)
+{
+            wmbc_printf(wmbc, esc.flags.zero ? "%02d:%02d" : "%2d:%02d", tm->tm_hour, tm->tm_min);
+}
+
 winmsg_esc_ex(WinNum, Window *win)
 {
 	if (esc->num == 0)
@@ -548,13 +624,19 @@ char *MakeWinMsgEv(WinMsgBuf *winmsg, char *str, Window *win,
                    int chesc, int padlen, Event *ev, int rec)
 {
 	static int tick;
-	struct timeval now;
 	int qmnumrend = 0;
 	int numpad = 0;
 	int lastpad = 0;
 	WinMsgBufContext *wmbc;
 	WinMsgEsc esc;
 	WinMsgCond *cond;
+
+	struct tm *tm;
+	struct timeval now;
+	tm = 0;
+	gettimeofday(&now, NULL);
+	time_t nowsec = now.tv_sec;
+	tm = localtime(&nowsec);
 
 	/* TODO: temporary to work into existing code */
 	if (winmsg == NULL) {
@@ -615,7 +697,44 @@ char *MakeWinMsgEv(WinMsgBuf *winmsg, char *str, Window *win,
 		if ((esc.flags.lng = (*s == 'L')) != 0)
 			s++;
 
+	        if (!tick || tick > 3600)
+		        tick = 3600;
+
 		switch (*s) {
+		case WINESC_TIME:
+			__WinMsgEscEsc_TIME(wmbc, tm, esc);
+			if (!tick || tick > 60)
+				tick = 60;
+			break;
+		case WINESC_time:
+			__WinMsgEscEsc_time(wmbc, tm, esc);
+			if (!tick || tick > 60)
+				tick = 60;
+			break;
+		case WINESC_HOUR:
+			__WinMsgEscEsc_HOUR(wmbc, tm);
+			break;
+		case WINESC_hour:
+			__WinMsgEscEsc_hour(wmbc, tm);
+			break;
+		case WINESC_DAY:
+			__WinMsgEscEsc_DAY(wmbc, tm);
+			break;
+		case WINESC_day:
+			__WinMsgEscEsc_day(wmbc, tm);
+			break;
+		case WINESC_MONTH:
+			__WinMsgEscEsc_MONTH(wmbc, tm);
+			break;
+		case WINESC_month:
+			__WinMsgEscEsc_month(wmbc, tm);
+			break;
+		case WINESC_YEAR:
+			__WinMsgEscEsc_YEAR(wmbc, tm);
+			break;
+		case WINESC_year:
+			__WinMsgEscEsc_year(wmbc, tm);
+			break;
 		case WINESC_COND:
 			WinMsgDoEscEx(Cond, &qmnumrend);
 			break;

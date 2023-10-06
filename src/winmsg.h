@@ -1,4 +1,6 @@
-/* Copyright (c) 2013
+/* Copyrigth (c) 2024
+ *      Alexander Naumov (alexander_naumov@opensuse.org)
+ * Copyright (c) 2013
  *      Mike Gerwitz (mtg@gnu.org)
  * Copyright (c) 2010
  *      Juergen Weigert (jnweiger@immd4.informatik.uni-erlangen.de)
@@ -46,12 +48,20 @@
 
 /* escape characters (alphabetical order) */
 typedef enum {
+	WINESC_TIME            = 'C',
+	WINESC_time            = 'c',
+	WINESC_HOUR            = 'A',
+	WINESC_hour            = 'a',
+	WINESC_DAY             = 'D',
+	WINESC_day             = 'd',
 	WINESC_ESC_SEEN        = 'E',
 	WINESC_FOCUS           = 'F',
 	WINESC_WFLAGS          = 'f',
 	WINESC_WIN_GROUP       = 'g',
 	WINESC_HOST            = 'H',
 	WINESC_HSTATUS         = 'h',
+	WINESC_MONTH           = 'M',
+	WINESC_month           = 'm',
 	WINESC_WIN_LOGNAME     = 'N',
 	WINESC_WIN_NUM         = 'n',
 	WINESC_WIN_COUNT       = 'O',
@@ -65,6 +75,8 @@ typedef enum {
 	WINESC_WIN_NAMES       = 'w',
 	WINESC_CMD             = 'X',
 	WINESC_CMD_ARGS        = 'x',
+	WINESC_YEAR            = 'Y',
+	WINESC_year            = 'y',
 	WINESC_REND_START      = '{',
 	WINESC_REND_END        = '}',
 	WINESC_REND_POP        = '-',

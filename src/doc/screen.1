@@ -4050,6 +4050,20 @@ is used instead.
 Here is the full list of supported escapes:
 .IP %
 the escape character itself
+.IP A
+AM or PM. 'AM' stands for the Latin 'ante meridiem', translating to
+"before midday". This is the time before noon. 'PM' stands for post
+meridiem or 'after midday' – the time after noon.
+.IP a
+the same as 'A', but written in small letters: 'am' or 'pm'.
+.IP C
+12 hours time format like 1:48
+.IP c
+the same like 'C', but uses 24 hours time format (for example, 13:48)
+.IP D
+day of the week (for example, Mon, Wed, Fri)
+.IP d
+day of the month (number).
 .IP E
 sets %? to true if the escape character has been pressed.
 .IP e
@@ -4064,6 +4078,10 @@ hardstatus of the window
 hostname of the system
 .IP O
 The count of screen windows. Prefix with '-' to limit to current window group.
+.IP M
+name of the month (for example, Aug, Dec)
+.IP m
+month of the year (number)
 .IP n
 window number
 .IP P
@@ -4086,6 +4104,10 @@ all window numbers and names except the current one
 the executed command including arguments running in this windows
 .IP X
 the executed command without arguments running in this windows
+.IP Y
+year (four numbers like '2024')
+.IP y
+last two digits of the year (for example, '24')
 .IP ?
 the part to the next '%?' is displayed only if a '%' escape
 inside the part expands to a non-empty string
