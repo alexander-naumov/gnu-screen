@@ -25,7 +25,7 @@
 @ifinfo
 This file documents the @code{Screen} virtual terminal manager.
 
-Copyright (c) 1993-2018 Free Software Foundation, Inc.
+Copyright (c) 1993-2024 Free Software Foundation, Inc.
 
 Permission is granted to make and distribute verbatim copies of
 this manual provided the copyright notice and this permission notice
@@ -53,11 +53,11 @@ by the Foundation.
 @title Screen
 @subtitle The virtual terminal manager
 @subtitle for Version @value{version}
-@subtitle Feb 2017
+@subtitle Jul 2024
 
 @page
 @vskip 0pt plus 1filll
-Copyright @copyright{} 1993-2018 Free Software Foundation, Inc.
+Copyright @copyright{} 1993-2024 Free Software Foundation, Inc.
 
 Permission is granted to make and distribute verbatim copies of
 this manual provided the copyright notice and this permission notice
@@ -1129,8 +1129,6 @@ Switch to the window you were in last.  @xref{Selecting}.
 Switch to the parent window.  @xref{Selecting}.
 @item partial @var{state}
 Set window to partial refresh.  @xref{Redisplay}.
-@item password [@var{crypted_pw}]
-Set reattach password.  @xref{Detach}.
 @item paste [@var{src_regs} [@var{dest_reg}]]
 Paste contents of paste buffer or registers somewhere.  @xref{Paste}.
 @item pastefont [@var{state}]
@@ -5540,6 +5538,8 @@ sets %? to true if the window has the focus
 hardstatus of the window
 @item H
 hostname of the system
+@item O
+count of screen windows. Prefix with @code{'-'} to limit to current window group.
 @item l
 current load of the system
 @item m
@@ -5550,8 +5550,6 @@ month name
 window number
 @item P
 sets %? to true if the current region is in copy/paste mode
-@item s
-seconds
 @item S
 session name
 @item t
