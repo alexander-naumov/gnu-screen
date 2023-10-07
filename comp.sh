@@ -13,17 +13,17 @@ fi
 
 cd $1
 
-for i in $(ls)
+for i in $(ls *.c *.h)
 do
 	if [[ -d $i ]]; then
 		true
 	else
-		echo "$(sha256sum $i | gawk '{ print $1 }') $2$i" | sha256sum --check  >/dev/null
+		echo "$(sha256sum $i | gawk '{ print $1 }') $2/$i" | sha256sum --check  >/dev/null
 		if [ $? == 1 ]; then
 			echo
 			echo
 			echo =====================================================================
-			git --no-pager diff --no-index $i $2$i
+			git --no-pager diff --no-index $i $2/$i
 		fi
 	fi
 done
