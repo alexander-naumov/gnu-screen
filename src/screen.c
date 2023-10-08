@@ -591,7 +591,7 @@ int main(int argc, char **argv)
 					printf("Screen version %s\n", version);
 					exit(0);
 				case 'U':
-					nwin_options.encoding = nwin_options.encoding == -1 ? UTF8 : 0;
+					nwin_options.encoding = UTF8;
 					break;
 				default:
 					exit_with_usage(myname, "Unknown option %s", --ap);
