@@ -8,7 +8,7 @@
 @finalout
 @setchapternewpage odd
 @c %**end of header
-@set version 4.5.1
+@set version 5.0.0
 
 @direntry
 * Screen: (screen).             Full-screen window manager.
@@ -5755,8 +5755,8 @@ Window number of a window (at creation time).
 @cindex files
 
 @table @file
-@item .../screen-4.?.??/etc/screenrc
-@itemx .../screen-4.?.??/etc/etcscreenrc
+@item .../screen-5.0.0/etc/screenrc
+@itemx .../screen-5.0.0/etc/etcscreenrc
 Examples in the @code{screen} distribution package for private and
 global initialization files.
 
