@@ -13,7 +13,7 @@ fi
 
 cd $1
 
-for i in $(ls *.c *.h)
+for i in $(ls *.c *.h *.sh)
 do
 	if [[ -d $i ]]; then
 		true
@@ -24,6 +24,8 @@ do
 			echo
 			echo =====================================================================
 			git --no-pager diff --no-index $i $2$i
+		else
+			echo $(sha256sum $i)
 		fi
 	fi
 done
