@@ -268,6 +268,7 @@ extern bool adaptflag;
 extern bool auto_detach;
 extern bool cjkwidth;
 extern bool default_startup;
+extern bool do_auth;
 extern bool hastruecolor;
 extern bool iflag;
 extern bool logtstamp_on;

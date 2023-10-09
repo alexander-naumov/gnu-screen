@@ -90,6 +90,7 @@ static void   SetTtyname(bool fatal, struct stat *st);
 int nversion;			/* numerical version, used for secondary DA */
 
 /* the attacher */
+bool      do_auth = false;
 struct    passwd *ppp;
 char     *attach_tty;
 int       attach_fd = -1;

@@ -887,6 +887,9 @@ Enables support for the "alternate screen" terminal capability.  @xref{Redisplay
 Execute a command at other displays or windows.  @xref{At}.
 @item attrcolor @var{attrib} [@var{attribute/color-modifier}]
 Map attributes to colors.  @xref{Attrcolor}.
+@item auth @var{state}
+This command enables/disables password protection for the screen session.
+It is off by default (authentication is disabled).
 @item autodetach @var{state}
 Automatically detach the session on SIGHUP.  @xref{Detach}.
 @item autonuke @var{state}

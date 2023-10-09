@@ -4296,6 +4296,17 @@ static void DoCommandAltscreen(struct action *act)
 		OutputMsg(0, "Will %sdo alternate screen switching", use_altscreen ? "" : "not ");
 }
 
+
+static void DoCommandAuth(struct action *act)
+{
+        int msgok = display && !*rc_name;
+
+        (void)ParseSwitch(act, &do_auth);
+        if (msgok)
+                OutputMsg(0, "Authentication: %s" , do_auth ? "enabled" : "disabled");
+}
+
+
 static void DoCommandBacktick(struct action *act)
 {
 	char **args = act->args;
@@ -5228,6 +5239,9 @@ void DoAction(struct action *act)
 		break;
 	case RC_ALTSCREEN:
 		DoCommandAltscreen(act);
+		break;
+	case RC_AUTH:
+		DoCommandAuth(act);
 		break;
 	case RC_BACKTICK:
 		DoCommandBacktick(act);
