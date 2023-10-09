@@ -7,7 +7,7 @@
 #echo $* (argv)
 
 if [ $# != 2 ]; then
-	echo "usage: $0 SAVANNAH_PATH GITHUB_PATH"
+	echo "usage: $0 SAVANNAH_SRC_PATH GITHUB_SRC_PATH"
 	exit 1
 fi
 
@@ -18,12 +18,12 @@ do
 	if [[ -d $i ]]; then
 		true
 	else
-		echo "$(sha256sum $i | gawk '{ print $1 }') $2/$i" | sha256sum --check  >/dev/null
+		echo "$(sha256sum $i | gawk '{ print $1 }') $2$i" | sha256sum --check  >/dev/null
 		if [ $? == 1 ]; then
 			echo
 			echo
 			echo =====================================================================
-			git --no-pager diff --no-index $i $2/$i
+			git --no-pager diff --no-index $i $2$i
 		fi
 	fi
 done
