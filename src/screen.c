@@ -90,13 +90,13 @@ static void   SetTtyname(bool fatal, struct stat *st);
 int nversion;			/* numerical version, used for secondary DA */
 
 /* the attacher */
-bool      do_auth = false;
-struct    passwd *ppp;
-char     *attach_tty;
-int       attach_fd = -1;
-char     *attach_term;
-char     *LoginName;
-struct    mode attach_Mode;
+bool          do_auth = false;
+struct        passwd *ppp;
+char         *attach_tty;
+int           attach_fd = -1;
+char         *attach_term;
+char         *LoginName;
+struct mode   attach_Mode;
 
 /* Indicator whether the current tty exists in another namespace. */
 bool      attach_tty_is_in_new_ns = false;
@@ -948,7 +948,7 @@ int main(int argc, char **argv)
 				*ap = '-';
 		if (strlen(socknamebuf) > FILENAME_MAX)
 			socknamebuf[FILENAME_MAX - 1] = 0;
-		snprintf(SocketPath + strlen(SocketPath), sizeof(SocketPath) - strlen(SocketPath) + 2, "/%s", socknamebuf);
+		snprintf(SocketPath + strlen(SocketPath), sizeof(SocketPath) - strlen(SocketPath), "/%s", socknamebuf);
 		SET_GUID();
 		Attacher();
 		/* NOTREACHED */
@@ -1013,7 +1013,7 @@ int main(int argc, char **argv)
 	if (strlen(socknamebuf) > FILENAME_MAX) {
 		socknamebuf[FILENAME_MAX] = 0;
 	}
-	snprintf(SocketPath + strlen(SocketPath), sizeof(SocketPath) - strlen(SocketPath) + 2, "/%s", socknamebuf);
+	snprintf(SocketPath + strlen(SocketPath), sizeof(SocketPath) - strlen(SocketPath), "/%s", socknamebuf);
 
 	ServerSocket = MakeServerSocket();
 #ifdef SYSTEM_SCREENRC

@@ -47,13 +47,9 @@
 #include <signal.h>
 
 #if ENABLE_PAM
-  #include <security/pam_appl.h>
+#include <security/pam_appl.h>
 #else
-  #ifdef _PWD_H_
-    #include <pwd.h>
-  #else
-    #include <shadow.h>
-  #endif /* PWD_H */
+#include <shadow.h>
 #endif
 
 #include "screen.h"
@@ -1207,30 +1203,13 @@ static bool CheckPassword(const char *password) {
 static bool CheckPassword(const char *password) {
 	bool ret = false;
 	char *passwd = 0;
-
-#ifndef _PWD_H
-	struct passwd *p;
-#else
 	struct spwd *p;
-#endif
-
 	gid_t gid = getegid();
 	uid_t uid = geteuid();
 
-	if (seteuid(0) || setegid(0)) {
+	if (seteuid(0) || setegid(0))
 		Panic(0, "\r\ncan't get root uid/gid\r\n");
-		printf("Can not get root uid/gid\n");
-	}
-
-#ifndef _PWD_H
-	p = getpwnam_shadow(ppp->pw_name);
-#else
 	p = getspnam(ppp->pw_name);
-#endif
-
-	if (p == NULL)
-		return false;
-
 	if (seteuid(uid) || setegid(gid))
 		Panic(0, "\r\ncan't restore uid/gid\r\n");
 
@@ -1239,13 +1218,10 @@ static bool CheckPassword(const char *password) {
 		return false;
 	}
 
-#ifndef _PWD_H
-	passwd = crypt(password, p->pw_passwd);
-	ret    = (strcmp(passwd, p->pw_passwd) == 0);
-#else
 	passwd = crypt(password, p->sp_pwdp);
-	ret    = (strcmp(passwd, p->sp_pwdp) == 0);
-#endif
+
+	ret = (strcmp(passwd, p->sp_pwdp) == 0);
+
 	return ret;
 }
 #endif /* ENABLE_PAM */
