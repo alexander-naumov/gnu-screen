@@ -372,6 +372,12 @@ brings up the windowlist on the blank window, while a @samp{+} will
 create new window. The command will not be executed if the specified
 window could not be found.
 
+@item -P
+Turns authentication on. By default @code{screen} allows to attach without
+enter the user's password. This option changes this behavior, i.e.
+enables authentication.
+The same effect can be done by using "auth on" command.
+
 @item -q
 Suppress printing of error messages. In combination with @samp{-ls} the exit 
 value is set as follows: 9 indicates a directory without sessions. 10 

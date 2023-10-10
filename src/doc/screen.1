@@ -300,6 +300,13 @@ brings up the windowlist on the blank window, while a \*Q+\*U
 will create a new window. The command will not be
 executed if the specified window could not be found.
 .TP 5
+.B \-P
+Turns authentication on. By default
+.I screen
+allows to attach without enter the user's password.
+This option changes this behavior, i.e. enables authentication.
+The same effect can be done by using "auth on" command.
+.TP 5
 .B \-q
 Suppress printing of error messages. In combination with \*Q-ls\*U the exit 
 value is as follows: 9 indicates a directory without sessions. 10 

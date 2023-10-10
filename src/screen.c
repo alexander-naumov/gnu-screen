@@ -268,6 +268,7 @@ static void exit_with_usage(char *myname, char *message, char *arg)
 	printf("-m            ignore $STY variable, do create a new screen session.\n");
 	printf("-O            Choose optimal output rather than exact vt100 emulation.\n");
 	printf("-p window     Preselect the named window if it exists.\n");
+	printf("-P            Tell screen to enable authentication.\n");
 	printf("-q            Quiet startup. Exits with non-zero return code if unsuccessful.\n");
 	printf("-Q            Commands will send the response to the stdout of the querying process.\n");
 	printf("-r [session]  Reattach to a detached screen process.\n");
@@ -402,6 +403,9 @@ int main(int argc, char **argv)
 						preselect = *++argv;
 					}
 					ap = NULL;
+					break;
+				case 'P':
+					do_auth = true;
 					break;
 				case 'c':
 					if (*++ap)
