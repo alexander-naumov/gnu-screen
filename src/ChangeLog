@@ -1,15 +1,27 @@
-Version 5.0.0 (08.07.24):
+Version 5.0.0 (28/08/24):
   * Rewriten autentication mechanism
   * Add escape %T to show current tty for window
-  * Add escape %C to show number of currently open windows
-  * Use wcwdith() instead of UTF-8 hard-coded tables (#63634)
+  * Add escape %O to show number of currently open windows
+  * Use wcwdith() instead of UTF-8 hard-coded tables
+  * New commands:
+	- auth [on|off]
+	  Provides password protection
+	- status [top|up|down|bottom] [left|right]
+	  The status window by default is in bottom-left corner.
+	  This command can move status messages to any corner of the screen.
+	- truecolor [on|off]
+	- multiinput
+	  input to multiple windows at the same time
   * Removed commands:
 	- time
 	- debug
 	- password
+	- maxwin
+	- nethack
   * Fixes:
-	- Screen buffers ESC keypresses indefinitely (#57748)
-	- Crashes after passing through a zmodem transfer (#25291)
+	- Screen buffers ESC keypresses indefinitely
+	- Crashes after passing through a zmodem transfer
+	- Fix double -U issue
 
 Version 4.9.1 (20/08/2023):
   * Support stop/parity bits on serial port (#23952)
