@@ -1,5 +1,5 @@
 Version 5.0.0 (28/08/24):
-  * Rewriten autentication mechanism
+  * Rewritten authentication mechanism
   * Add escape %T to show current tty for window
   * Add escape %O to show number of currently open windows
   * Use wcwdith() instead of UTF-8 hard-coded tables
