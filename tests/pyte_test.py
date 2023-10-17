@@ -29,15 +29,37 @@ PEXPECT LICENSE
 
 '''
 
+import datetime
 import pexpect
 import pyte
 import os
 import re
+import sys
+
 
 ROWS, COLS = 50, 174
 
 screen = pyte.Screen(COLS, ROWS)
 stream = pyte.Stream(screen)
+
+
+def entry_log(log, message):
+    try:
+        log = open(log, 'a+')
+        log.write("[" + datetime.datetime.now().strftime("%H:%M:%S") + "] " + message + "\n")
+        log.close()
+    except:
+        print("can't open/write logfile")
+        sys.exit(1)
+
+
+def error_exit(log, message):
+    print("§§§§§§§§§§§§§§§ ERROR §§§§§§§§§§§§§§§§§§§§§")
+    print(message)
+    print("§§§§§§§§§§§§§§§ ERROR §§§§§§§§§§§§§§§§§§§§§")
+    entry_log(log, message)
+    sys.exit(1)
+
 
 def spawn_process(cmd):
     env = os.environ.copy()
@@ -69,17 +91,17 @@ def pprint(out):
     print("-" * COLS)
 
 
-def run(T, CMD):
-    child.sendline(CMD)
-    child.expect(pexpect.TIMEOUT, timeout=T)
-    out = emulate_ansi_terminal(child.before+child.buffer, clean=False)
+def run(s, T, CMD):
+    s.sendline(CMD)
+    s.expect(pexpect.TIMEOUT, timeout=T)
+    out = emulate_ansi_terminal(s.before + s.buffer, clean=False)
     pprint(out)
 
 
-def screen_exit():
-    child.send('	\\')
+def screen_exit(s):
+    s.send('	\\')
     try:
-        run(1, '')
+        run(s, 1, '')
     except pexpect.exceptions.EOF as error:
         pass
         #print(type(error.args))
@@ -107,12 +129,37 @@ def screen_attach(session_id):
     child.sendline('')
 
 
-child = spawn_process('../src/screen')
-child.expect("Press")
-out = emulate_ansi_terminal(child.before+child.buffer, clean=False)
-pprint(out)
-child.sendline('')
+def test_welcome_message(s, log):
+    out = emulate_ansi_terminal(s.before + s.buffer, clean=False)
+    pprint(out)
+    if not re.search('Screen version 5.0.0', out):
+        error_exit(log, sys._getframe().f_code.co_name + ": wrong version")
+    else:
+        entry_log(log, "OK:    " + sys._getframe().f_code.co_name)
+    s.sendline('')
 
+
+def main():
+    FILE = 'screen-' + str(datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")) + '.log'
+    try:
+        logfd = open(FILE, 'a+')
+        logfd.write("[" + datetime.datetime.now().strftime("%H:%M:%S") + "] RUN TEST RUN\n")
+        logfd.close()
+    except:
+        print("can't open/write logfile " + FILE)
+        sys.exit(1)
+
+
+    s = spawn_process('../src/screen')
+    s.expect("Press")
+
+    test_welcome_message(s, FILE)
+
+
+
+    screen_exit(s)
+
+'''
 print("\nRun 'pwd':")
 run(1, "pwd")
 
@@ -203,3 +250,8 @@ run(1, 'true')
 #screen_attach(session_id)
 
 screen_exit()
+'''
+
+
+if __name__ == "__main__":
+    main()
