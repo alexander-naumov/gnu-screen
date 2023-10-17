@@ -316,6 +316,7 @@ def test_commands(s, log):
     #pprint(emulate_ansi_terminal(s.before + s.buffer, clean=False))
     #s.send(':next')
     #s.sendline('')
+    pass
 
 
 def main():
@@ -333,10 +334,10 @@ def main():
     test_keybindings(s, FILE)
     screen_exit(s)
 
-'''
-#session_id = screen_detach()
-#screen_attach(session_id)
-'''
+    '''
+    #session_id = screen_detach()
+    #screen_attach(session_id)
+    '''
 
 
 if __name__ == "__main__":
