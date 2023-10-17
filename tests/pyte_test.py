@@ -30,6 +30,7 @@ PEXPECT LICENSE
 '''
 
 import datetime
+import time
 import pexpect
 import pyte
 import os
@@ -96,6 +97,7 @@ def run(s, T, CMD):
     s.expect(pexpect.TIMEOUT, timeout=T)
     out = emulate_ansi_terminal(s.before + s.buffer, clean=False)
     pprint(out)
+    return out
 
 
 def screen_exit(s):
@@ -129,49 +131,94 @@ def screen_attach(session_id):
     child.sendline('')
 
 
-def test_welcome_message(s, log):
+def test_welcome(s, log):
     out = emulate_ansi_terminal(s.before + s.buffer, clean=False)
     pprint(out)
     if not re.search('Screen version 5.0.0', out):
         error_exit(log, sys._getframe().f_code.co_name + ": wrong version")
     else:
-        entry_log(log, "OK:    " + sys._getframe().f_code.co_name)
+        entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") correct version found")
     s.sendline('')
+
+
+def test_cmd_run(s, log):
+    #print("\nRun 'pwd':")
+    out = run(s, 1, "pwd")
+    if not re.search('tests', out):
+        error_exit(log, sys._getframe().f_code.co_name + "output from 'pwd' should include 'tests'")
+    else:
+        entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") correct 'pwd' output")
+
+    #print ("\nChange PATH to ../src:")
+    out = run(s, 1, "cd ../src/")
+
+    #print ("\nRun 'ls':")
+    out = run(s, 1, "ls")
+    if not re.search('ChangeLog', out):
+        error_exit(log, sys._getframe().f_code.co_name + "output from 'ls' should include 'ChangeLog' file")
+    else:
+        entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") correct 'ls' output")
+
+    #print("\nRun 'mc':")
+    out = run(s, 1, "mc")
+    if not re.search('Edit', out):
+        error_exit(log, sys._getframe().f_code.co_name + "output from 'mc' should include 'Edit'")
+    else:
+        entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") correct 'mc' output")
+
+
+def test_split(s, log):
+    '''                                                             ___
+    Split screen (ctrl-a |), switch to new window (ctrl-a tab) and | |X|
+    create there a new session (ctrl-a c)                          |_|_|
+    '''
+
+    s.send('|	c')
+    out = emulate_ansi_terminal(s.before + s.buffer, clean=False)
+    if not re.search('tests', out):
+        error_exit(log, sys._getframe().f_code.co_name + "after split and create new window we shlould see 'tests' PATH")
+    else:
+        entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") correct view after vertical split")
+
+    #print("\nRun 'echo $TERM':")
+    #run(s, 1, "echo $TERM")
+
+    #print("\nRun 'ping -c 5 localhost':")
+    run(s, 1, "ping localhost")
+    time.sleep(3)
+    out = emulate_ansi_terminal(s.before + s.buffer, clean=False)
+    pprint(out)
+
+
+    '''                                                             ___
+    Split screen (ctrl-a S), switch to new window (ctrl-a tab) and | |_|
+    create there a new session (ctrl-a c)                          |_|X|
+    '''
+    s.send('S	c')
+
+    #print("\nRun 'top':")
+    out = run(s, 1, 'top')
+    if not re.search('sleeping', out) and not re.search('64 bytes from localhost', out):
+        error_exit(log, sys._getframe().f_code.co_name + "output from 3er window with 'top' is wrong")
+    else:
+        entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") second split (vertical and horisontal) works fine")
 
 
 def main():
     FILE = 'screen-' + str(datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")) + '.log'
-    try:
-        logfd = open(FILE, 'a+')
-        logfd.write("[" + datetime.datetime.now().strftime("%H:%M:%S") + "] RUN TEST RUN\n")
-        logfd.close()
-    except:
-        print("can't open/write logfile " + FILE)
-        sys.exit(1)
-
 
     s = spawn_process('../src/screen')
     s.expect("Press")
 
-    test_welcome_message(s, FILE)
+    entry_log(FILE, "RUN TEST RUN")
 
-
+    test_welcome(s, FILE)
+    test_cmd_run(s,FILE)
+    test_split(s,FILE)
 
     screen_exit(s)
 
 '''
-print("\nRun 'pwd':")
-run(1, "pwd")
-
-print ("\nChange PATH to ../src:")
-run(1, "cd ../src/")
-
-print ("\nRun 'ls':")
-run(1, "ls")
-
-print("\nRun 'mc':")
-run(1, "mc")
-
 print("\nSplit screen (ctrl-a |), switch to new window (ctrl-a tab) and create there a new session (ctrl-a c):")
 child.send('|	c')
 
