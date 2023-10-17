@@ -90,7 +90,7 @@ def pprint(out):
     print("-" * COLS)
     print(out)
     print("-" * COLS)
-
+    return out
 
 def run(s, T, CMD):
     s.sendline(CMD)
@@ -185,9 +185,9 @@ def test_split(s, log):
 
     #print("\nRun 'ping -c 5 localhost':")
     run(s, 1, "ping localhost")
-    time.sleep(3)
-    out = emulate_ansi_terminal(s.before + s.buffer, clean=False)
-    pprint(out)
+    #time.sleep(3)
+    #out = emulate_ansi_terminal(s.before + s.buffer, clean=False)
+    #pprint(out)
 
 
     '''                                                             ___
@@ -203,6 +203,120 @@ def test_split(s, log):
     else:
         entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") second split (vertical and horisontal) works fine")
 
+    #send ctrl-c to 'top'
+    s.send('\x03') #ctrl-c
+    out = run(s, 2, 'true')
+    pprint(out)
+
+
+    #'''                            ___
+    #come back to the first window |X|_|
+    #                              |_|_|
+    #'''
+    #s.send('	2')
+    #pprint(emulate_ansi_terminal(child.before+child.buffer, clean=False))
+
+    '''                                    ___
+    Swith to the first window (with 'mc') | |_|
+                                          |_|X|
+    '''
+    s.send('0')
+    run(s, 1, 'true')
+
+
+    '''                                    ___
+    Swith focus to 'mc' on first window   |X|_|
+                                          |_|_|
+    '''
+    s.send('	')
+
+
+    '''                                                             ___
+    Split screen (ctrl-a S), switch to new window (ctrl-a tab) and |_|_|
+    create there a new session (ctrl-a c)                          |X|_|
+    Run 'ls -la' there
+    '''
+    s.send('S	c')
+    run(s, 1, 'true')
+    pprint(emulate_ansi_terminal(s.before + s.buffer, clean=False))
+    run(s, 1, 'ls -la')
+
+
+def test_keybindings(s, log):
+    '''
+    ====================== Test 'number' (ctrl-a N) =====================================
+    '''
+    s.send('N')
+    s.expect(pexpect.TIMEOUT, timeout=3)
+    out = pprint(emulate_ansi_terminal(s.before + s.buffer, clean=False))
+
+    if not re.search('This is window', out):
+        error_exit(log, sys._getframe().f_code.co_name + "keybinding 'number' is broken")
+    else:
+        entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") keybinding 'number'")
+
+
+    '''
+    ====================== Test 'windowlist -b' (ctrl-a ") ==============================
+    '''
+    s.send('"')
+    s.expect(pexpect.TIMEOUT, timeout=3)
+    out = pprint(emulate_ansi_terminal(s.before + s.buffer, clean=False))
+
+    if not re.search('Press ctrl-l to refresh; Return to end.', out):
+        error_exit(log, sys._getframe().f_code.co_name + "keybinding 'windowlist' is broken")
+    else:
+        entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") keybinding 'windowlist'")
+
+
+    '''
+    ====================== Test 'license' (ctrl-a ,) ====================================
+    '''
+    s.send(',')
+    s.expect(pexpect.TIMEOUT, timeout=3)
+    out = pprint(emulate_ansi_terminal(s.before + s.buffer, clean=False))
+
+    if not re.search('Naumov', out):
+        error_exit(log, sys._getframe().f_code.co_name + "keybinding 'license' is broken")
+    else:
+        entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") keybinding 'license'")
+
+    '''
+    ====================== Test 'help' (ctrl-a ?) =======================================
+    '''
+    s.send('?')
+    s.expect(pexpect.TIMEOUT, timeout=3)
+    out = pprint(emulate_ansi_terminal(s.before + s.buffer, clean=False))
+
+    if not re.search('Screen key bindings', out):
+        error_exit(log, sys._getframe().f_code.co_name + "keybinding 'help' is broken")
+    else:
+        entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") keybinding 'help'")
+
+    '''
+    ====================== Test 'kill' (ctrl-a K) =======================================
+    '''
+    s.send('  ')
+    s.send('K')
+    s.expect(pexpect.TIMEOUT, timeout=3)
+    out = pprint(emulate_ansi_terminal(s.before + s.buffer, clean=False))
+
+    if not re.search('killed', out):
+        error_exit(log, sys._getframe().f_code.co_name + "keybinding 'kill' is broken")
+    else:
+        entry_log(log, "OK (" + sys._getframe().f_code.co_name + ") keybinding 'kill' %)")
+
+
+def test_commands(s, log):
+    #'''
+    #Test command :next
+    #'''
+    #s.send(':next')
+    #s.sendline('')
+    #pprint(emulate_ansi_terminal(s.before + s.buffer, clean=False))
+    #s.send(':next')
+    #s.sendline('')
+
 
 def main():
     FILE = 'screen-' + str(datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")) + '.log'
@@ -216,87 +330,12 @@ def main():
     test_cmd_run(s,FILE)
     test_split(s,FILE)
 
+    test_keybindings(s, FILE)
     screen_exit(s)
 
 '''
-print("\nSplit screen (ctrl-a |), switch to new window (ctrl-a tab) and create there a new session (ctrl-a c):")
-child.send('|	c')
-
-print("\nRun 'echo $TERM':")
-run(1, "echo $TERM")
-
-print("\nRun 'ping -c 5 localhost':")
-run(1, "ping -c 5 localhost")
-
-#os.system('clear')
-
-print("\nSplit screen (ctrl-a S), switch to new window (ctrl-a tab) and create there a new session (ctrl-a c):")
-child.send('S	c')
-
-print("\nRun 'top':")
-run(1, 'top')
-
-print("come back to first window")
-child.send('	2')
-pprint(emulate_ansi_terminal(child.before+child.buffer, clean=False))
-print("\nsend ctrl-c to 'top':")
-child.send('\x03') #ctrl-c
-run(2, 'true')
-
-print("Swith to 'mc' on first window")
-child.send('0')
-run(1, 'true')
-
-print("\nSplit screen (ctrl-a S), switch to new window (ctrl-a tab) and create there a new session (ctrl-a c):")
-child.send('S	c')
-
-print("\nRun 'ls' on the last window")
-child.sendline('')
-run(1, 'ls -la')
-
-print("\nTest command :next")
-child.send(':next')
-child.sendline('')
-pprint(emulate_ansi_terminal(child.before+child.buffer, clean=False))
-child.send(':next')
-child.sendline('')
-
-
-
-print("Show license:")
-child.send(',')
-pprint(emulate_ansi_terminal(child.before+child.buffer, clean=False))
-child.expect(pexpect.TIMEOUT, timeout=3)
-child.sendline('')
-
-
-print("Test 'list of sessions':")
-child.send('	')
-child.send('"')
-pprint(emulate_ansi_terminal(child.before+child.buffer, clean=False))
-child.expect(pexpect.TIMEOUT, timeout=3)
-pprint(emulate_ansi_terminal(child.before+child.buffer, clean=False))
-child.sendline('')
-child.sendline('')
-#run(1, 'true')
-
-#FIXME
-print("Test 'help':")
-#child.send('	')
-child.send('?')
-pprint(emulate_ansi_terminal(child.before+child.buffer, clean=False))
-child.expect(pexpect.TIMEOUT, timeout=3)
-pprint(emulate_ansi_terminal(child.before+child.buffer, clean=False))
-child.expect(pexpect.TIMEOUT, timeout=3)
-child.sendline('')
-child.sendline('')
-
-run(1, 'true')
-
 #session_id = screen_detach()
 #screen_attach(session_id)
-
-screen_exit()
 '''
 
 
