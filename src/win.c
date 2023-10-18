@@ -48,8 +48,7 @@
 #include "process.h"
 #include "sched.h"
 
-/* TODO: rid global variable (has been renamed to point this out; see commit
- * history) */
+/* TODO: rid global variable (has been renamed to point this out; see commit history) */
 WinMsgBuf *g_winmsg;
 
 #define CHRPAD 127
@@ -68,21 +67,17 @@ static const char months[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
 /* redundant definition abstraction for escape character handlers; note that
  * a variable varadic macro name is a gcc extension and is not portable, so
  * we instead use two separate macros */
-#define WINMSG_ESC_PARAMS \
-	__attribute__((unused)) WinMsgEsc *esc, \
-	__attribute__((unused)) char **src, \
-	__attribute__((unused)) WinMsgBufContext *wmbc, \
-	__attribute__((unused)) WinMsgCond *cond
-#define winmsg_esc__name(name) __WinMsgEsc##name
-#define winmsg_esc__def(name) static void winmsg_esc__name(name)
-#define winmsg_esc(name) winmsg_esc__def(name)(WINMSG_ESC_PARAMS)
-#define winmsg_esc_ex(name, ...) winmsg_esc__def(name)(WINMSG_ESC_PARAMS, __VA_ARGS__)
-#define WINMSG_ESC_ARGS &esc, &s, wmbc, cond
-#define WinMsgDoEsc(name) winmsg_esc__name(name)(WINMSG_ESC_ARGS)
-#define WinMsgDoEscEx(name, ...) winmsg_esc__name(name)(WINMSG_ESC_ARGS, __VA_ARGS__)
+
+
+#define winmsg_esc_ex(name, ...) \
+	static void __WinMsgEsc##name \
+                    (__attribute__((unused)) WinMsgEsc *esc,\
+		     __attribute__((unused)) char **src, \
+		     __attribute__((unused)) WinMsgBufContext *wmbc, \
+		     __attribute__((unused)) WinMsgCond *cond, \
+		     __VA_ARGS__)
 
 static void _MakeWinMsgEvRec(WinMsgBufContext *, WinMsgCond *, char *, Window *, int *, int);
-
 
 
 /* Allocate and initialize to the empty string a new window message buffer. The
@@ -379,19 +374,6 @@ void wmbc_free(WinMsgBufContext *c)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Initialize new condition and set to false; can be used to re-initialize a
  * condition for re-use */
 void wmc_init(WinMsgCond *cond, int offset)
@@ -551,7 +533,11 @@ winmsg_esc_ex(Wflags, Window *win)
 	wmbc_fastfw0(wmbc);
 }
 
-winmsg_esc(Pid)
+static void
+__WinMsgEscPid(__attribute__((unused)) WinMsgEsc *esc, \
+                    __attribute__((unused)) char **src, \
+                    __attribute__((unused)) WinMsgBufContext *wmbc, \
+                    __attribute__((unused)) WinMsgCond *cond)
 {
 	wmbc_printf(wmbc, "%d", (esc->flags.plus && display) ? D_userpid : getpid());
 }
@@ -579,7 +565,11 @@ winmsg_esc_ex(CopyMode, Event *ev)
 	}
 }
 
-winmsg_esc(EscSeen)
+static void
+__WinMsgEscEscSeen(__attribute__((unused)) WinMsgEsc *esc, \
+                    __attribute__((unused)) char **src, \
+                    __attribute__((unused)) WinMsgBufContext *wmbc, \
+                    __attribute__((unused)) WinMsgCond *cond)
 {
 	if (display && D_ESCseen) {
 		wmc_set(cond);
@@ -596,7 +586,11 @@ winmsg_esc_ex(Focus, Window *win, Event *ev)
 		wmc_set(cond);
 }
 
-winmsg_esc(HostName)
+static void
+__WinMsgEscHostName(__attribute__((unused)) WinMsgEsc *esc, \
+                    __attribute__((unused)) char **src, \
+                    __attribute__((unused)) WinMsgBufContext *wmbc, \
+                    __attribute__((unused)) WinMsgCond *cond)
 {
 	if (*wmbc_strcpy(wmbc, HostName))
 		wmc_set(cond);
@@ -744,7 +738,11 @@ winmsg_esc_ex(PadOrTrunc, int *numpad, int *lastpad, int padlen)
  * The first character of SRC is assumed to be (unverified) the opening brace
  * of the sequence.
  */
-winmsg_esc(Rend)
+static void
+__WinMsgEscRend(__attribute__((unused)) WinMsgEsc *esc, \
+                    __attribute__((unused)) char **src, \
+                    __attribute__((unused)) WinMsgBufContext *wmbc, \
+                    __attribute__((unused)) WinMsgCond *cond)
 {
 	char rbuf[RENDBUF_SIZE];
 	uint8_t i;
@@ -769,7 +767,11 @@ winmsg_esc(Rend)
 	*src += i;
 }
 
-winmsg_esc(SessName)
+static void
+__WinMsgEscSessName(__attribute__((unused)) WinMsgEsc *esc, \
+                    __attribute__((unused)) char **src, \
+                    __attribute__((unused)) WinMsgBufContext *wmbc, \
+                    __attribute__((unused)) WinMsgCond *cond)
 {
 	char *session_name = strchr(SocketName, '.') + 1;
 
@@ -829,19 +831,19 @@ winmsg_esc_ex(WinArgv, Window *win)
 }
 
 static void
-__WinMsgEscEsc_YEAR(WinMsgBufContext *wmbc, struct tm *tm)
+hardstatus_YEAR(WinMsgBufContext *wmbc, struct tm *tm)
 {
 	wmbc_printf(wmbc, "%04d", tm->tm_year + 1900);
 }
 
 static void
-__WinMsgEscEsc_year(WinMsgBufContext *wmbc, struct tm *tm)
+hardstatus_year(WinMsgBufContext *wmbc, struct tm *tm)
 {
             wmbc_printf(wmbc, "%02d", tm->tm_year % 100);
 }
 
 static void
-__WinMsgEscEsc_MONTH(WinMsgBufContext *wmbc, struct tm *tm)
+hardstatus_MONTH(WinMsgBufContext *wmbc, struct tm *tm)
 {
 #ifdef USE_LOCALE
             strftime(wmbc, l, (longflg ? "%B" : "%b"), tm);
@@ -851,13 +853,13 @@ __WinMsgEscEsc_MONTH(WinMsgBufContext *wmbc, struct tm *tm)
 }
 
 static void
-__WinMsgEscEsc_month(WinMsgBufContext *wmbc, struct tm *tm)
+hardstatus_month(WinMsgBufContext *wmbc, struct tm *tm)
 {
             wmbc_printf(wmbc, "%02d", tm->tm_mon + 1);
 }
 
 static void
-__WinMsgEscEsc_DAY(WinMsgBufContext *wmbc, struct tm *tm)
+hardstatus_DAY(WinMsgBufContext *wmbc, struct tm *tm)
 {
 #ifdef USE_LOCALE
             strftime(wmbc, l, (longflg ? "%A" : "%a"), tm);
@@ -867,32 +869,32 @@ __WinMsgEscEsc_DAY(WinMsgBufContext *wmbc, struct tm *tm)
 }
 
 static void
-__WinMsgEscEsc_day(WinMsgBufContext *wmbc, struct tm *tm)
+hardstatus_day(WinMsgBufContext *wmbc, struct tm *tm)
 {
             wmbc_printf(wmbc, "%02d", tm->tm_mday % 100);
 }
 
 static void
-__WinMsgEscEsc_HOUR(WinMsgBufContext *wmbc, struct tm *tm)
+hardstatus_HOUR(WinMsgBufContext *wmbc, struct tm *tm)
 {
             wmbc_printf(wmbc, tm->tm_hour >= 12 ? "PM" : "AM");
 }
 
 static void
-__WinMsgEscEsc_hour(WinMsgBufContext *wmbc, struct tm *tm)
+hardstatus_hour(WinMsgBufContext *wmbc, struct tm *tm)
 {
             wmbc_printf(wmbc, tm->tm_hour >= 12 ? "pm" : "am");
 }
 
 
 static void
-__WinMsgEscEsc_TIME(WinMsgBufContext *wmbc, struct tm *tm, WinMsgEsc esc)
+hardstatus_TIME(WinMsgBufContext *wmbc, struct tm *tm, WinMsgEsc esc)
 {
             wmbc_printf(wmbc, esc.flags.zero ? "%02d:%02d" : "%2d:%02d", (tm->tm_hour + 11) % 12 + 1, tm->tm_min);
 }
 
 static void
-__WinMsgEscEsc_time(WinMsgBufContext *wmbc, struct tm *tm, WinMsgEsc esc)
+hardstatus_time(WinMsgBufContext *wmbc, struct tm *tm, WinMsgEsc esc)
 {
             wmbc_printf(wmbc, esc.flags.zero ? "%02d:%02d" : "%2d:%02d", tm->tm_hour, tm->tm_min);
 }
@@ -1117,112 +1119,110 @@ char *MakeWinMsgEv(WinMsgBuf *winmsg, char *str, Window *win,
 
 		switch (*s) {
 		case WINESC_TIME:
-			__WinMsgEscEsc_TIME(wmbc, tm, esc);
+			hardstatus_TIME(wmbc, tm, esc);
 			if (!tick || tick > 60)
 				tick = 60;
 			break;
 		case WINESC_time:
-			__WinMsgEscEsc_time(wmbc, tm, esc);
+			hardstatus_time(wmbc, tm, esc);
 			if (!tick || tick > 60)
 				tick = 60;
 			break;
 		case WINESC_HOUR:
-			__WinMsgEscEsc_HOUR(wmbc, tm);
+			hardstatus_HOUR(wmbc, tm);
 			break;
 		case WINESC_hour:
-			__WinMsgEscEsc_hour(wmbc, tm);
+			hardstatus_hour(wmbc, tm);
 			break;
 		case WINESC_DAY:
-			__WinMsgEscEsc_DAY(wmbc, tm);
+			hardstatus_DAY(wmbc, tm);
 			break;
 		case WINESC_day:
-			__WinMsgEscEsc_day(wmbc, tm);
+			hardstatus_day(wmbc, tm);
 			break;
 		case WINESC_MONTH:
-			__WinMsgEscEsc_MONTH(wmbc, tm);
+			hardstatus_MONTH(wmbc, tm);
 			break;
 		case WINESC_month:
-			__WinMsgEscEsc_month(wmbc, tm);
+			hardstatus_month(wmbc, tm);
 			break;
 		case WINESC_YEAR:
-			__WinMsgEscEsc_YEAR(wmbc, tm);
+			hardstatus_YEAR(wmbc, tm);
 			break;
 		case WINESC_year:
-			__WinMsgEscEsc_year(wmbc, tm);
+			hardstatus_year(wmbc, tm);
 			break;
 		case WINESC_COND:
-			WinMsgDoEscEx(Cond, &qmnumrend);
+			__WinMsgEscCond (&esc, &s, wmbc, cond, &qmnumrend);
 			break;
 		case WINESC_COND_ELSE:
-			WinMsgDoEscEx(CondElse, &qmnumrend);
+			__WinMsgEscCondElse (&esc, &s, wmbc, cond, &qmnumrend);
 			break;
 		case WINESC_HSTATUS:
-			WinMsgDoEscEx(Hstatus, win, &tick, rec);
+			__WinMsgEscHstatus (&esc, &s, wmbc, cond, win, &tick, rec);
 			break;
 		case WINESC_BACKTICK:
-			WinMsgDoEscEx(Backtick, esc.num, win, &tick, &now, rec);
+			__WinMsgEscBacktick (&esc, &s, wmbc, cond, esc.num, win, &tick, &now, rec);
 			break;
 		case WINESC_CMD:
 		case WINESC_CMD_ARGS:
-			WinMsgDoEscEx(WinArgv, win);
+			__WinMsgEscWinArgv (&esc, &s, wmbc, cond, win);
 			break;
 		case WINESC_WIN_NAMES:
 		case WINESC_WIN_NAMES_NOCUR:
-			WinMsgDoEscEx(WinNames, (*s == WINESC_WIN_NAMES_NOCUR), win);
+			__WinMsgEscWinNames (&esc, &s, wmbc, cond,(*s == WINESC_WIN_NAMES_NOCUR), win);
 			break;
 		case WINESC_WFLAGS:
-			WinMsgDoEscEx(Wflags, win);
+			__WinMsgEscWflags (&esc, &s, wmbc, cond, win);
 			break;
 		case WINESC_WIN_TITLE:
-			WinMsgDoEscEx(WinTitle, win);
+			__WinMsgEscWinTitle (&esc, &s, wmbc, cond, win);
 			break;
 		case WINESC_WIN_GROUP:
-			WinMsgDoEscEx(WinGroup, win);
+			__WinMsgEscWinGroup (&esc, &s, wmbc, cond, win);
 			break;
 		case WINESC_REND_START:
-			WinMsgDoEsc(Rend);
+			__WinMsgEscRend (&esc, &s, wmbc, cond);
 			break;
 		case WINESC_HOST:
-			WinMsgDoEsc(HostName);
+			__WinMsgEscHostName (&esc, &s, wmbc, cond);
 			break;
 		case WINESC_SESS_NAME:
-			WinMsgDoEsc(SessName);
+			__WinMsgEscSessName (&esc, &s, wmbc, cond);
 			break;
 		case WINESC_PID:
-			WinMsgDoEsc(Pid);
+			__WinMsgEscPid (&esc, &s, wmbc, cond);
 			break;
 		case WINESC_FOCUS:
-			WinMsgDoEscEx(Focus, win, ev);
+			__WinMsgEscFocus (&esc, &s, wmbc, cond, win, ev);
 			break;
 		case WINESC_COPY_MODE:
-			WinMsgDoEscEx(CopyMode, ev);
+			__WinMsgEscCopyMode (&esc, &s, wmbc, cond, ev);
 			break;
 		case WINESC_ESC_SEEN:
-			WinMsgDoEsc(EscSeen);
+			__WinMsgEscEscSeen (&esc, &s, wmbc, cond);
 			break;
 		case WINESC_TRUNC_POS:
-			WinMsgDoEscEx(TruncPos,
-				((esc.num > 100) ? 100 : esc.num),
-				esc.flags.lng);
+			__WinMsgEscTruncPos (&esc, &s, wmbc, cond, ((esc.num > 100) ? 100 : esc.num), esc.flags.lng);
 			break;
 		case WINESC_PAD:
 		case WINESC_TRUNC:
-			WinMsgDoEscEx(PadOrTrunc, &numpad, &lastpad, padlen);
+			__WinMsgEscPadOrTrunc (&esc, &s, wmbc, cond,&numpad, &lastpad, padlen);
 			break;
 		case WINESC_WIN_SIZE:
-			WinMsgDoEscEx(WinSize, win);
+			__WinMsgEscWinSize (&esc, &s, wmbc, cond, win);
 			break;
 		case WINESC_WIN_NUM:
-			WinMsgDoEscEx(WinNum, win);
+			__WinMsgEscWinNum (&esc, &s, wmbc, cond, win);
 			break;
 		case WINESC_WIN_COUNT:
-			WinMsgDoEscEx(WinCount, win);
+			__WinMsgEscWinCount (&esc, &s, wmbc, cond, win);
 			break;
 		case WINESC_WIN_LOGNAME:
-			WinMsgDoEscEx(WinLogName, win);
+			__WinMsgEscWinLogName (&esc, &s, wmbc, cond, win);
 			break;
 		case WINESC_WIN_TTY:
-			WinMsgDoEscEx(WinTty, win);
+			__WinMsgEscWinTty (&esc, &s, wmbc, cond, win);
 			break;
 		}
 	}
