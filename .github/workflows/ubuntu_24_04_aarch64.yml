@@ -96,8 +96,8 @@ jobs:
                 ./autogen.sh
 
                 echo "-----------------------------------------------------"
-                echo "> cc=gcc ./configure CFLAGS='-Wall -DDEBUG'"
-                cc=gcc ./configure CFLAGS="-Wall -DDEBUG"
+                echo "> cc=gcc ./configure CFLAGS='-Wall'"
+                cc=gcc ./configure CFLAGS="-Wall"
 
                 echo "-----------------------------------------------------"
                 echo "> make"
@@ -116,8 +116,8 @@ jobs:
                 make clean
 
                 echo "-----------------------------------------------------"
-                echo "> cc=clang ./configure CFLAGS='-Wall -DDEBUG'"
-                cc=clang ./configure CFLAGS="-Wall -DDEBUG"
+                echo "> cc=clang ./configure CFLAGS='-Wall'"
+                cc=clang ./configure CFLAGS="-Wall"
 
                 echo "-----------------------------------------------------"
                 echo "> make"

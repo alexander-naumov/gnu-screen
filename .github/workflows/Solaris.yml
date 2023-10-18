@@ -28,8 +28,8 @@ jobs:
           git clone https://github.com/alexander-naumov/gnu-screen.git
           cd gnu-screen/src
           ./autogen.sh
-          echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
-          ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+          echo "> ./configure --disable-pam CFLAGS='-Wall'"
+          ./configure --disable-pam CFLAGS="-Wall"
           make
           ./screen -v
           ./screen --help

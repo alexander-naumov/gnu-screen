@@ -42,7 +42,7 @@ jobs:
     - name: gcc configure
       shell: bash
       working-directory: ${{github.workspace}}/src
-      run: cc=gcc ./configure CFLAGS="-Wall -DDEBUG"
+      run: cc=gcc ./configure CFLAGS="-Wall"
 
     - name: gcc build
       shell: bash
@@ -69,7 +69,7 @@ jobs:
     - name: clang configure
       shell: bash
       working-directory: ${{github.workspace}}/src
-      run: cc=clang ./configure CFLAGS="-Wall -DDEBUG"
+      run: cc=clang ./configure CFLAGS="-Wall"
 
     - name: clang build
       shell: bash

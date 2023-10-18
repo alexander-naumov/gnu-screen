@@ -61,7 +61,7 @@ jobs:
       working-directory: ${{github.workspace}}/src
       run: |
         clang -v
-        cc=clang ./configure --disable-pam CFLAGS='-Wall -DDEBUG'
+        cc=clang ./configure --disable-pam CFLAGS='-Wall'
 
     - name: Build DEBUG
       working-directory: ${{github.workspace}}/src

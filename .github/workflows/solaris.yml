@@ -27,7 +27,7 @@ jobs:
           git clone https://github.com/alexander-naumov/screen.git
           cd screen/src
           ./autogen.sh
-          echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
-          ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+          echo "> ./configure --disable-pam CFLAGS='-Wall'"
+          ./configure --disable-pam CFLAGS="-Wall"
           make
           echo "OK"

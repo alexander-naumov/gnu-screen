@@ -36,8 +36,8 @@ jobs:
 
     - name: DEBUG build
       run: |
-        echo "> cc=clang ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
-        cc=clang ./configure --disable-pam CFLAGS='-Wall -DDEBUG'
+        echo "> cc=clang ./configure --disable-pam CFLAGS='-Wall'"
+        cc=clang ./configure --disable-pam CFLAGS='-Wall'
         echo "> gmake"
         gmake
 

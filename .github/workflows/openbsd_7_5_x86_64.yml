@@ -63,8 +63,8 @@ jobs:
             echo $?
 
             echo "------------------------------------------------------------"
-            echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
-            ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+            echo "> ./configure --disable-pam CFLAGS='-Wall'"
+            ./configure --disable-pam CFLAGS="-Wall"
 
             echo "------------------------------------------------------------"
             echo "> gmake"

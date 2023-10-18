@@ -24,8 +24,8 @@ jobs:
         export AUTOCONF_VERSION=2.71
         export AUTOMAKE_VERSION=1.15
         ./autogen.sh
-        echo "> ./configure --disable-pam CFLAGS='-Wall -DDEBUG'"
-        ./configure --disable-pam CFLAGS="-Wall -DDEBUG"
+        echo "> ./configure --disable-pam CFLAGS='-Wall'"
+        ./configure --disable-pam CFLAGS="-Wall"
         echo "> make"
         make
 
