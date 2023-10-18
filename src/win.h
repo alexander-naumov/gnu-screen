@@ -1,4 +1,4 @@
-/* Copyright (c) 2014
+/* Copyright (c) 2024
  *      Alexander Naumov (alexander_naumov@opensuse.org)
  *
  * This file is part of GNU screen.
@@ -72,39 +72,38 @@ typedef struct {
 } WinMsgCond;
 
 /* WinMsgCond is intended to be used as an opaque type */
-void wmc_init(WinMsgCond *, int);
-void wmc_set(WinMsgCond *);
-void wmc_clear(WinMsgCond *);
-bool wmc_is_active(const WinMsgCond *);
-bool wmc_is_set(const WinMsgCond *);
-int  wmc_else(WinMsgCond *, int, bool *);
-int  wmc_end(const WinMsgCond *, int, bool *);
-void wmc_deinit(WinMsgCond *);
+void        wmc_init(WinMsgCond *, int);
+void        wmc_set(WinMsgCond *);
+void        wmc_clear(WinMsgCond *);
+bool        wmc_is_active(const WinMsgCond *);
+bool        wmc_is_set(const WinMsgCond *);
+int         wmc_else(WinMsgCond *, int, bool *);
+int         wmc_end(const WinMsgCond *, int, bool *);
+void        wmc_deinit(WinMsgCond *);
 
-
-WinMsgBuf *wmb_create(void);
-void wmb_reset(WinMsgBuf *);
-size_t wmb_expand(WinMsgBuf *, size_t);
-void wmb_rendadd(WinMsgBuf *, uint64_t, int);
-size_t wmb_size(const WinMsgBuf *);
+WinMsgBuf  *wmb_create(void);
+void        wmb_reset(WinMsgBuf *);
+size_t      wmb_expand(WinMsgBuf *, size_t);
+void        wmb_rendadd(WinMsgBuf *, uint64_t, int);
+size_t      wmb_size(const WinMsgBuf *);
 const char *wmb_contents(const WinMsgBuf *);
-void wmb_reset(WinMsgBuf *);
-void wmb_free(WinMsgBuf *);
+void        wmb_reset(WinMsgBuf *);
+void        wmb_free(WinMsgBuf *);
 
 WinMsgBufContext *wmbc_create(WinMsgBuf *);
-void wmbc_rewind(WinMsgBufContext *);
-void wmbc_fastfw0(WinMsgBufContext *);
-void wmbc_fastfw_end(WinMsgBufContext *);
-void wmbc_putchar(WinMsgBufContext *, char);
-const char *wmbc_strncpy(WinMsgBufContext *, const char *, size_t);
-const char *wmbc_strcpy(WinMsgBufContext *, const char *);
-int wmbc_printf(WinMsgBufContext *, const char *, ...)
+void              wmbc_rewind(WinMsgBufContext *);
+void              wmbc_fastfw0(WinMsgBufContext *);
+void              wmbc_fastfw_end(WinMsgBufContext *);
+void              wmbc_putchar(WinMsgBufContext *, char);
+const char       *wmbc_strncpy(WinMsgBufContext *, const char *, size_t);
+const char       *wmbc_strcpy(WinMsgBufContext *, const char *);
+int               wmbc_printf(WinMsgBufContext *, const char *, ...)
                 __attribute__((format(printf,2,3)));
-size_t wmbc_offset(WinMsgBufContext *);
-size_t wmbc_bytesleft(WinMsgBufContext *);
-const char *wmbc_mergewmb(WinMsgBufContext *, WinMsgBuf *);
-const char *wmbc_finish(WinMsgBufContext *);
-void wmbc_free(WinMsgBufContext *);
+size_t            wmbc_offset(WinMsgBufContext *);
+size_t            wmbc_bytesleft(WinMsgBufContext *);
+const char       *wmbc_mergewmb(WinMsgBufContext *, WinMsgBuf *);
+const char       *wmbc_finish(WinMsgBufContext *);
+void              wmbc_free(WinMsgBufContext *);
 
 /* escape characters (alphabetical order) */
 typedef enum {
