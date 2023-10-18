@@ -34,7 +34,7 @@
 #include "help.h"
 #include "list_generic.h"
 #include "resize.h"
-#include "winmsg.h"
+#include "win.h"
 
 static void CanvasInitBlank(Canvas *cv)
 {

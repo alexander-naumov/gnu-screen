@@ -75,9 +75,9 @@ Franklin Street, Fifth Floor, Boston, MA  02111-1301  USA.\n"
 static int gl_License_header(ListData *ldata)
 {
 	(void)ldata; /* unused */
-	char str_version[75]; /* 75 is strlen("Screen version ") + sizeof(version[60]); */
+	char str_version[80]; /* 79 is strlen("GNU Screen version ") + sizeof(version[60]); */
 
-	snprintf(str_version, 75, "Screen version %s", version);
+	snprintf(str_version, 80, "GNU Screen version %s", version);
 
 	centerline(str_version, 0);
 

@@ -57,7 +57,7 @@
 #include "list_generic.h"
 #include "mark.h"
 #include "utmp.h"
-#include "winmsg.h"
+#include "win.h"
 
 extern char **environ;
 

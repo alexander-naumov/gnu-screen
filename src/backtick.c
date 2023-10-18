@@ -35,7 +35,7 @@
 
 #include "fileio.h"
 #include "misc.h"
-#include "winmsg.h"
+#include "win.h"
 
 /* TODO: get rid of global var */
 static Backtick *backticks;

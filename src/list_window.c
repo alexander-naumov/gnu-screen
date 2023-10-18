@@ -35,7 +35,7 @@
 #include "layer.h"
 #include "misc.h"
 #include "process.h"
-#include "winmsg.h"
+#include "win.h"
 
 static char ListID[] = "window";
 

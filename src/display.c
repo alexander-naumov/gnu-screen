@@ -51,7 +51,7 @@
 #include "resize.h"
 #include "termcap.h"
 #include "tty.h"
-#include "winmsg.h"
+#include "win.h"
 
 /* CSI parsing status */
 enum {

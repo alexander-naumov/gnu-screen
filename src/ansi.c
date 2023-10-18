@@ -44,7 +44,7 @@
 #include "misc.h"
 #include "process.h"
 #include "resize.h"
-#include "winmsg.h"
+#include "win.h"
 
 /* widths for Z0/Z1 switching */
 const int Z0width = 132;

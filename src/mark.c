@@ -42,7 +42,7 @@
 #include "fileio.h"
 #include "process.h"
 #include "search.h"
-#include "winmsg.h"
+#include "win.h"
 
 /*
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

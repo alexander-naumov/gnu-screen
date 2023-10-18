@@ -53,8 +53,7 @@ CFILES=	screen.c \
 	display.c encoding.c fileio.c help.c input.c kmapdef.c layer.c \
 	layout.c list_display.c list_generic.c list_license.o list_window.c logfile.c mark.c \
 	misc.c process.c pty.c resize.c sched.c search.c socket.c telnet.c \
-	term.c termcap.c tty.c utmp.c viewport.c window.c winmsg.c \
-	winmsgbuf.c winmsgcond.c
+	term.c termcap.c tty.c utmp.c viewport.c window.c win.c
 OFILES=$(CFILES:c=o)
 
 TESTCFILES := $(wildcard tests/test-*.c)
@@ -169,29 +168,29 @@ depend.in: $(CFILES) term.h
 ### Dependencies:
 screen.o: screen.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h winmsg.h winmsgbuf.h winmsgcond.h backtick.h \
+ logfile.h win.h backtick.h \
  fileio.h mark.h attacher.h encoding.h help.h misc.h process.h socket.h \
  termcap.h tty.h utmp.h
 ansi.o: ansi.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h winmsg.h winmsgbuf.h winmsgcond.h backtick.h encoding.h \
+ logfile.h win.h backtick.h encoding.h \
  fileio.h help.h mark.h misc.h process.h resize.h
 fileio.o: fileio.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h fileio.h misc.h process.h winmsgbuf.h termcap.h encoding.h
+ logfile.h fileio.h misc.h process.h win.h termcap.h encoding.h
 mark.o: mark.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h encoding.h fileio.h mark.h process.h winmsgbuf.h search.h
+ logfile.h encoding.h fileio.h mark.h process.h win.h search.h
 misc.o: misc.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
  logfile.h
 resize.o: resize.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h process.h winmsgbuf.h resize.h telnet.h
+ logfile.h process.h win.h resize.h telnet.h
 socket.o: socket.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
  logfile.h encoding.h fileio.h list_generic.h misc.h process.h \
- winmsgbuf.h resize.h socket.h termcap.h tty.h utmp.h
+ win.h resize.h socket.h termcap.h tty.h utmp.h
 search.o: search.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
  logfile.h mark.h input.h
@@ -201,7 +200,7 @@ tty.o: tty.c config.h screen.h os.h ansi.h sched.h acls.h comm.h layer.h \
 term.o: term.c term.h
 window.o: window.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h winmsg.h winmsgbuf.h winmsgcond.h backtick.h fileio.h help.h \
+ logfile.h win.h backtick.h fileio.h help.h \
  input.h mark.h misc.h process.h pty.h resize.h telnet.h termcap.h tty.h \
  utmp.h
 utmp.o: utmp.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
@@ -209,10 +208,10 @@ utmp.o: utmp.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  logfile.h misc.h tty.h utmp.h
 help.o: help.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h misc.h list_generic.h process.h winmsgbuf.h
+ logfile.h misc.h list_generic.h process.h win.h
 termcap.o: termcap.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h encoding.h misc.h process.h winmsgbuf.h resize.h termcap.h
+ logfile.h encoding.h misc.h process.h win.h resize.h termcap.h
 input.o: input.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
  logfile.h misc.h
@@ -223,12 +222,12 @@ pty.o: pty.c config.h screen.h os.h ansi.h sched.h acls.h comm.h layer.h \
  term.h image.h canvas.h display.h layout.h viewport.h window.h logfile.h
 process.o: process.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h winmsg.h winmsgbuf.h winmsgcond.h backtick.h encoding.h \
+ logfile.h win.h backtick.h encoding.h \
  fileio.h help.h input.h kmapdef.h list_generic.h mark.h misc.h process.h \
  resize.h search.h socket.h telnet.h termcap.h tty.h utmp.h
 display.o: display.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h winmsg.h winmsgbuf.h winmsgcond.h backtick.h encoding.h mark.h \
+ logfile.h win.h backtick.h encoding.h mark.h \
  misc.h process.h pty.h resize.h termcap.h tty.h
 comm.o: comm.c config.h os.h screen.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
@@ -236,21 +235,17 @@ comm.o: comm.c config.h os.h screen.h ansi.h sched.h acls.h comm.h \
 kmapdef.o: kmapdef.c config.h
 acls.o: acls.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h mark.h misc.h process.h winmsgbuf.h
+ logfile.h mark.h misc.h process.h win.h
 logfile.o: logfile.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
  logfile.h misc.h
 layer.o: layer.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
  logfile.h encoding.h mark.h tty.h
-winmsg.o: winmsg.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
+win.o: win.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h winmsg.h winmsgbuf.h winmsgcond.h backtick.h fileio.h \
+ logfile.h win.h backtick.h fileio.h \
  process.h mark.h
-winmsgbuf.o: winmsgbuf.c winmsgbuf.h screen.h os.h ansi.h sched.h acls.h \
- comm.h layer.h term.h image.h canvas.h display.h layout.h viewport.h \
- window.h logfile.h
-winmsgcond.o: winmsgcond.c winmsgcond.h
 backtick.o: backtick.c backtick.h screen.h os.h ansi.h sched.h acls.h \
  comm.h layer.h term.h image.h canvas.h display.h layout.h viewport.h \
  window.h logfile.h fileio.h
@@ -266,7 +261,7 @@ canvas.o: canvas.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  logfile.h help.h list_generic.h resize.h
 layout.o: layout.c config.h screen.h os.h ansi.h sched.h acls.h comm.h \
  layer.h term.h image.h canvas.h display.h layout.h viewport.h window.h \
- logfile.h fileio.h misc.h process.h winmsgbuf.h resize.h
+ logfile.h fileio.h misc.h process.h win.h resize.h
 viewport.o: viewport.c config.h screen.h os.h ansi.h sched.h acls.h \
  comm.h layer.h term.h image.h canvas.h display.h layout.h viewport.h \
  window.h logfile.h
@@ -278,6 +273,6 @@ list_generic.o: list_generic.c config.h screen.h os.h ansi.h sched.h \
  viewport.h window.h logfile.h input.h list_generic.h misc.h
 list_window.o: list_window.c config.h screen.h os.h ansi.h sched.h acls.h \
  comm.h layer.h term.h image.h canvas.h display.h layout.h viewport.h \
- window.h logfile.h winmsg.h winmsgbuf.h winmsgcond.h backtick.h input.h \
+ window.h logfile.h win.h backtick.h input.h \
  list_generic.h misc.h process.h
 list_license.o: list_license.c list_generic.h misc.h comm.h

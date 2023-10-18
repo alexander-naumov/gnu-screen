@@ -1,7 +1,7 @@
 #ifndef SCREEN_PROCESS_H
 #define SCREEN_PROCESS_H
 
-#include "winmsgbuf.h"
+#include "win.h"
 
 void  InitKeytab (void);
 void  ProcessInput (char *, size_t);

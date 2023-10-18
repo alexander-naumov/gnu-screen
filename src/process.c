@@ -66,7 +66,7 @@
 #include "tty.h"
 #include "utmp.h"
 #include "viewport.h"
-#include "winmsg.h"
+#include "win.h"
 
 
 static int CheckArgNum(int, char **);
