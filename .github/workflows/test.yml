@@ -92,4 +92,6 @@ jobs:
       shell: bash
       working-directory: ${{github.workspace}}/tests
       run: |
+        rm -rf screen-2024*
         ./pyte_test.py
+        cat screen-*
