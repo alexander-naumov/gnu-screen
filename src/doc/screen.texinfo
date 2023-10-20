@@ -1108,8 +1108,6 @@ Don't try to do keymapping on the next keystroke.  @xref{Bindkey Control}.
 Set the inter-character timeout used for keymapping. @xref{Bindkey Control}.
 @item markkeys @var{string}
 Rebind keys in copy mode.  @xref{Copy Mode Keys}.
-@item maxwin @var{n}
-Set the maximum window number. @xref{Maxwin}.
 @item meta
 Insert the command character.  @xref{Command Character}.
 @item monitor [@var{state}]
@@ -5145,7 +5143,6 @@ categories.
 * Attrcolor::			Map attributes to colors.
 * Setsid::			Change process group management.
 * Eval::			Parse and execute arguments.
-* Maxwin::			Set the maximum window number.
 * Backtick::			Program a command for a backtick string escape.
 * Screen Saver::		Define a screen safer.
 * Zmodem::			Define how screen treats zmodem requests.
@@ -5415,23 +5412,14 @@ The default is @code{on}, of course. This command is probably useful
 only in rare circumstances.
 @end deffn
 
-@node Eval, Maxwin, Setsid, Miscellaneous
+@node Eval, , Setsid, Miscellaneous
 @section Eval
 @deffn Command eval @var{command1} [@var{command2} ...]
 (none)@*
 Parses and executes each argument as separate command.
 @end deffn
 
-@node Maxwin, Backtick, Eval, Miscellaneous
-@section Maxwin
-@deffn Command maxwin @var{n}
-(none)@*
-Set the maximum window number screen will create. Doesn't affect 
-already existing windows. The number can be increased only when there are no
-existing windows.
-@end deffn
-
-@node Backtick, Screen Saver, Maxwin, Miscellaneous
+@node Backtick, Screen Saver, , Miscellaneous
 @section Backtick
 @deffn Command backtick @var{id} @var{lifespan} @var{autorefresh} @var{command} [@var{args}]
 @deffnx Command backtick @var{id}
