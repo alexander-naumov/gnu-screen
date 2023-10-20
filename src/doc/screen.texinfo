@@ -5722,9 +5722,6 @@ Number of lines on the terminal (overrides termcap entry).
 @item LOCKPRG
 Screen lock program.
 
-@item NETHACKOPTIONS
-Turns on @code{nethack} option.
-
 @item PATH
 Used for locating programs to run.
 
