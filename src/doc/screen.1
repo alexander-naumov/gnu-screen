@@ -2772,14 +2772,6 @@ As shown in this example, multiple keys can be assigned to one function in a
 single statement.
 .RE
 .TP
-.BI "maxwin " num
-.RS 0
-.PP
-Set the maximum window number screen will create. Doesn't affect
-already existing windows. The number can be increased only when there are no
-existing windows.
-.RE
-.TP
 .B meta
 .RS 0
 .PP
@@ -3237,8 +3229,7 @@ When a new window is established, the first available number
 is assigned to this window.
 Thus, the first window can be activated by \*Qselect 0\*U.
 The number of windows is set by the MAXWIN
-configuration parameter (which defaults to 100),
-but it can be changed by using `maxwin' command.
+configuration parameter (which defaults to 100).
 There are two special WindowIDs, \*Q\-\*U selects the
 internal blank window and \*Q.\*U selects the current window. The
 latter is useful if used with screen's \*Q\-X\*U option.
