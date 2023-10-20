@@ -2839,24 +2839,6 @@ can be used to enable (and disable) other users accessing this
 session. 
 .RE
 .TP
-.BR "nethack [ on | off ]"
-.RS 0
-.PP
-Changes the kind of error messages used by
-.IR screen .
-When you are familiar with the game \*Qnethack\*U, you may enjoy the
-nethack-style messages which will often blur the facts a little, but are
-much funnier to read. Anyway, standard messages often tend to be unclear as
-well.
-.br
-This option is only available if
-.I screen
-was compiled with the NETHACK flag defined. The
-default setting is then determined by the presence of the environment 
-variable $NETHACKOPTIONS and the file ~/.nethackrc - if either one is present,
-the default is \fBon\fP.
-.RE
-.TP
 .B next
 .RS 0
 .PP
@@ -5191,8 +5173,6 @@ Directory in which to look for .screenrc.
 Number of lines on the terminal (overrides termcap entry).
 .IP LOCKPRG
 Screen lock program.
-.IP NETHACKOPTIONS
-Turns on nethack option.
 .IP PATH
 Used for locating programs to run.
 .IP SCREENCAP
