@@ -5633,65 +5633,59 @@ standout
 @item B
 blinking
 @end table
-Colors are coded either as a hexadecimal number or two letters specifying
-the desired background and foreground color (in that order). The following
-colors are known:
-@table @code
-@item k
-black
-@item r
-red
-@item g
-green
-@item y
-yellow
-@item b
-blue
-@item m
-magenta
-@item c
-cyan
-@item w
-white
-@item d
-default color
-@item .
-leave color unchanged
-@end table
-The capitalized versions of the letter specify bright colors. You can also
-use the pseudo-color @samp{i} to set just the brightness and leave the color
-unchanged.
+The  old format of specifying colors by letters (k,r,g,y,b,m,c,w) is
+now deprecated. Colors are coded as 0-7 for basic ANSI, 0-255 for 256
+color mode, or for truecolor, either a hexadecimal code starting with
+x, or HTML notation as either 3 or 6 hexadecimal digits.
+Foreground and background are specified by putting a semicolon between
+them.
+Ex: @code{#FFF;#000} or @code{i7;0} is white on a black background.
 
-A one digit/letter color description is treated as foreground or
-background color dependent on the current attributes: if reverse mode is
-set, the background color is changed instead of the foreground color.
-If you don't like this, prefix the color with a @samp{.}. If you want
-the same behavior for two-letter color descriptions, also prefix them
-with a @samp{.}.
+The following numbers are for basic ANSI:
+
+@table @code
+@item 0
+black
+@item 1
+red
+@item 2
+green
+@item 3
+yellow
+@item 4
+blue
+@item 5
+magenta
+@item 6
+cyan
+@item 7
+white
+@end table
+
+You can also use the pseudo-color 'i' to set just the brightness
+and leave the color unchanged.
 
 As a special case, @samp{%@{-@}} restores the attributes and colors that
 were set before the last change was made (i.e. pops one level of the
 color-change stack).
 
-@noindent
 Examples:
 @table @samp
-@item G
+@item 12
 set color to bright green
 @item +b r
 use bold red
-@item = yd
-clear all attributes, write in default color on yellow background.
-@item %-Lw%@{= BW@}%50>%n%f* %t%@{-@}%+Lw%<
-The available windows centered at the current win dow and truncated to
-the available width. The current window is displayed white on blue.
+@item #F00;FFA
+write in bright red color on a pale yellow background
+@item %-Lw%@{#AAA;#006@}%50>%n%f* %t%@{-@}%+Lw%<
+The  available windows centered at the current window and truncated
+to the available width. The current window is displayed white on blue.
 This can be used with @samp{hardstatus alwayslastline}.
-@item %?%F%@{.R.@}%?%3n %t%? [%h]%?
+@item %?%F%@{;2@}%?%3n %t%? [%h]%?
 The window number and title and the window's hardstatus, if one is set.
 Also use a red background if this is the active focus.
 Useful for @samp{caption string}.
 @end table
-
 
 @node Environment, Files, String Escapes, Top
 @chapter Environment Variables
